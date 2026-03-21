@@ -1301,9 +1301,35 @@ function renderLibrary(){
 // ══════════════════════════════════════════════
 // PROGRAMMES PAGE
 // ══════════════════════════════════════════════
-function buildProgramsPage(){
+async function buildProgramsPage(){
   const list=document.getElementById('prog-list');
   if(!list)return;
+
+  // Recharger les programmes depuis Supabase à chaque ouverture
+  const {data}=await sb.from('programs')
+    .select('*')
+    .eq('user_id',currentUser.id)
+    .order('created_at',{ascending:false});
+  allPrograms=data||[];
+
+  if(!allPrograms.length){
+    list.innerHTML='Aucun programme trouvé.';
+    return;
+  }
+
+  list.innerHTML=allPrograms.map(p=>`
+    
+      
+        ${p.name}
+        ${p.structure?.days?.length||0} jours · créé le ${new Date(p.created_at).toLocaleDateString('fr')}
+      
+      ${p.is_active?'Actif':''}
+      
+        ${!p.is_active?`Activer`:''}
+        ${!p.is_active?`Suppr.`:''}
+      
+    `).join('');
+}
   list.innerHTML=allPrograms.map(p=>`
     <div class="prog-card${p.is_active?' active-prog':''}">
       <div class="prog-card-info">
