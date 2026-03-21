@@ -1276,6 +1276,7 @@ async function buildProgramsPage() {
       list.innerHTML = '<p style="font-size:12px;color:var(--mut);text-align:center;padding:20px">Aucun programme trouvé.</p>';
       return;
     }
+    console.log('buildProgramsPage: rendering', allPrograms.length, 'programs');
     list.innerHTML = allPrograms.map(p =>
       '<div class="prog-card' + (p.is_active ? ' active-prog' : '') + '">' +
         '<div class="prog-card-info">' +
@@ -1295,6 +1296,7 @@ async function buildProgramsPage() {
         if (this.dataset.action === 'delete') deleteProgram(this.dataset.id);
       });
     });
+    console.log('buildProgramsPage: done');
   } catch(e) {
     console.log('buildProgramsPage: error', e.message);
     list.innerHTML = '<p style="font-size:11px;color:var(--mut);padding:10px">Chargement...</p>';
