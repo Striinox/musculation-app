@@ -510,6 +510,7 @@ sb.auth.onAuthStateChange(async function(event, session) {
     currentUser = session.user;
     await initUserSession();
   }
+})();
   
 // ══════════════════════════════════════
 // INIT USER SESSION
@@ -1441,7 +1442,6 @@ document.querySelectorAll('.timer-opt').forEach(function(opt) {
 
 document.getElementById('timer-start').addEventListener('click', startTimer);
 document.getElementById('timer-skip').addEventListener('click', closeTimer);
-})();
 </script>
   <!-- TIMER -->
 <div class="timer-overlay" id="timer-overlay">
