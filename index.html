@@ -491,20 +491,9 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
   
-let isRefreshing = false;
-document.addEventListener('visibilitychange', async () => {
-  if (document.visibilityState === 'visible' && currentUser && !isRefreshing) {
-    await new Promise(r => setTimeout(r, 300));
-    isRefreshing = true;
-    setSyncStatus('', '');
-    const activePage = document.querySelector('.page.on');
-    if (activePage) {
-      const pid = activePage.id;
-      if (pid === 'page-programs')  await buildProgramsPage();
-      if (pid === 'page-dashboard') await loadDashboard();
-      if (pid === 'page-library')   renderLibrary();
-    }
-    isRefreshing = false;
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && currentUser) {
+    location.reload();
   }
 });
   
