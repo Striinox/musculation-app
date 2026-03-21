@@ -379,7 +379,12 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 const SUPABASE_URL = 'https://rqymrinhvihfrlgklkfi.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_w4SuqbeyssghagcxDmN1jw_hz3WYIKO';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-  auth: { persistSession: true }
+  auth: {
+    persistSession: true,
+    storage: window.localStorage,
+    autoRefreshToken: true,
+    detectSessionInUrl: false
+  }
 });
 
 // ── STATE ──
@@ -469,12 +474,10 @@ document.getElementById('btn-new-prog').addEventListener('click', startNewProgra
 // ── AUTH STATE ──
 document.addEventListener('visibilitychange', async () => {
   if (document.visibilityState === 'visible') {
-    await new Promise(r => setTimeout(r, 800));
-    const { data } = await sb.auth.getSession();
-    if (!data.session) {
-      if (currentUser) location.reload();
-    } else {
-      currentUser = data.session.user;
+    await new Promise(r => setTimeout(r, 500));
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      currentUser = session.user;
       setSyncStatus('', '');
       const activePage = document.querySelector('.page.on');
       if (activePage) {
@@ -483,6 +486,8 @@ document.addEventListener('visibilitychange', async () => {
         if (pid === 'page-dashboard') loadDashboard();
         if (pid === 'page-library')   renderLibrary();
       }
+    } else {
+      location.reload();
     }
   }
 });
