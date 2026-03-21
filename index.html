@@ -490,18 +490,6 @@ sb.auth.onAuthStateChange(async (event, session) => {
     showScreen('auth');
   }
 });
-  document.addEventListener('visibilitychange', async () => {
-  if (document.visibilityState === 'visible' && currentUser) {
-    setSyncStatus('', '');
-    const activePage = document.querySelector('.page.on');
-    if (activePage) {
-      const pid = activePage.id;
-      if (pid === 'page-programs')  buildProgramsPage();
-      if (pid === 'page-dashboard') loadDashboard();
-      if (pid === 'page-library')   renderLibrary();
-    }
-  }
-});
   
 // ── INIT ──
 async function initUserSession() {
@@ -899,12 +887,11 @@ function goPage(page, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
   if (btn) btn.classList.add('on');
   document.getElementById('app-content').scrollTop = 0;
+
   if (typeof page === 'number') {
-    const el = document.getElementById('page-' + page);
-    if (el) el.classList.add('on');
+    document.getElementById('page-' + page)?.classList.add('on');
   } else {
-    const el = document.getElementById('page-' + page);
-    if (el) el.classList.add('on');
+    document.getElementById('page-' + page)?.classList.add('on');
     if (page === 'dashboard') loadDashboard();
     if (page === 'library')   renderLibrary();
     if (page === 'programs')  buildProgramsPage();
