@@ -679,6 +679,8 @@ async function migrateExistingProgram() {
 // ══════════════════════════════════════
 async function generateProgram() {
   showOnbStep(6);
+  console.log('profile:', JSON.stringify(p));
+  console.log('libraryCache size:', libraryCache.length);
   const p = onbProfile;
   await sb.from('user_profiles').upsert({
     user_id: currentUser.id, objective: p.objective, level: p.level,
