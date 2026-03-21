@@ -490,6 +490,18 @@ sb.auth.onAuthStateChange(async (event, session) => {
     showScreen('auth');
   }
 });
+  document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'visible' && currentUser) {
+    setSyncStatus('', '');
+    const activePage = document.querySelector('.page.on');
+    if (activePage) {
+      const pid = activePage.id;
+      if (pid === 'page-programs')  buildProgramsPage();
+      if (pid === 'page-dashboard') loadDashboard();
+      if (pid === 'page-library')   renderLibrary();
+    }
+  }
+});
   
 // ── INIT ──
 async function initUserSession() {
