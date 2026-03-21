@@ -491,6 +491,18 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
   
+  document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'visible' && currentUser) {
+    setSyncStatus('', '');
+    const activePage = document.querySelector('.page.on');
+    if (!activePage) return;
+    const pid = activePage.id;
+    if (pid === 'page-programs')  buildProgramsPage();
+    if (pid === 'page-dashboard') loadDashboard();
+    if (pid === 'page-library')   renderLibrary();
+  }
+});
+  
 // ── INIT ──
 async function initUserSession() {
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
