@@ -491,7 +491,8 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
   
-  document.addEventListener('visibilitychange', async () => {
+document.addEventListener('visibilitychange', async () => {
+  console.log('visibility:', document.visibilityState);
   if (document.visibilityState === 'visible' && currentUser) {
     setSyncStatus('', '');
     const activePage = document.querySelector('.page.on');
