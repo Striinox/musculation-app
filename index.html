@@ -527,8 +527,9 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 // ══════════════════════════════════════════════
 const SUPABASE_URL = 'https://rqymrinhvihfrlgklkfi.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_w4SuqbeyssghagcxDmN1jw_hz3WYIKO';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: { persistSession: true }
+});
 // ══════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════
