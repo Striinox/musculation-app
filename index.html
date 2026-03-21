@@ -1118,11 +1118,11 @@ async function loadDashboard() {
   setSyncStatus('Chargement...', 'syncing');
   
   try {
-    const { data, error } = await Promise.race([
-      sb.from('workout_logs').select('*').eq('user_id', currentUser.id).order('session_date', { ascending: true }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
-    ]);
-    if (error) throw error;
+    const { data, error } = await sb.from('workout_logs')
+  .select('*')
+  .eq('user_id', currentUser.id)
+  .order('session_date', { ascending: true });
+if (error) throw error;
     setSyncStatus('', '');
     const all      = data || [];
     const filtered = dashFilter === 'all' ? all : all.filter(r => r.day_key === dashFilter);
