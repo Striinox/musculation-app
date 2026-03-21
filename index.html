@@ -683,9 +683,9 @@ async function generateProgram() {
   console.log('libraryCache size:', libraryCache.length);
   const p = onbProfile;
   await sb.from('user_profiles').upsert({
-    user_id: currentUser.id, objective: p.objective, level: p.level,
-    days_per_week: p.days_per_week, equipment: p.equipment, constraints: p.constraints
-  });
+  user_id: currentUser.id, objective: p.objective, level: p.level,
+  days_per_week: p.days_per_week, equipment: p.equipment, constraints: p.constraints
+  }, { onConflict: 'user_id' });
   const structure = buildProgramFromProfile(p);
   const progName  = buildProgramName(p);
   await sb.from('programs').update({ is_active: false }).eq('user_id', currentUser.id);
