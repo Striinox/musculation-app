@@ -467,7 +467,24 @@ document.getElementById('btn-close-modal').addEventListener('click', closeModal)
 document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
 
 // ── AUTH STATE ──
-sb.auth.onAuthStateChange(async (event, session) => {
+  document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'visible' && currentUser) {
+    const { data } = await sb.auth.getSession();
+    if (!data.session) {
+      location.reload();
+    } else {
+      setSyncStatus('', '');
+      const activePage = document.querySelector('.page.on');
+      if (activePage) {
+        const pid = activePage.id;
+        if (pid === 'page-programs')  buildProgramsPage();
+        if (pid === 'page-dashboard') loadDashboard();
+        if (pid === 'page-library')   renderLibrary();
+      }
+    }
+  }
+});
+  sb.auth.onAuthStateChange(async (event, session) => {
   if (session && session.user) {
     currentUser = session.user;
     await initUserSession();
