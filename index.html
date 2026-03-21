@@ -195,6 +195,20 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .tip .ic{font-size:14px;flex-shrink:0;margin-top:1px}
 .tip strong{display:block;font-size:11px;font-weight:600;margin-bottom:1px}
 .tip span{font-size:10px;color:var(--mut)}
+.timer-overlay{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--sur);border-top:2px solid var(--acc);padding:16px 20px calc(16px + var(--safe-bot));display:none;flex-direction:column;gap:12px}
+.timer-overlay.open{display:flex}
+.timer-header{display:flex;align-items:center;justify-content:space-between}
+.timer-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mut)}
+.timer-skip{background:none;border:none;font-size:11px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif}
+.timer-display{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:4px;color:var(--acc);text-align:center;line-height:1}
+.timer-display.urgent{color:var(--red)}
+.timer-options{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.timer-opt{background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;font-weight:600;color:var(--mut);font-family:'Inter',sans-serif;transition:.15s}
+.timer-opt.selected{border-color:var(--acc);color:var(--acc);background:rgba(200,241,53,.08)}
+.timer-start{background:var(--acc);color:#0f0f0f;border:none;border-radius:8px;padding:12px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.timer-bar{height:3px;background:var(--brd);border-radius:2px;overflow:hidden}
+.timer-bar-fill{height:100%;background:var(--acc);transition:width 1s linear;width:100%}
+.timer-bar-fill.urgent{background:var(--red)}
 </style>
 </head>
 <body>
@@ -496,7 +510,7 @@ sb.auth.onAuthStateChange(async function(event, session) {
     currentUser = session.user;
     await initUserSession();
   }
-})();
+  
 // ══════════════════════════════════════
 // INIT USER SESSION
 // ══════════════════════════════════════
@@ -966,6 +980,12 @@ async function saveLog(exId, dayKey, numSets, dayIdx) {
   setTimeout(function() { setSyncStatus('',''); }, 2000);
   const conf = document.getElementById('conf-'+exId+'-'+dayIdx);
   if (conf) { conf.classList.add('show'); setTimeout(function() { conf.classList.remove('show'); }, 2500); }
+  let exNameTimer = exId;
+libraryCache.forEach(function(e) { if (e.id === exId) exNameTimer = e.name; });
+if (activeProgram) activeProgram.structure.days.forEach(function(d) {
+  d.exercises.forEach(function(e) { if (e.id === exId) exNameTimer = e.name; });
+});
+openTimer(exNameTimer, exId);
   const hist = document.getElementById('hist-'+exId+'-'+dayIdx);
   if (hist && hist.classList.contains('open')) loadHist(exId, dayIdx, hist);
 }
@@ -1326,8 +1346,119 @@ function getSVG(id) {
     '<text x="130" y="65" text-anchor="middle" font-size="18" fill="#333" font-family="Inter,sans-serif">💪</text>' +
     '<text x="130" y="90" text-anchor="middle" font-size="10" fill="#555" font-family="Inter,sans-serif">'+id.replace(/-/g,' ')+'</text></svg>';
 }
+  
+// ══════════════════════════════════════
+// TIMER DE REPOS
+// ══════════════════════════════════════
+let timerInterval  = null;
+let timerRemaining = 0;
+let timerTotal     = 0;
+let timerRunning   = false;
+let timerExId      = null;
+const timerPrefs   = {};
 
+function openTimer(exName, exId) {
+  timerExId = exId;
+  const lastSecs = timerPrefs[exId] || 90;
+  document.querySelectorAll('.timer-opt').forEach(function(o) {
+    o.classList.toggle('selected', parseInt(o.dataset.secs) === lastSecs);
+  });
+  document.getElementById('timer-ex-name').textContent  = exName + ' — Repos';
+  document.getElementById('timer-display').textContent  = formatTime(lastSecs);
+  document.getElementById('timer-display').classList.remove('urgent');
+  document.getElementById('timer-display').style.fontSize = '';
+  document.getElementById('timer-bar-fill').style.width = '100%';
+  document.getElementById('timer-bar-fill').classList.remove('urgent');
+  document.getElementById('timer-start').textContent = '▶ Démarrer le repos';
+  document.getElementById('timer-start').disabled = false;
+  timerRemaining = lastSecs;
+  timerTotal     = lastSecs;
+  timerRunning   = false;
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById('timer-overlay').classList.add('open');
+}
+
+function closeTimer() {
+  document.getElementById('timer-overlay').classList.remove('open');
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  timerRunning = false;
+}
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return m + ':' + (s < 10 ? '0' + s : s);
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  const selectedOpt = document.querySelector('.timer-opt.selected');
+  const secs = parseInt(selectedOpt ? selectedOpt.dataset.secs : 90);
+  if (timerExId) timerPrefs[timerExId] = secs;
+  timerRemaining = secs;
+  timerTotal     = secs;
+  document.getElementById('timer-start').textContent = '⏸ En cours...';
+  document.getElementById('timer-start').disabled = true;
+  document.getElementById('timer-display').textContent = formatTime(timerRemaining);
+  document.getElementById('timer-bar-fill').style.width = '100%';
+
+  timerInterval = setInterval(function() {
+    timerRemaining--;
+    const display = document.getElementById('timer-display');
+    const barFill = document.getElementById('timer-bar-fill');
+    const pct     = (timerRemaining / timerTotal) * 100;
+    display.textContent    = formatTime(timerRemaining);
+    barFill.style.width    = pct + '%';
+    if (timerRemaining <= 10) {
+      display.classList.add('urgent');
+      barFill.classList.add('urgent');
+    }
+    if (timerRemaining <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRunning  = false;
+      display.textContent  = "C'est reparti ! 💪";
+      display.style.fontSize = '24px';
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+      setTimeout(function() { closeTimer(); }, 2000);
+    }
+  }, 1000);
+}
+
+document.querySelectorAll('.timer-opt').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    if (timerRunning) return;
+    document.querySelectorAll('.timer-opt').forEach(function(o) { o.classList.remove('selected'); });
+    this.classList.add('selected');
+    const secs = parseInt(this.dataset.secs);
+    timerRemaining = secs;
+    timerTotal     = secs;
+    document.getElementById('timer-display').textContent = formatTime(secs);
+    document.getElementById('timer-bar-fill').style.width = '100%';
+  });
+});
+
+document.getElementById('timer-start').addEventListener('click', startTimer);
+document.getElementById('timer-skip').addEventListener('click', closeTimer);
 })();
 </script>
+  <!-- TIMER -->
+<div class="timer-overlay" id="timer-overlay">
+  <div class="timer-header">
+    <span class="timer-title" id="timer-ex-name">Repos</span>
+    <button class="timer-skip" id="timer-skip">Passer ✕</button>
+  </div>
+  <div class="timer-bar"><div class="timer-bar-fill" id="timer-bar-fill"></div></div>
+  <div class="timer-display" id="timer-display">1:30</div>
+  <div class="timer-options">
+    <div class="timer-opt" data-secs="45">45s</div>
+    <div class="timer-opt" data-secs="60">1min</div>
+    <div class="timer-opt selected" data-secs="90">1m30</div>
+    <div class="timer-opt" data-secs="120">2min</div>
+    <div class="timer-opt" data-secs="180">3min</div>
+  </div>
+  <button class="timer-start" id="timer-start">▶ Démarrer le repos</button>
+</div>
 </body>
 </html>
