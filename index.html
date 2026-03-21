@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Muscu">
@@ -20,12 +21,8 @@
 }
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-size:14px;display:flex;flex-direction:column}
-
-/* ── SCREENS ── */
 .screen{display:none;flex-direction:column;height:100%}
 .screen.active{display:flex}
-
-/* ── AUTH ── */
 #auth-screen{align-items:center;justify-content:center;padding:24px;gap:20px}
 .auth-logo{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:4px;color:var(--acc);line-height:1;text-align:center}
 .auth-sub{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:2px;text-align:center;margin-top:-10px}
@@ -42,8 +39,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .auth-switch{font-size:12px;color:var(--mut);text-align:center}
 .auth-switch span{color:var(--acc);cursor:pointer;font-weight:600}
 .auth-error{font-size:11px;color:var(--red);min-height:16px;text-align:center}
-
-/* ── ONBOARDING ── */
 #onboarding-screen{padding:0}
 .onb-wrap{flex:1;overflow-y:auto;padding:calc(var(--safe-top) + 20px) 20px 40px}
 .onb-header{text-align:center;margin-bottom:28px}
@@ -71,19 +66,14 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .onb-existing-notice{background:rgba(200,241,53,.06);border:1px solid rgba(200,241,53,.2);border-radius:10px;padding:16px;margin-bottom:20px}
 .onb-existing-notice p{font-size:12px;color:var(--mut);line-height:1.6;margin-bottom:12px}
 .onb-existing-notice strong{color:var(--acc)}
-
-/* ── APP ── */
 #app-screen{overflow:hidden}
 .app-header{background:var(--sur);border-bottom:2px solid var(--acc);padding:calc(var(--safe-top) + 8px) 16px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .app-header h1{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--acc);line-height:1}
 .header-right{display:flex;align-items:center;gap:8px}
-.prog-switcher{background:var(--card);border:1px solid var(--brd);border-radius:5px;padding:4px 10px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prog-switcher{background:var(--card);border:1px solid var(--brd);border-radius:5px;padding:4px 10px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btn-logout{background:none;border:1px solid var(--brd);border-radius:4px;padding:4px 8px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif}
-
 .app-content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .page{display:none;padding:16px 14px 24px}.page.on{display:block}
-
-/* ── BOTTOM NAV ── */
 .bottom-nav{background:var(--sur);border-top:1px solid var(--brd);display:grid;padding-bottom:var(--safe-bot);flex-shrink:0}
 .nav-btn{background:none;border:none;border-top:2px solid transparent;padding:8px 2px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
 .nav-btn .ni{font-size:18px;line-height:1}
@@ -91,20 +81,15 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .nav-btn.on{border-top-color:var(--acc)}.nav-btn.on .nl{color:var(--acc)}
 .nav-btn.dash.on{border-top-color:var(--blue)}.nav-btn.dash.on .nl{color:var(--blue)}
 .nav-btn.lib.on{border-top-color:var(--orange)}.nav-btn.lib.on .nl{color:var(--orange)}
-
-/* ── PAGE HEADERS ── */
+.nav-btn.prg.on{border-top-color:var(--acc)}.nav-btn.prg.on .nl{color:var(--acc)}
 .page-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--brd)}
 .page-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--brd);line-height:1;flex-shrink:0}
 .page-info h2{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--acc);line-height:1.1}
 .page-info p{color:var(--mut);font-size:10px;margin-top:2px}
-
-/* ── SESSION BAR ── */
 .session-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 12px;background:var(--card);border:1px solid var(--brd);border-radius:8px;flex-wrap:wrap}
 .session-bar label{font-size:10px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
 .session-bar input[type=date]{background:var(--bg);border:1px solid var(--brd);border-radius:5px;color:var(--txt);font-family:'Inter',sans-serif;font-size:13px;padding:6px 10px;outline:none;-webkit-appearance:none;flex:1;min-width:0}
 .session-bar input[type=date]:focus{border-color:var(--acc)}
-
-/* ── EXERCISE CARDS ── */
 .ex-card{background:var(--card);border:1px solid var(--brd);border-radius:10px;overflow:hidden;margin-bottom:14px}
 .ex-vis{background:#111;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:center;padding:6px;height:140px}
 .ex-vis svg{width:100%;height:100%;max-width:260px;display:block}
@@ -114,9 +99,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .ex-pill{background:rgba(200,241,53,.07);border:1px solid rgba(200,241,53,.2);border-radius:3px;padding:2px 8px;font-size:10px;font-weight:600;color:var(--acc)}
 .ex-desc{font-size:11px;color:var(--mut);line-height:1.5;margin-bottom:10px}
 .ex-replace-btn{background:none;border:1px solid var(--brd);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif;margin-left:auto}
-.ex-replace-btn:active{background:var(--brd)}
-
-/* ── LOG ── */
 .log-section{border-top:1px solid var(--brd);padding-top:10px}
 .log-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin-bottom:8px}
 .set-rows{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
@@ -143,8 +125,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .hist-del{background:none;border:none;color:#3a3a3a;cursor:pointer;font-size:14px;padding:0 2px;line-height:1}
 .hist-del:active{color:var(--red)}
 .hist-empty{font-size:11px;color:#444;font-style:italic}
-
-/* ── DASHBOARD ── */
 .dash-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .stat-card{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:14px}
 .stat-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin-bottom:4px}
@@ -163,8 +143,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .chart-area svg{display:block;width:100%;height:auto}
 .dash-empty{text-align:center;padding:50px 20px;color:var(--mut)}
 .dash-empty-icon{font-size:48px;display:block;margin-bottom:12px}
-
-/* ── BIBLIOTHÈQUE ── */
 .lib-filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px;scrollbar-width:none}
 .lib-filters::-webkit-scrollbar{display:none}
 .lib-filter{background:var(--card);border:1px solid var(--brd);border-radius:5px;padding:5px 12px;font-size:10px;font-weight:600;color:var(--mut);cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.5px}
@@ -185,12 +163,9 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .lib-tag-pull{background:rgba(77,255,158,.12);color:var(--green)}
 .lib-tag-legs{background:rgba(255,149,0,.12);color:var(--orange)}
 .lib-tag-core{background:rgba(200,241,53,.1);color:var(--acc)}
-.lib-tag-beg{background:rgba(77,255,158,.1);color:var(--green)}
-.lib-tag-int{background:rgba(255,149,0,.1);color:var(--orange)}
-.lib-tag-adv{background:rgba(255,77,77,.1);color:var(--red)}
-.lib-add-btn{background:var(--acc);color:#0f0f0f;border:none;border-radius:4px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:6px}
-
-/* ── PROGRAMME PAGE ── */
+.lib-tag-beginner{background:rgba(77,255,158,.1);color:var(--green)}
+.lib-tag-intermediate{background:rgba(255,149,0,.1);color:var(--orange)}
+.lib-tag-advanced{background:rgba(255,77,77,.1);color:var(--red)}
 .prog-page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--brd)}
 .prog-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
 .prog-card{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
@@ -201,22 +176,15 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .prog-active-badge{background:rgba(200,241,53,.1);border:1px solid rgba(200,241,53,.3);border-radius:3px;padding:2px 7px;font-size:9px;font-weight:600;color:var(--acc);white-space:nowrap}
 .prog-actions{display:flex;gap:6px}
 .prog-action-btn{background:none;border:1px solid var(--brd);border-radius:4px;padding:5px 10px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif}
-.prog-action-btn.danger:active{color:var(--red);border-color:var(--red)}
 .btn-new-prog{background:rgba(200,241,53,.06);border:1px solid rgba(200,241,53,.2);border-radius:8px;padding:14px;text-align:center;cursor:pointer;font-size:13px;color:var(--acc);font-family:'Inter',sans-serif;font-weight:600;width:100%}
-
-/* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--sur);border-radius:16px 16px 0 0;padding:20px;width:100%;max-height:80vh;overflow-y:auto;padding-bottom:calc(20px + var(--safe-bot))}
 .modal-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--acc);margin-bottom:4px}
 .modal-sub{font-size:11px;color:var(--mut);margin-bottom:16px}
 .modal-close{background:none;border:none;color:var(--mut);font-size:20px;cursor:pointer;float:right;margin-top:-4px}
-
-/* ── SYNC ── */
 .sync-status{font-size:10px;color:var(--mut);text-align:center;padding:4px;flex-shrink:0;min-height:20px}
 .sync-status.syncing{color:var(--acc)}.sync-status.error{color:var(--red)}
-
-/* ── SEMAINE ── */
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:28px}
 .wday{background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:10px 4px;text-align:center}
 .wday .wn{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin-bottom:4px}
@@ -233,217 +201,121 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     AUTH
-══════════════════════════════════════ -->
+<!-- AUTH -->
 <div id="auth-screen" class="screen active">
   <div class="auth-logo">💪 Muscu</div>
   <div class="auth-sub">Programme · Prise de Masse</div>
-
   <div class="auth-card" id="login-form">
     <div class="auth-card-title">Connexion</div>
     <div class="inp-group"><label>Email</label><input type="email" id="login-email" placeholder="ton@email.com" autocomplete="email"></div>
     <div class="inp-group"><label>Mot de passe</label><input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password"></div>
     <div class="auth-error" id="login-error"></div>
-    <button class="btn-primary" onclick="doLogin()">Se connecter</button>
-    <div class="auth-switch">Pas de compte ? <span onclick="toggleAuth()">Créer un compte</span></div>
+    <button class="btn-primary" id="btn-login">Se connecter</button>
+    <div class="auth-switch">Pas de compte ? <span id="toggle-auth">Créer un compte</span></div>
   </div>
-
   <div class="auth-card" id="register-form" style="display:none">
     <div class="auth-card-title">Créer un compte</div>
     <div class="inp-group"><label>Email</label><input type="email" id="reg-email" placeholder="ton@email.com" autocomplete="email"></div>
     <div class="inp-group"><label>Mot de passe</label><input type="password" id="reg-pwd" placeholder="Minimum 6 caractères" autocomplete="new-password"></div>
     <div class="auth-error" id="reg-error"></div>
-    <button class="btn-primary" onclick="doRegister()">Créer le compte</button>
-    <div class="auth-switch">Déjà un compte ? <span onclick="toggleAuth()">Se connecter</span></div>
+    <button class="btn-primary" id="btn-register">Créer le compte</button>
+    <div class="auth-switch">Déjà un compte ? <span id="toggle-auth-2">Se connecter</span></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     ONBOARDING
-══════════════════════════════════════ -->
+<!-- ONBOARDING -->
 <div id="onboarding-screen" class="screen">
   <div class="onb-wrap">
     <div class="onb-header">
       <div class="onb-logo">💪 Muscu</div>
       <div class="onb-step-indicator" id="onb-dots"></div>
     </div>
-
-    <!-- STEP 0 : Utilisateur existant détecté -->
     <div class="onb-step" id="onb-step-0">
       <div class="onb-question">Bon retour ! 👋</div>
-      <div class="onb-hint">On a détecté que tu as déjà des données d'entraînement. Que veux-tu faire ?</div>
-      <div class="onb-existing-notice">
-        <p>Tes séances et ta progression sont <strong>totalement préservées</strong>. On a juste besoin de créer ton profil pour la nouvelle version.</p>
-      </div>
+      <div class="onb-hint">On a détecté que tu as déjà des données. Que veux-tu faire ?</div>
+      <div class="onb-existing-notice"><p>Tes séances et ta progression sont <strong>totalement préservées</strong>.</p></div>
       <div class="onb-options">
-        <div class="onb-opt" onclick="selectExisting('keep')" id="opt-keep">
-          <span class="onb-opt-icon">🔄</span>
-          <div class="onb-opt-text"><strong>Garder mon programme actuel</strong><span>Push/Pull/Legs 5 jours — migrer vers le nouveau système</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectExisting('new')" id="opt-new">
-          <span class="onb-opt-icon">✨</span>
-          <div class="onb-opt-text"><strong>Générer un nouveau programme</strong><span>Répondre au questionnaire et repartir sur une base neuve</span></div>
-        </div>
+        <div class="onb-opt" id="opt-keep"><span class="onb-opt-icon">🔄</span><div class="onb-opt-text"><strong>Garder mon programme actuel</strong><span>Push/Pull/Legs 5 jours — migrer vers le nouveau système</span></div></div>
+        <div class="onb-opt" id="opt-new"><span class="onb-opt-icon">✨</span><div class="onb-opt-text"><strong>Générer un nouveau programme</strong><span>Répondre au questionnaire et repartir sur une base neuve</span></div></div>
       </div>
-      <div class="onb-nav">
-        <button class="btn-primary" onclick="confirmExistingChoice()">Continuer</button>
-      </div>
+      <div class="onb-nav"><button class="btn-primary" id="btn-confirm-existing">Continuer</button></div>
     </div>
-
-    <!-- STEP 1 : Objectif -->
     <div class="onb-step" id="onb-step-1">
       <div class="onb-question">Quel est ton objectif principal ?</div>
-      <div class="onb-hint">Ce choix détermine le type de programme, les exercices et les fourchettes de répétitions.</div>
+      <div class="onb-hint">Ce choix détermine le type de programme et les fourchettes de répétitions.</div>
       <div class="onb-options">
-        <div class="onb-opt" onclick="selectOpt(this,'objective','mass')" data-val="mass">
-          <span class="onb-opt-icon">💪</span>
-          <div class="onb-opt-text"><strong>Prise de masse</strong><span>Développer le volume musculaire · charges lourdes · calories en surplus</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectOpt(this,'objective','cut')" data-val="cut">
-          <span class="onb-opt-icon">🔥</span>
-          <div class="onb-opt-text"><strong>Perte de poids / Sèche</strong><span>Maintenir le muscle · brûler les graisses · temps de repos réduits</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectOpt(this,'objective','fitness')" data-val="fitness">
-          <span class="onb-opt-icon">⚡</span>
-          <div class="onb-opt-text"><strong>Forme générale</strong><span>Santé · endurance · équilibre entre force et cardio</span></div>
-        </div>
+        <div class="onb-opt" data-field="objective" data-val="mass"><span class="onb-opt-icon">💪</span><div class="onb-opt-text"><strong>Prise de masse</strong><span>Développer le volume musculaire · charges lourdes</span></div></div>
+        <div class="onb-opt" data-field="objective" data-val="cut"><span class="onb-opt-icon">🔥</span><div class="onb-opt-text"><strong>Perte de poids / Sèche</strong><span>Maintenir le muscle · brûler les graisses</span></div></div>
+        <div class="onb-opt" data-field="objective" data-val="fitness"><span class="onb-opt-icon">⚡</span><div class="onb-opt-text"><strong>Forme générale</strong><span>Santé · endurance · équilibre force et cardio</span></div></div>
       </div>
-      <div class="onb-nav">
-        <button class="btn-secondary" onclick="onbBack()">Retour</button>
-        <button class="btn-primary" onclick="onbNext()" style="flex:2">Suivant</button>
-      </div>
+      <div class="onb-nav"><button class="btn-secondary" id="btn-back-1">Retour</button><button class="btn-primary" id="btn-next-1" style="flex:2">Suivant</button></div>
     </div>
-
-    <!-- STEP 2 : Niveau -->
     <div class="onb-step" id="onb-step-2">
       <div class="onb-question">Quel est ton niveau ?</div>
-      <div class="onb-hint">Sois honnête — un programme adapté à ton niveau te fera progresser bien plus vite.</div>
+      <div class="onb-hint">Sois honnête — un programme adapté te fera progresser bien plus vite.</div>
       <div class="onb-options">
-        <div class="onb-opt" onclick="selectOpt(this,'level','beginner')" data-val="beginner">
-          <span class="onb-opt-icon">🌱</span>
-          <div class="onb-opt-text"><strong>Débutant</strong><span>Moins d'1 an de pratique régulière</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectOpt(this,'level','intermediate')" data-val="intermediate">
-          <span class="onb-opt-icon">📈</span>
-          <div class="onb-opt-text"><strong>Intermédiaire</strong><span>1 à 3 ans · bonne maîtrise des exercices de base</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectOpt(this,'level','advanced')" data-val="advanced">
-          <span class="onb-opt-icon">🏆</span>
-          <div class="onb-opt-text"><strong>Avancé</strong><span>3+ ans · progression lente · technique maîtrisée</span></div>
-        </div>
+        <div class="onb-opt" data-field="level" data-val="beginner"><span class="onb-opt-icon">🌱</span><div class="onb-opt-text"><strong>Débutant</strong><span>Moins d'1 an de pratique régulière</span></div></div>
+        <div class="onb-opt" data-field="level" data-val="intermediate"><span class="onb-opt-icon">📈</span><div class="onb-opt-text"><strong>Intermédiaire</strong><span>1 à 3 ans · bonne maîtrise des exercices de base</span></div></div>
+        <div class="onb-opt" data-field="level" data-val="advanced"><span class="onb-opt-icon">🏆</span><div class="onb-opt-text"><strong>Avancé</strong><span>3+ ans · progression lente · technique maîtrisée</span></div></div>
       </div>
-      <div class="onb-nav">
-        <button class="btn-secondary" onclick="onbBack()">Retour</button>
-        <button class="btn-primary" onclick="onbNext()" style="flex:2">Suivant</button>
-      </div>
+      <div class="onb-nav"><button class="btn-secondary" id="btn-back-2">Retour</button><button class="btn-primary" id="btn-next-2" style="flex:2">Suivant</button></div>
     </div>
-
-    <!-- STEP 3 : Jours -->
     <div class="onb-step" id="onb-step-3">
       <div class="onb-question">Combien de jours par semaine ?</div>
-      <div class="onb-hint">Choisis un nombre que tu peux tenir sur le long terme — la régularité bat l'intensité.</div>
+      <div class="onb-hint">Choisis un nombre que tu peux tenir sur le long terme.</div>
       <div class="onb-days-grid">
-        <div class="onb-day-btn" onclick="selectDays(this,2)"><div class="day-num">2</div><div class="day-lbl">jours</div></div>
-        <div class="onb-day-btn" onclick="selectDays(this,3)"><div class="day-num">3</div><div class="day-lbl">jours</div></div>
-        <div class="onb-day-btn" onclick="selectDays(this,4)"><div class="day-num">4</div><div class="day-lbl">jours</div></div>
-        <div class="onb-day-btn" onclick="selectDays(this,5)"><div class="day-num">5</div><div class="day-lbl">jours</div></div>
-        <div class="onb-day-btn" onclick="selectDays(this,6)"><div class="day-num">6</div><div class="day-lbl">jours</div></div>
+        <div class="onb-day-btn" data-days="2"><div class="day-num">2</div><div class="day-lbl">jours</div></div>
+        <div class="onb-day-btn" data-days="3"><div class="day-num">3</div><div class="day-lbl">jours</div></div>
+        <div class="onb-day-btn" data-days="4"><div class="day-num">4</div><div class="day-lbl">jours</div></div>
+        <div class="onb-day-btn" data-days="5"><div class="day-num">5</div><div class="day-lbl">jours</div></div>
+        <div class="onb-day-btn" data-days="6"><div class="day-num">6</div><div class="day-lbl">jours</div></div>
       </div>
-      <div class="onb-nav">
-        <button class="btn-secondary" onclick="onbBack()">Retour</button>
-        <button class="btn-primary" onclick="onbNext()" style="flex:2">Suivant</button>
-      </div>
+      <div class="onb-nav"><button class="btn-secondary" id="btn-back-3">Retour</button><button class="btn-primary" id="btn-next-3" style="flex:2">Suivant</button></div>
     </div>
-
-    <!-- STEP 4 : Matériel -->
     <div class="onb-step" id="onb-step-4">
       <div class="onb-question">Quel matériel as-tu ?</div>
-      <div class="onb-hint">Le programme sera entièrement adapté à ton équipement disponible.</div>
+      <div class="onb-hint">Le programme sera entièrement adapté à ton équipement.</div>
       <div class="onb-options">
-        <div class="onb-opt" onclick="selectOpt(this,'equipment','gym')" data-val="gym">
-          <span class="onb-opt-icon">🏋️</span>
-          <div class="onb-opt-text"><strong>Salle de sport complète</strong><span>Barres · haltères · machines · poulies</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectOpt(this,'equipment','dumbbells')" data-val="dumbbells">
-          <span class="onb-opt-icon">🏠</span>
-          <div class="onb-opt-text"><strong>Haltères seulement</strong><span>Banc + haltères · pas de barre · pas de machines</span></div>
-        </div>
-        <div class="onb-opt" onclick="selectOpt(this,'equipment','bodyweight')" data-val="bodyweight">
-          <span class="onb-opt-icon">🤸</span>
-          <div class="onb-opt-text"><strong>Poids du corps</strong><span>Barre de traction · sol · pas d'équipement lourd</span></div>
-        </div>
+        <div class="onb-opt" data-field="equipment" data-val="gym"><span class="onb-opt-icon">🏋️</span><div class="onb-opt-text"><strong>Salle de sport complète</strong><span>Barres · haltères · machines · poulies</span></div></div>
+        <div class="onb-opt" data-field="equipment" data-val="dumbbells"><span class="onb-opt-icon">🏠</span><div class="onb-opt-text"><strong>Haltères seulement</strong><span>Banc + haltères · pas de barre · pas de machines</span></div></div>
+        <div class="onb-opt" data-field="equipment" data-val="bodyweight"><span class="onb-opt-icon">🤸</span><div class="onb-opt-text"><strong>Poids du corps</strong><span>Barre de traction · sol · pas d'équipement lourd</span></div></div>
       </div>
-      <div class="onb-nav">
-        <button class="btn-secondary" onclick="onbBack()">Retour</button>
-        <button class="btn-primary" onclick="onbNext()" style="flex:2">Suivant</button>
-      </div>
+      <div class="onb-nav"><button class="btn-secondary" id="btn-back-4">Retour</button><button class="btn-primary" id="btn-next-4" style="flex:2">Suivant</button></div>
     </div>
-
-    <!-- STEP 5 : Contraintes -->
     <div class="onb-step" id="onb-step-5">
       <div class="onb-question">As-tu des contraintes ?</div>
-      <div class="onb-hint">Plusieurs choix possibles. Ces contraintes seront prises en compte dans ton programme.</div>
+      <div class="onb-hint">Plusieurs choix possibles.</div>
       <div class="onb-options">
-        <div class="onb-opt" onclick="toggleConstraint(this,'none')" data-val="none" id="cst-none">
-          <span class="onb-opt-icon">✅</span>
-          <div class="onb-opt-text"><strong>Aucune contrainte</strong><span>Programme complet sans restriction</span></div>
-        </div>
-        <div class="onb-opt" onclick="toggleConstraint(this,'no_cardio')" data-val="no_cardio">
-          <span class="onb-opt-icon">🚫</span>
-          <div class="onb-opt-text"><strong>Pas de cardio</strong><span>Uniquement de la musculation pure</span></div>
-        </div>
-        <div class="onb-opt" onclick="toggleConstraint(this,'upper_only')" data-val="upper_only">
-          <span class="onb-opt-icon">💪</span>
-          <div class="onb-opt-text"><strong>Haut du corps uniquement</strong><span>Blessure ou contrainte aux jambes</span></div>
-        </div>
-        <div class="onb-opt" onclick="toggleConstraint(this,'lower_only')" data-val="lower_only">
-          <span class="onb-opt-icon">🦵</span>
-          <div class="onb-opt-text"><strong>Bas du corps uniquement</strong><span>Blessure ou contrainte au haut du corps</span></div>
-        </div>
+        <div class="onb-opt" id="cst-none"><span class="onb-opt-icon">✅</span><div class="onb-opt-text"><strong>Aucune contrainte</strong><span>Programme complet sans restriction</span></div></div>
+        <div class="onb-opt" data-cst="no_cardio"><span class="onb-opt-icon">🚫</span><div class="onb-opt-text"><strong>Pas de cardio</strong><span>Uniquement de la musculation pure</span></div></div>
+        <div class="onb-opt" data-cst="upper_only"><span class="onb-opt-icon">💪</span><div class="onb-opt-text"><strong>Haut du corps uniquement</strong><span>Blessure ou contrainte aux jambes</span></div></div>
+        <div class="onb-opt" data-cst="lower_only"><span class="onb-opt-icon">🦵</span><div class="onb-opt-text"><strong>Bas du corps uniquement</strong><span>Blessure ou contrainte au haut du corps</span></div></div>
       </div>
-      <div class="onb-nav">
-        <button class="btn-secondary" onclick="onbBack()">Retour</button>
-        <button class="btn-primary" onclick="generateProgram()" style="flex:2" id="btn-generate">Générer mon programme 🚀</button>
-      </div>
+      <div class="onb-nav"><button class="btn-secondary" id="btn-back-5">Retour</button><button class="btn-primary" id="btn-generate">Générer mon programme 🚀</button></div>
     </div>
-
-    <!-- STEP 6 : Génération -->
     <div class="onb-step" id="onb-step-6">
       <div style="text-align:center;padding:40px 20px">
         <div style="font-size:48px;margin-bottom:16px" id="gen-icon">⚙️</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--acc);margin-bottom:8px" id="gen-title">Création du programme</div>
-        <div style="font-size:13px;color:var(--mut);line-height:1.6" id="gen-desc">Sélection des exercices adaptés à ton profil...</div>
+        <div style="font-size:13px;color:var(--mut);line-height:1.6" id="gen-desc">Sélection des exercices...</div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     APP PRINCIPALE
-══════════════════════════════════════ -->
+<!-- APP -->
 <div id="app-screen" class="screen">
-
   <div class="app-header">
     <h1>💪 Muscu</h1>
     <div class="header-right">
-      <div class="prog-switcher" id="prog-switcher-btn" onclick="goPage(7,document.querySelectorAll('.nav-btn')[7])">📋 Mon Programme</div>
-      <button class="btn-logout" onclick="doLogout()">✕</button>
+      <div class="prog-switcher" id="prog-switcher-btn">📋 Programme</div>
+      <button class="btn-logout" id="btn-logout">✕</button>
     </div>
   </div>
-
   <div class="app-content" id="app-content">
-
-    <!-- Les pages de séances sont générées dynamiquement -->
     <div id="workout-pages"></div>
-
-    <!-- PAGE SEMAINE -->
     <div class="page" id="page-semaine">
-      <div class="page-head">
-        <span class="page-num">↗</span>
-        <div class="page-info"><h2>Semaine Type</h2><p>Organisation de ton programme actif</p></div>
-      </div>
+      <div class="page-head"><span class="page-num">↗</span><div class="page-info"><h2>Semaine Type</h2><p>Organisation de ton programme actif</p></div></div>
       <div id="week-overview"></div>
       <div class="tips-box">
         <h3>Principes Clés</h3>
@@ -457,951 +329,961 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
         </div>
       </div>
     </div>
-
-    <!-- PAGE DASHBOARD -->
     <div class="page" id="page-dashboard">
-      <div class="page-head">
-        <span class="page-num" style="color:var(--blue)">📊</span>
-        <div class="page-info"><h2 style="color:var(--blue)">Progression</h2><p>Tes performances dans le temps</p></div>
-      </div>
+      <div class="page-head"><span class="page-num" style="color:var(--blue)">📊</span><div class="page-info"><h2 style="color:var(--blue)">Progression</h2><p>Tes performances dans le temps</p></div></div>
       <div class="dash-stats" id="dash-stats"></div>
       <div class="dash-filters" id="dash-filters"></div>
       <div id="dash-charts"></div>
     </div>
-
-    <!-- PAGE BIBLIOTHÈQUE -->
     <div class="page" id="page-library">
-      <div class="page-head">
-        <span class="page-num" style="color:var(--orange)">📚</span>
-        <div class="page-info"><h2 style="color:var(--orange)">Bibliothèque</h2><p>67 exercices · filtrer et ajouter à ton programme</p></div>
-      </div>
-      <input class="lib-search" type="search" placeholder="🔍 Rechercher un exercice..." id="lib-search" oninput="filterLibrary()">
+      <div class="page-head"><span class="page-num" style="color:var(--orange)">📚</span><div class="page-info"><h2 style="color:var(--orange)">Bibliothèque</h2><p>67 exercices · filtrer et explorer</p></div></div>
+      <input class="lib-search" type="search" placeholder="🔍 Rechercher un exercice..." id="lib-search">
       <div class="lib-filters">
-        <div class="lib-filter on" onclick="setLibFilter('all',this)">Tous</div>
-        <div class="lib-filter" onclick="setLibFilter('push',this)">Push</div>
-        <div class="lib-filter" onclick="setLibFilter('pull',this)">Pull</div>
-        <div class="lib-filter" onclick="setLibFilter('legs',this)">Legs</div>
-        <div class="lib-filter" onclick="setLibFilter('core',this)">Core</div>
-        <div class="lib-filter" onclick="setLibFilter('beginner',this)">Débutant</div>
-        <div class="lib-filter" onclick="setLibFilter('intermediate',this)">Intermédiaire</div>
-        <div class="lib-filter" onclick="setLibFilter('advanced',this)">Avancé</div>
+        <div class="lib-filter on" data-filter="all">Tous</div>
+        <div class="lib-filter" data-filter="push">Push</div>
+        <div class="lib-filter" data-filter="pull">Pull</div>
+        <div class="lib-filter" data-filter="legs">Legs</div>
+        <div class="lib-filter" data-filter="core">Core</div>
+        <div class="lib-filter" data-filter="beginner">Débutant</div>
+        <div class="lib-filter" data-filter="intermediate">Intermédiaire</div>
+        <div class="lib-filter" data-filter="advanced">Avancé</div>
       </div>
       <div class="lib-grid" id="lib-grid"></div>
     </div>
-
-    <!-- PAGE PROGRAMMES -->
     <div class="page" id="page-programs">
       <div class="prog-page-head">
-        <div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--acc)">Mes Programmes</div>
-          <div style="font-size:10px;color:var(--mut)">Switcher ou créer un nouveau programme</div>
-        </div>
+        <div><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--acc)">Mes Programmes</div><div style="font-size:10px;color:var(--mut)">Switcher ou créer un nouveau programme</div></div>
       </div>
       <div class="prog-list" id="prog-list"></div>
-      <button class="btn-new-prog" onclick="startNewProgram()">+ Créer un nouveau programme</button>
+      <button class="btn-new-prog" id="btn-new-prog">+ Créer un nouveau programme</button>
     </div>
-
   </div>
-
   <div class="sync-status" id="sync-status"></div>
-
   <nav class="bottom-nav" id="bottom-nav"></nav>
-
 </div>
 
-<!-- ══════════════════════════════════════
-     MODAL REMPLACEMENT EXERCICE
-══════════════════════════════════════ -->
+<!-- MODAL REMPLACEMENT -->
 <div class="modal-overlay" id="replace-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" id="btn-close-modal">✕</button>
     <div class="modal-title">Remplacer l'exercice</div>
-    <div class="modal-sub" id="replace-modal-sub">Choisir un exercice du même groupe musculaire</div>
+    <div class="modal-sub" id="replace-modal-sub"></div>
     <div id="replace-modal-list"></div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// SUPABASE
-// ══════════════════════════════════════════════
+(function() {
+
+// ── SUPABASE ──
 const SUPABASE_URL = 'https://rqymrinhvihfrlgklkfi.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_w4SuqbeyssghagcxDmN1jw_hz3WYIKO';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: { persistSession: true }
 });
-// ══════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════
-let currentUser    = null;
-let activeProgram  = null;
-let allPrograms    = [];
-let libraryCache   = [];
-let libFilter      = 'all';
-let dashFilter     = 'all';
-let onbProfile     = { objective:'', level:'', days_per_week:0, equipment:'', constraints:[] };
-let onbStep        = 1;
-let existingChoice = null;
-let replaceTarget  = null; // {dayIdx, exIdx, category}
 
-// ══════════════════════════════════════════════
-// AUTH
-// ══════════════════════════════════════════════
-function toggleAuth(){
-  const lf=document.getElementById('login-form'), rf=document.getElementById('register-form');
-  lf.style.display = lf.style.display==='none'?'flex':'none';
-  rf.style.display = rf.style.display==='none'?'flex':'none';
-  lf.style.flexDirection='column'; rf.style.flexDirection='column';
-}
-async function doLogin(){
-  const email=document.getElementById('login-email').value.trim();
-  const pwd=document.getElementById('login-pwd').value;
-  document.getElementById('login-error').textContent='';
-  if(!email||!pwd){document.getElementById('login-error').textContent='Remplis tous les champs.';return;}
-  const {error}=await sb.auth.signInWithPassword({email,password:pwd});
-  if(error) document.getElementById('login-error').textContent=error.message;
-}
-async function doRegister(){
-  const email=document.getElementById('reg-email').value.trim();
-  const pwd=document.getElementById('reg-pwd').value;
-  document.getElementById('reg-error').textContent='';
-  if(!email||!pwd){document.getElementById('reg-error').textContent='Remplis tous les champs.';return;}
-  if(pwd.length<6){document.getElementById('reg-error').textContent='Mot de passe trop court.';return;}
-  const {error}=await sb.auth.signUp({email,password:pwd});
-  if(error) document.getElementById('reg-error').textContent=error.message;
-}
-async function doLogout(){ await sb.auth.signOut(); location.reload(); }
+// ── STATE ──
+let currentUser   = null;
+let activeProgram = null;
+let allPrograms   = [];
+let libraryCache  = [];
+let libFilter     = 'all';
+let dashFilter    = 'all';
+let onbProfile    = { objective:'', level:'', days_per_week:0, equipment:'', constraints:[] };
+let onbStep       = 1;
+let existingChoice= null;
+let replaceTarget = null;
 
-sb.auth.onAuthStateChange(async(event,session)=>{
-  if(session?.user){
-    currentUser=session.user;
-    showScreen('loading');
+// ── UTILS ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(name + '-screen').classList.add('active');
+}
+
+function setSyncStatus(msg, cls) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'sync-status' + (cls ? ' ' + cls : '');
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// ── AUTH LISTENERS ──
+document.getElementById('btn-login').addEventListener('click', async function() {
+  const email = document.getElementById('login-email').value.trim();
+  const pwd   = document.getElementById('login-pwd').value;
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  if (!email || !pwd) { errEl.textContent = 'Remplis tous les champs.'; return; }
+  this.textContent = 'Connexion...';
+  this.disabled = true;
+  const { error } = await sb.auth.signInWithPassword({ email, password: pwd });
+  this.textContent = 'Se connecter';
+  this.disabled = false;
+  if (error) errEl.textContent = error.message;
+});
+
+document.getElementById('btn-register').addEventListener('click', async function() {
+  const email = document.getElementById('reg-email').value.trim();
+  const pwd   = document.getElementById('reg-pwd').value;
+  const errEl = document.getElementById('reg-error');
+  errEl.textContent = '';
+  if (!email || !pwd) { errEl.textContent = 'Remplis tous les champs.'; return; }
+  if (pwd.length < 6) { errEl.textContent = 'Mot de passe trop court (min 6 caractères).'; return; }
+  this.textContent = 'Création...';
+  this.disabled = true;
+  const { error } = await sb.auth.signUp({ email, password: pwd });
+  this.textContent = 'Créer le compte';
+  this.disabled = false;
+  if (error) errEl.textContent = error.message;
+  else errEl.style.color = 'var(--green)', errEl.textContent = 'Compte créé ! Connexion en cours...';
+});
+
+document.getElementById('toggle-auth').addEventListener('click', function() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('register-form').style.display = 'flex';
+  document.getElementById('register-form').style.flexDirection = 'column';
+});
+
+document.getElementById('toggle-auth-2').addEventListener('click', function() {
+  document.getElementById('register-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'flex';
+  document.getElementById('login-form').style.flexDirection = 'column';
+});
+
+document.getElementById('btn-logout').addEventListener('click', async function() {
+  await sb.auth.signOut();
+  location.reload();
+});
+
+document.getElementById('prog-switcher-btn').addEventListener('click', function() {
+  goPage('programs', document.querySelector('.nav-btn.prg'));
+});
+
+document.getElementById('btn-close-modal').addEventListener('click', closeModal);
+document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
+
+// ── AUTH STATE ──
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (session && session.user) {
+    currentUser = session.user;
     await initUserSession();
   }
 });
 
-// ══════════════════════════════════════════════
-// INIT SESSION
-// ══════════════════════════════════════════════
-async function initUserSession(){
-  // Charger la bibliothèque
-  const {data:lib}=await sb.from('exercises_library').select('*').order('name');
-  libraryCache = lib||[];
+// ── INIT ──
+async function initUserSession() {
+  const { data: lib } = await sb.from('exercises_library').select('*').order('name');
+  libraryCache = lib || [];
 
-  // Vérifier si l'utilisateur a un profil
-  const {data:profile}=await sb.from('user_profiles').select('*').eq('user_id',currentUser.id).single();
+  const { data: profile } = await sb.from('user_profiles').select('*').eq('user_id', currentUser.id).single();
 
-  if(!profile){
-    // Vérifier s'il a des données existantes
-    const {data:logs}=await sb.from('workout_logs').select('id').eq('user_id',currentUser.id).limit(1);
-    const isExisting = logs && logs.length>0;
-    startOnboarding(isExisting);
+  if (!profile) {
+    const { data: logs } = await sb.from('workout_logs').select('id').eq('user_id', currentUser.id).limit(1);
+    startOnboarding(logs && logs.length > 0);
   } else {
-    // Profil existant → charger le programme actif
     await loadActiveProgram();
     showScreen('app');
     initAppUI();
   }
 }
 
-// ══════════════════════════════════════════════
-// ONBOARDING
-// ══════════════════════════════════════════════
-function startOnboarding(isExisting){
+// ── ONBOARDING ──
+function startOnboarding(isExisting) {
   showScreen('onboarding');
-  if(isExisting){
-    onbStep=0;
+  buildOnbDots(isExisting ? 7 : 5);
+  if (isExisting) {
+    onbStep = 0;
     showOnbStep(0);
-    buildOnbDots(6, isExisting);
   } else {
-    onbStep=1;
+    onbStep = 1;
     showOnbStep(1);
-    buildOnbDots(5, false);
   }
 }
 
-function buildOnbDots(total, withStep0){
-  const el=document.getElementById('onb-dots');
-  el.innerHTML='';
-  const n = withStep0 ? total+1 : total;
-  for(let i=0;i<n;i++){
-    const d=document.createElement('div');
-    d.className='onb-dot';
-    d.id=`onb-dot-${i}`;
+function buildOnbDots(n) {
+  const el = document.getElementById('onb-dots');
+  el.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('div');
+    d.className = 'onb-dot';
     el.appendChild(d);
   }
   updateOnbDots();
 }
 
-function updateOnbDots(){
-  document.querySelectorAll('.onb-dot').forEach((d,i)=>{
-    d.classList.remove('active','done');
-    if(i===onbStep) d.classList.add('active');
-    else if(i<onbStep) d.classList.add('done');
+function updateOnbDots() {
+  const dots = document.querySelectorAll('.onb-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === onbStep) d.classList.add('active');
+    else if (i < onbStep) d.classList.add('done');
   });
 }
 
-function showOnbStep(n){
-  document.querySelectorAll('.onb-step').forEach(s=>s.classList.remove('active'));
-  const el=document.getElementById(`onb-step-${n}`);
-  if(el) el.classList.add('active');
-  onbStep=n;
+function showOnbStep(n) {
+  document.querySelectorAll('.onb-step').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('onb-step-' + n);
+  if (el) el.classList.add('active');
+  onbStep = n;
   updateOnbDots();
 }
 
-function selectExisting(choice){
-  existingChoice=choice;
-  document.querySelectorAll('#onb-step-0 .onb-opt').forEach(o=>o.classList.remove('selected'));
-  document.getElementById(`opt-${choice}`).classList.add('selected');
-}
+// Existing user choice
+document.getElementById('opt-keep').addEventListener('click', function() {
+  existingChoice = 'keep';
+  document.querySelectorAll('#onb-step-0 .onb-opt').forEach(o => o.classList.remove('selected'));
+  this.classList.add('selected');
+});
 
-async function confirmExistingChoice(){
-  if(!existingChoice){alert('Choisis une option.');return;}
-  if(existingChoice==='keep'){
-    // Migrer le programme PPL existant
-    await migrateExistingProgram();
-  } else {
-    showOnbStep(1);
+document.getElementById('opt-new').addEventListener('click', function() {
+  existingChoice = 'new';
+  document.querySelectorAll('#onb-step-0 .onb-opt').forEach(o => o.classList.remove('selected'));
+  this.classList.add('selected');
+});
+
+document.getElementById('btn-confirm-existing').addEventListener('click', async function() {
+  if (!existingChoice) { alert('Choisis une option.'); return; }
+  if (existingChoice === 'keep') await migrateExistingProgram();
+  else showOnbStep(1);
+});
+
+// Option selection
+document.querySelectorAll('.onb-opt[data-field]').forEach(el => {
+  el.addEventListener('click', function() {
+    const field = this.dataset.field;
+    const val   = this.dataset.val;
+    document.querySelectorAll('.onb-opt[data-field="' + field + '"]').forEach(o => o.classList.remove('selected'));
+    this.classList.add('selected');
+    onbProfile[field] = val;
+  });
+});
+
+// Days selection
+document.querySelectorAll('.onb-day-btn').forEach(el => {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('.onb-day-btn').forEach(b => b.classList.remove('selected'));
+    this.classList.add('selected');
+    onbProfile.days_per_week = parseInt(this.dataset.days);
+  });
+});
+
+// Constraints
+document.getElementById('cst-none').addEventListener('click', function() {
+  document.querySelectorAll('#onb-step-5 .onb-opt').forEach(o => o.classList.remove('selected'));
+  this.classList.add('selected');
+  onbProfile.constraints = [];
+});
+
+document.querySelectorAll('.onb-opt[data-cst]').forEach(el => {
+  el.addEventListener('click', function() {
+    document.getElementById('cst-none').classList.remove('selected');
+    this.classList.toggle('selected');
+    const val = this.dataset.cst;
+    const idx = onbProfile.constraints.indexOf(val);
+    if (idx > -1) onbProfile.constraints.splice(idx, 1);
+    else onbProfile.constraints.push(val);
+  });
+});
+
+// Nav buttons
+document.getElementById('btn-back-1').addEventListener('click', () => showOnbStep(onbStep - 1));
+document.getElementById('btn-back-2').addEventListener('click', () => showOnbStep(onbStep - 1));
+document.getElementById('btn-back-3').addEventListener('click', () => showOnbStep(onbStep - 1));
+document.getElementById('btn-back-4').addEventListener('click', () => showOnbStep(onbStep - 1));
+document.getElementById('btn-back-5').addEventListener('click', () => showOnbStep(onbStep - 1));
+
+document.getElementById('btn-next-1').addEventListener('click', function() {
+  if (!onbProfile.objective) { alert('Choisis un objectif.'); return; }
+  showOnbStep(2);
+});
+document.getElementById('btn-next-2').addEventListener('click', function() {
+  if (!onbProfile.level) { alert('Choisis ton niveau.'); return; }
+  showOnbStep(3);
+});
+document.getElementById('btn-next-3').addEventListener('click', function() {
+  if (!onbProfile.days_per_week) { alert('Choisis le nombre de jours.'); return; }
+  if (onbProfile.equipment === 'bodyweight' && onbProfile.days_per_week > 3) {
+    alert('Avec le poids du corps, on recommande 3 jours max. Ajusté automatiquement.');
+    onbProfile.days_per_week = 3;
   }
-}
+  showOnbStep(4);
+});
+document.getElementById('btn-next-4').addEventListener('click', function() {
+  if (!onbProfile.equipment) { alert('Choisis ton équipement.'); return; }
+  showOnbStep(5);
+});
 
-async function migrateExistingProgram(){
+document.getElementById('btn-generate').addEventListener('click', generateProgram);
+
+// ── MIGRATE EXISTING ──
+async function migrateExistingProgram() {
   showOnbStep(6);
-  document.getElementById('gen-title').textContent='Migration en cours';
-  document.getElementById('gen-desc').textContent='On migre ton programme Push/Pull/Legs...';
+  document.getElementById('gen-title').textContent = 'Migration en cours';
+  document.getElementById('gen-desc').textContent  = 'Migration de ton programme Push/Pull/Legs...';
 
-  // Créer profil par défaut
   await sb.from('user_profiles').upsert({
-    user_id:currentUser.id, objective:'mass', level:'intermediate',
-    days_per_week:5, equipment:'gym', constraints:['no_cardio']
+    user_id: currentUser.id, objective: 'mass', level: 'intermediate',
+    days_per_week: 5, equipment: 'gym', constraints: ['no_cardio']
   });
 
-  // Créer le programme PPL
-  const pplStructure = buildPPLProgram();
+  const structure = buildPPLProgram('gym', 'mass', 'intermediate', 5);
   await sb.from('programs').insert({
-    user_id:currentUser.id,
-    name:'Push / Pull / Legs — Masse',
-    is_active:true,
-    structure:pplStructure
+    user_id: currentUser.id,
+    name: 'Push / Pull / Legs — Masse',
+    is_active: true,
+    structure: structure
   });
 
-  document.getElementById('gen-icon').textContent='✅';
-  document.getElementById('gen-title').textContent='Migration réussie !';
-  document.getElementById('gen-desc').textContent='Ton programme et toutes tes données sont préservés.';
-  await new Promise(r=>setTimeout(r,1500));
+  document.getElementById('gen-icon').textContent  = '✅';
+  document.getElementById('gen-title').textContent = 'Migration réussie !';
+  document.getElementById('gen-desc').textContent  = 'Ton programme et toutes tes données sont préservés.';
+
+  await new Promise(r => setTimeout(r, 1500));
   await loadActiveProgram();
   showScreen('app');
   initAppUI();
 }
 
-function selectOpt(el, field, val){
-  const parent=el.closest('.onb-step');
-  parent.querySelectorAll('.onb-opt').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  onbProfile[field]=val;
-}
-
-function selectDays(el, n){
-  document.querySelectorAll('.onb-day-btn').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-  onbProfile.days_per_week=n;
-}
-
-function toggleConstraint(el, val){
-  if(val==='none'){
-    document.querySelectorAll('#onb-step-5 .onb-opt').forEach(o=>o.classList.remove('selected'));
-    el.classList.add('selected');
-    onbProfile.constraints=[];
-    return;
-  }
-  document.getElementById('cst-none').classList.remove('selected');
-  el.classList.toggle('selected');
-  const idx=onbProfile.constraints.indexOf(val);
-  if(idx>-1) onbProfile.constraints.splice(idx,1);
-  else onbProfile.constraints.push(val);
-}
-
-function onbNext(){
-  const step=onbStep;
-  if(step===1 && !onbProfile.objective){alert('Choisis un objectif.');return;}
-  if(step===2 && !onbProfile.level){alert('Choisis ton niveau.');return;}
-  if(step===3 && !onbProfile.days_per_week){alert('Choisis le nombre de jours.');return;}
-  if(step===4 && !onbProfile.equipment){alert('Choisis ton équipement.');return;}
-  // Avertissement bodyweight + 5-6 jours
-  if(step===4 && onbProfile.equipment==='bodyweight' && onbProfile.days_per_week>3){
-    alert('⚠️ Avec le poids du corps uniquement, on recommande 3 jours max. On ajuste automatiquement à 3 jours.');
-    onbProfile.days_per_week=3;
-  }
-  showOnbStep(step+1);
-}
-function onbBack(){ if(onbStep>1) showOnbStep(onbStep-1); }
-
-async function generateProgram(){
+// ── GENERATE PROGRAM ──
+async function generateProgram() {
   showOnbStep(6);
-  const p=onbProfile;
+  const p = onbProfile;
 
-  // Sauvegarder le profil
   await sb.from('user_profiles').upsert({
-    user_id:currentUser.id,
-    objective:p.objective,
-    level:p.level,
-    days_per_week:p.days_per_week,
-    equipment:p.equipment,
-    constraints:p.constraints
+    user_id: currentUser.id,
+    objective: p.objective, level: p.level,
+    days_per_week: p.days_per_week, equipment: p.equipment,
+    constraints: p.constraints
   });
 
-  // Générer la structure du programme
-  document.getElementById('gen-desc').textContent='Sélection des exercices...';
+  document.getElementById('gen-desc').textContent = 'Sélection des exercices...';
   const structure = buildProgramFromProfile(p);
+  const progName  = buildProgramName(p);
 
-  document.getElementById('gen-desc').textContent='Sauvegarde du programme...';
-  const progName = buildProgramName(p);
-  await sb.from('programs').update({is_active:false}).eq('user_id',currentUser.id);
+  document.getElementById('gen-desc').textContent = 'Sauvegarde...';
+  await sb.from('programs').update({ is_active: false }).eq('user_id', currentUser.id);
   await sb.from('programs').insert({
-    user_id:currentUser.id, name:progName, is_active:true, structure
+    user_id: currentUser.id, name: progName, is_active: true, structure: structure
   });
 
-  document.getElementById('gen-icon').textContent='✅';
-  document.getElementById('gen-title').textContent='Programme créé !';
-  document.getElementById('gen-desc').textContent=progName;
-  await new Promise(r=>setTimeout(r,1500));
+  document.getElementById('gen-icon').textContent  = '✅';
+  document.getElementById('gen-title').textContent = 'Programme créé !';
+  document.getElementById('gen-desc').textContent  = progName;
+
+  await new Promise(r => setTimeout(r, 1500));
   await loadActiveProgram();
   showScreen('app');
   initAppUI();
 }
 
-// ══════════════════════════════════════════════
-// ALGORITHME DE RECOMMANDATION
-// ══════════════════════════════════════════════
-function buildProgramFromProfile(p){
-  const {objective, level, days_per_week, equipment, constraints} = p;
-  const d=days_per_week, eq=equipment, lv=level, obj=objective;
-
-  // Poids du corps : max 3 jours
-  if(eq==='bodyweight') return buildBodyweightProgram(d>3?3:d);
-  // Haut du corps seulement
-  if(constraints.includes('upper_only')) return buildUpperOnlyProgram(d, eq);
-  // Bas du corps seulement
-  if(constraints.includes('lower_only')) return buildLowerOnlyProgram(d, eq);
-
-  // Full Body : 2-3 jours débutant, ou 2-3 jours tous niveaux
-  if(d<=3 || lv==='beginner') return buildFullBodyProgram(d, eq, obj);
-
-  // Upper/Lower : 4 jours
-  if(d===4) return buildUpperLowerProgram(eq, obj, lv);
-
-  // PPL : 5-6 jours
-  if(d>=5) return buildPPLProgram(eq, obj, lv, d);
-
-  return buildFullBodyProgram(d, eq, obj);
+// ── ALGORITHM ──
+function buildProgramFromProfile(p) {
+  const { objective: obj, level: lv, days_per_week: d, equipment: eq, constraints: cst } = p;
+  if (eq === 'bodyweight') return buildBodyweightProgram(Math.min(d, 3));
+  if (cst.includes('upper_only')) return buildUpperOnlyProgram(d, eq);
+  if (cst.includes('lower_only')) return buildLowerOnlyProgram(d, eq);
+  if (d <= 3 || lv === 'beginner') return buildFullBodyProgram(d, eq, obj);
+  if (d === 4) return buildUpperLowerProgram(eq, obj, lv);
+  return buildPPLProgram(eq, obj, lv, d);
 }
 
-function buildProgramName(p){
-  const obj={mass:'Masse',cut:'Sèche',fitness:'Forme'}[p.objective];
-  const lv={beginner:'Débutant',intermediate:'Intermédiaire',advanced:'Avancé'}[p.level];
-  return `Programme ${obj} — ${lv} · ${p.days_per_week}j/sem`;
+function buildProgramName(p) {
+  const obj = { mass: 'Masse', cut: 'Sèche', fitness: 'Forme' }[p.objective] || '';
+  const lv  = { beginner: 'Débutant', intermediate: 'Intermédiaire', advanced: 'Avancé' }[p.level] || '';
+  return 'Programme ' + obj + ' — ' + lv + ' · ' + p.days_per_week + 'j/sem';
 }
 
-// ── Sélecteur d'exercices depuis la bibliothèque ──
-function getExercises(filters){
-  return libraryCache.filter(e=>{
-    if(filters.category && e.category!==filters.category) return false;
-    if(filters.muscle && e.muscle_primary!==filters.muscle && !(e.muscles_secondary||[]).includes(filters.muscle)) return false;
-    if(filters.level){
-      const lvMap={beginner:0,intermediate:1,advanced:2};
-      if(lvMap[e.level]>lvMap[filters.level]) return false;
+function getExercises(filters) {
+  return libraryCache.filter(e => {
+    if (filters.category && e.category !== filters.category) return false;
+    if (filters.level) {
+      const m = { beginner: 0, intermediate: 1, advanced: 2 };
+      if (m[e.level] > m[filters.level]) return false;
     }
-    if(filters.equipment){
-      const eq=filters.equipment;
-      if(eq==='bodyweight') return (e.equipment||[]).some(x=>['bodyweight','pull_up_bar','dip_bar'].includes(x));
-      if(eq==='dumbbells') return (e.equipment||[]).some(x=>['dumbbells','bodyweight','bench','pull_up_bar'].includes(x));
-      return true; // gym = tout
+    if (filters.equipment) {
+      const eq = filters.equipment;
+      if (eq === 'bodyweight') return (e.equipment || []).some(x => ['bodyweight','pull_up_bar','dip_bar'].includes(x));
+      if (eq === 'dumbbells')  return (e.equipment || []).some(x => ['dumbbells','bodyweight','bench','pull_up_bar'].includes(x));
     }
     return true;
   });
 }
 
-function pick(exercises, n){
-  return exercises.slice(0,n).map(e=>({
-    id:e.id, name:e.name, sets:4, rep:e.reps_recommended||'8-12',
-    desc:e.description, muscle:e.muscle_primary, category:e.category
+function pick(exercises, n) {
+  return exercises.slice(0, n).map(e => ({
+    id: e.id, name: e.name, sets: 4,
+    rep: e.reps_recommended || '8-12',
+    desc: e.description, category: e.category
   }));
 }
 
-// ── Templates ──
-function buildPPLProgram(eq='gym', obj='mass', lv='intermediate', days=5){
-  const push=pick(getExercises({category:'push',equipment:eq,level:lv}),5);
-  const pull=pick(getExercises({category:'pull',equipment:eq,level:lv}),5);
-  const legs=pick(getExercises({category:'legs',equipment:eq,level:lv}),5);
-  const days_arr=[
-    {key:'J1',label:'Push',subtitle:'Poitrine · Épaules · Triceps',exercises:push},
-    {key:'J2',label:'Pull',subtitle:'Dos · Biceps',exercises:pull},
-    {key:'J3',label:'Legs',subtitle:'Quadriceps · Ischios · Mollets',exercises:legs},
-    {key:'J4',label:'Push Bis',subtitle:'Épaules · Poitrine',exercises:push.slice(0,4)},
-    {key:'J5',label:'Pull Bis',subtitle:'Dos · Force · Biceps',exercises:pull.slice(0,4)},
+function buildPPLProgram(eq, obj, lv, days) {
+  const push = pick(getExercises({ category: 'push', equipment: eq, level: lv }), 5);
+  const pull = pick(getExercises({ category: 'pull', equipment: eq, level: lv }), 5);
+  const legs = pick(getExercises({ category: 'legs', equipment: eq, level: lv }), 5);
+  const arr = [
+    { key: 'J1', label: 'Push',     subtitle: 'Poitrine · Épaules · Triceps', exercises: push },
+    { key: 'J2', label: 'Pull',     subtitle: 'Dos · Biceps',                 exercises: pull },
+    { key: 'J3', label: 'Legs',     subtitle: 'Quadriceps · Ischios · Mollets',exercises: legs },
+    { key: 'J4', label: 'Push Bis', subtitle: 'Épaules · Poitrine',           exercises: push.slice(0, 4) },
+    { key: 'J5', label: 'Pull Bis', subtitle: 'Dos · Force · Biceps',         exercises: pull.slice(0, 4) },
   ];
-  if(days===6) days_arr.push({key:'J6',label:'Legs Bis',subtitle:'Quadriceps · Ischios',exercises:legs.slice(0,4)});
-  return {type:'PPL', days:days_arr};
+  if (days >= 6) arr.push({ key: 'J6', label: 'Legs Bis', subtitle: 'Quadriceps · Ischios', exercises: legs.slice(0, 4) });
+  return { type: 'PPL', days: arr };
 }
 
-function buildUpperLowerProgram(eq='gym', obj='mass', lv='intermediate'){
-  const upper_push=pick(getExercises({category:'push',equipment:eq,level:lv}),3);
-  const upper_pull=pick(getExercises({category:'pull',equipment:eq,level:lv}),3);
-  const lower=pick(getExercises({category:'legs',equipment:eq,level:lv}),5);
-  const upper=[...upper_push,...upper_pull];
-  return {type:'UpperLower', days:[
-    {key:'J1',label:'Upper A',subtitle:'Force · Haut du corps',exercises:upper},
-    {key:'J2',label:'Lower A',subtitle:'Force · Bas du corps',exercises:lower},
-    {key:'J3',label:'Upper B',subtitle:'Volume · Haut du corps',exercises:upper},
-    {key:'J4',label:'Lower B',subtitle:'Volume · Bas du corps',exercises:lower},
+function buildUpperLowerProgram(eq, obj, lv) {
+  const upper = [
+    ...pick(getExercises({ category: 'push', equipment: eq, level: lv }), 3),
+    ...pick(getExercises({ category: 'pull', equipment: eq, level: lv }), 3)
+  ];
+  const lower = pick(getExercises({ category: 'legs', equipment: eq, level: lv }), 5);
+  return { type: 'UpperLower', days: [
+    { key: 'J1', label: 'Upper A', subtitle: 'Force · Haut du corps',   exercises: upper },
+    { key: 'J2', label: 'Lower A', subtitle: 'Force · Bas du corps',    exercises: lower },
+    { key: 'J3', label: 'Upper B', subtitle: 'Volume · Haut du corps',  exercises: upper },
+    { key: 'J4', label: 'Lower B', subtitle: 'Volume · Bas du corps',   exercises: lower },
   ]};
 }
 
-function buildFullBodyProgram(days=3, eq='gym', obj='mass'){
-  const push=pick(getExercises({category:'push',equipment:eq}),2);
-  const pull=pick(getExercises({category:'pull',equipment:eq}),2);
-  const legs=pick(getExercises({category:'legs',equipment:eq}),2);
-  const fullbody=[...push,...pull,...legs];
-  const days_arr=[];
-  for(let i=0;i<days;i++){
-    days_arr.push({key:`J${i+1}`,label:`Full Body ${String.fromCharCode(65+i)}`,subtitle:'Corps complet',exercises:fullbody});
+function buildFullBodyProgram(days, eq, obj) {
+  const exs = [
+    ...pick(getExercises({ category: 'push', equipment: eq }), 2),
+    ...pick(getExercises({ category: 'pull', equipment: eq }), 2),
+    ...pick(getExercises({ category: 'legs', equipment: eq }), 2),
+  ];
+  const arr = [];
+  for (let i = 0; i < days; i++) {
+    arr.push({ key: 'J' + (i+1), label: 'Full Body ' + String.fromCharCode(65+i), subtitle: 'Corps complet', exercises: exs });
   }
-  return {type:'FullBody', days:days_arr};
+  return { type: 'FullBody', days: arr };
 }
 
-function buildBodyweightProgram(days=3){
-  const bw=pick(getExercises({equipment:'bodyweight'}),6);
-  return buildFullBodyProgram(days,'bodyweight','fitness');
+function buildBodyweightProgram(days) {
+  return buildFullBodyProgram(days, 'bodyweight', 'fitness');
 }
 
-function buildUpperOnlyProgram(days=4, eq='gym'){
-  const push=pick(getExercises({category:'push',equipment:eq}),4);
-  const pull=pick(getExercises({category:'pull',equipment:eq}),4);
-  const days_arr=[];
-  for(let i=0;i<days;i++){
-    const exs = i%2===0 ? push : pull;
-    days_arr.push({key:`J${i+1}`,label:i%2===0?'Push':'Pull',subtitle:'Haut du corps',exercises:exs});
+function buildUpperOnlyProgram(days, eq) {
+  const push = pick(getExercises({ category: 'push', equipment: eq }), 4);
+  const pull = pick(getExercises({ category: 'pull', equipment: eq }), 4);
+  const arr = [];
+  for (let i = 0; i < days; i++) {
+    arr.push({ key: 'J'+(i+1), label: i%2===0?'Push':'Pull', subtitle: 'Haut du corps', exercises: i%2===0?push:pull });
   }
-  return {type:'UpperOnly', days:days_arr};
+  return { type: 'UpperOnly', days: arr };
 }
 
-function buildLowerOnlyProgram(days=3, eq='gym'){
-  const legs=pick(getExercises({category:'legs',equipment:eq}),6);
-  const days_arr=[];
-  for(let i=0;i<days;i++){
-    days_arr.push({key:`J${i+1}`,label:`Legs ${String.fromCharCode(65+i)}`,subtitle:'Bas du corps',exercises:legs});
+function buildLowerOnlyProgram(days, eq) {
+  const legs = pick(getExercises({ category: 'legs', equipment: eq }), 6);
+  const arr = [];
+  for (let i = 0; i < days; i++) {
+    arr.push({ key: 'J'+(i+1), label: 'Legs '+String.fromCharCode(65+i), subtitle: 'Bas du corps', exercises: legs });
   }
-  return {type:'LowerOnly', days:days_arr};
+  return { type: 'LowerOnly', days: arr };
 }
 
-// ══════════════════════════════════════════════
-// LOAD ACTIVE PROGRAM
-// ══════════════════════════════════════════════
-async function loadActiveProgram(){
-  const {data}=await sb.from('programs').select('*').eq('user_id',currentUser.id).eq('is_active',true).single();
-  activeProgram=data;
-  const {data:all}=await sb.from('programs').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
-  allPrograms=all||[];
+// ── LOAD PROGRAM ──
+async function loadActiveProgram() {
+  const { data } = await sb.from('programs').select('*').eq('user_id', currentUser.id).eq('is_active', true).single();
+  activeProgram = data;
+  const { data: all } = await sb.from('programs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+  allPrograms = all || [];
 }
 
-// ══════════════════════════════════════════════
-// APP UI
-// ══════════════════════════════════════════════
-function initAppUI(){
-  if(!activeProgram) return;
+// ── APP UI ──
+function initAppUI() {
+  if (!activeProgram) return;
   buildNavBar();
   buildWorkoutPages();
   buildWeekOverview();
-  buildLibraryPage();
-  buildProgramsPage();
-  // Dates par défaut
-  const today=new Date().toISOString().slice(0,10);
-  document.querySelectorAll('input[type=date]').forEach(i=>{ if(!i.value) i.value=today; });
-  // Afficher prog actif dans le switcher
-  const sw=document.getElementById('prog-switcher-btn');
-  if(sw) sw.textContent=`📋 ${activeProgram.name.split('—')[0].trim()}`;
+  renderLibrary();
+  const sw = document.getElementById('prog-switcher-btn');
+  if (sw) sw.textContent = '📋 ' + (activeProgram.name.split('—')[0].trim());
 }
 
-function buildNavBar(){
-  const nav=document.getElementById('bottom-nav');
-  const days=activeProgram.structure.days;
-  const navItems=[
-    ...days.map((d,i)=>({icon:['💪','🏋️','🦵','🔥','⚡','🎯'][i]||'💪',label:d.label,page:i})),
-    {icon:'📅',label:'Semaine',page:'semaine'},
-    {icon:'📊',label:'Stats',page:'dashboard',cls:'dash'},
-    {icon:'📚',label:'Biblio',page:'library',cls:'lib'},
+function buildNavBar() {
+  const nav  = document.getElementById('bottom-nav');
+  const days = activeProgram.structure.days;
+  const icons = ['💪','🏋️','🦵','🔥','⚡','🎯'];
+  const items = [
+    ...days.map((d, i) => ({ icon: icons[i] || '💪', label: d.label, page: i, cls: '' })),
+    { icon: '📅', label: 'Semaine',  page: 'semaine',   cls: '' },
+    { icon: '📊', label: 'Stats',    page: 'dashboard', cls: 'dash' },
+    { icon: '📚', label: 'Biblio',   page: 'library',   cls: 'lib' },
+    { icon: '📋', label: 'Prog.',    page: 'programs',  cls: 'prg' },
   ];
-  nav.style.gridTemplateColumns=`repeat(${navItems.length},1fr)`;
-  nav.innerHTML='';
-  navItems.forEach((item,i)=>{
-    const btn=document.createElement('button');
-    btn.className=`nav-btn${item.cls?' '+item.cls:''}${i===0?' on':''}`;
-    btn.innerHTML=`<span class="ni">${item.icon}</span><span class="nl">${item.label}</span>`;
-    btn.onclick=()=>goPage(item.page, btn);
+  nav.style.gridTemplateColumns = 'repeat(' + items.length + ',1fr)';
+  nav.innerHTML = '';
+  items.forEach((item, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn' + (item.cls ? ' ' + item.cls : '') + (i === 0 ? ' on' : '');
+    btn.innerHTML = '<span class="ni">' + item.icon + '</span><span class="nl">' + item.label + '</span>';
+    btn.addEventListener('click', () => goPage(item.page, btn));
     nav.appendChild(btn);
   });
 }
 
-function buildWorkoutPages(){
-  const container=document.getElementById('workout-pages');
-  container.innerHTML='';
-  const days=activeProgram.structure.days;
-  days.forEach((day,dayIdx)=>{
-    const page=document.createElement('div');
-    page.className=`page${dayIdx===0?' on':''}`;
-    page.id=`page-${dayIdx}`;
-    page.innerHTML=`
-      <div class="page-head">
-        <span class="page-num">0${dayIdx+1}</span>
-        <div class="page-info"><h2>${day.label}</h2><p>${day.subtitle||''}</p></div>
-      </div>
-      <div class="session-bar">
-        <label>📅 Séance du</label>
-        <input type="date" id="date-${dayIdx}">
-      </div>
-      <div id="ex-grid-${dayIdx}"></div>`;
+function buildWorkoutPages() {
+  const container = document.getElementById('workout-pages');
+  container.innerHTML = '';
+  activeProgram.structure.days.forEach((day, dayIdx) => {
+    const page = document.createElement('div');
+    page.className = 'page' + (dayIdx === 0 ? ' on' : '');
+    page.id = 'page-' + dayIdx;
+    page.innerHTML =
+      '<div class="page-head">' +
+        '<span class="page-num">0' + (dayIdx+1) + '</span>' +
+        '<div class="page-info"><h2>' + day.label + '</h2><p>' + (day.subtitle||'') + '</p></div>' +
+      '</div>' +
+      '<div class="session-bar">' +
+        '<label>📅 Séance du</label>' +
+        '<input type="date" id="date-' + dayIdx + '" value="' + today() + '">' +
+      '</div>' +
+      '<div id="ex-grid-' + dayIdx + '"></div>';
     container.appendChild(page);
-    day.exercises.forEach(ex=>{
-      document.getElementById(`ex-grid-${dayIdx}`).appendChild(
-        buildExCard(ex, day.key, dayIdx)
-      );
-    });
+    const grid = document.getElementById('ex-grid-' + dayIdx);
+    day.exercises.forEach(ex => grid.appendChild(buildExCard(ex, day.key, dayIdx)));
   });
 }
 
-function buildWeekOverview(){
-  const el=document.getElementById('week-overview');
-  if(!activeProgram){el.innerHTML='';return;}
-  const days=activeProgram.structure.days;
-  const dayNames=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-  let html=`<div class="week-grid">`;
-  for(let i=0;i<7;i++){
-    const d=days[i];
-    if(d) html+=`<div class="wday"><div class="wn">${dayNames[i]}</div><div class="wt">${d.label}</div></div>`;
-    else html+=`<div class="wday rest"><div class="wn">${dayNames[i]}</div><div class="wt">Repos</div></div>`;
+function buildWeekOverview() {
+  const el = document.getElementById('week-overview');
+  if (!activeProgram) { el.innerHTML = ''; return; }
+  const days = activeProgram.structure.days;
+  const names = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+  let html = '<div class="week-grid">';
+  for (let i = 0; i < 7; i++) {
+    const d = days[i];
+    if (d) html += '<div class="wday"><div class="wn">' + names[i] + '</div><div class="wt">' + d.label + '</div></div>';
+    else   html += '<div class="wday rest"><div class="wn">' + names[i] + '</div><div class="wt">Repos</div></div>';
   }
-  html+=`</div>`;
-  el.innerHTML=html;
+  html += '</div>';
+  el.innerHTML = html;
 }
 
-function goPage(page, btn){
-  // Cacher toutes les pages
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
-  if(btn) btn.classList.add('on');
-  document.getElementById('app-content').scrollTop=0;
-
-  if(typeof page==='number'){
-    document.getElementById(`page-${page}`)?.classList.add('on');
+function goPage(page, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  document.getElementById('app-content').scrollTop = 0;
+  if (typeof page === 'number') {
+    const el = document.getElementById('page-' + page);
+    if (el) el.classList.add('on');
   } else {
-    document.getElementById(`page-${page}`)?.classList.add('on');
-    if(page==='dashboard') loadDashboard();
-    if(page==='library') renderLibrary();
-    if(page==='programs') buildProgramsPage();
+    const el = document.getElementById('page-' + page);
+    if (el) el.classList.add('on');
+    if (page === 'dashboard') loadDashboard();
+    if (page === 'library')   renderLibrary();
+    if (page === 'programs')  buildProgramsPage();
   }
 }
 
-// ══════════════════════════════════════════════
-// EXERCISE CARD
-// ══════════════════════════════════════════════
-function buildExCard(ex, dayKey, dayIdx){
-  const card=document.createElement('div');
-  card.className='ex-card';
-  card.id=`card-${ex.id}-${dayIdx}`;
-  const numSets=ex.sets||4;
-  let setsHTML='';
-  for(let s=1;s<=numSets;s++){
-    setsHTML+=`<div class="set-row">
-      <span class="set-num">Série ${s}</span>
-      <input type="number" id="w-${ex.id}-${dayIdx}-${s}" inputmode="decimal" placeholder="kg" min="0" max="500" step="0.5">
-      <span class="set-sep">×</span>
-      <input type="number" id="r-${ex.id}-${dayIdx}-${s}" inputmode="numeric" placeholder="reps" min="0" max="100" step="1">
-    </div>`;
+// ── EXERCISE CARD ──
+function buildExCard(ex, dayKey, dayIdx) {
+  const card = document.createElement('div');
+  card.className = 'ex-card';
+  const n = ex.sets || 4;
+  let setsHTML = '';
+  for (let s = 1; s <= n; s++) {
+    setsHTML +=
+      '<div class="set-row">' +
+        '<span class="set-num">Série ' + s + '</span>' +
+        '<input type="number" id="w-' + ex.id + '-' + dayIdx + '-' + s + '" inputmode="decimal" placeholder="kg" min="0" max="500" step="0.5">' +
+        '<span class="set-sep">×</span>' +
+        '<input type="number" id="r-' + ex.id + '-' + dayIdx + '-' + s + '" inputmode="numeric" placeholder="reps" min="0" max="100" step="1">' +
+      '</div>';
   }
-  card.innerHTML=`
-    <div class="ex-vis">${getSVG(ex.id)}</div>
-    <div class="ex-body">
-      <div class="ex-name">${ex.name}</div>
-      <div class="ex-meta">
-        <span class="ex-pill">${numSets} séries</span>
-        <span class="ex-pill">${ex.rep||'8-12'} reps</span>
-        <button class="ex-replace-btn" onclick="openReplaceModal('${ex.id}',${dayIdx},'${ex.category||''}')">Remplacer</button>
-      </div>
-      <p class="ex-desc">${ex.desc||''}</p>
-      <div class="log-section">
-        <div class="log-title">📝 Enregistrer</div>
-        <div class="set-rows">${setsHTML}</div>
-        <div class="log-actions">
-          <button class="btn-save" onclick="saveLog('${ex.id}','${dayKey}',${numSets},${dayIdx})">💾 Sauvegarder</button>
-          <button class="btn-hist" onclick="toggleHist('${ex.id}-${dayIdx}')">Historique</button>
-        </div>
-        <div class="save-confirm" id="conf-${ex.id}-${dayIdx}">✓ Sauvegardé</div>
-        <div class="hist-panel" id="hist-${ex.id}-${dayIdx}"></div>
-      </div>
-    </div>`;
+  card.innerHTML =
+    '<div class="ex-vis">' + getSVG(ex.id) + '</div>' +
+    '<div class="ex-body">' +
+      '<div class="ex-name">' + ex.name + '</div>' +
+      '<div class="ex-meta">' +
+        '<span class="ex-pill">' + n + ' séries</span>' +
+        '<span class="ex-pill">' + (ex.rep||'8-12') + ' reps</span>' +
+        '<button class="ex-replace-btn" data-exid="' + ex.id + '" data-dayidx="' + dayIdx + '" data-cat="' + (ex.category||'') + '">Remplacer</button>' +
+      '</div>' +
+      '<p class="ex-desc">' + (ex.desc||'') + '</p>' +
+      '<div class="log-section">' +
+        '<div class="log-title">📝 Enregistrer</div>' +
+        '<div class="set-rows">' + setsHTML + '</div>' +
+        '<div class="log-actions">' +
+          '<button class="btn-save" data-exid="' + ex.id + '" data-daykey="' + dayKey + '" data-sets="' + n + '" data-dayidx="' + dayIdx + '">💾 Sauvegarder</button>' +
+          '<button class="btn-hist" data-uid="' + ex.id + '-' + dayIdx + '">Historique</button>' +
+        '</div>' +
+        '<div class="save-confirm" id="conf-' + ex.id + '-' + dayIdx + '">✓ Sauvegardé</div>' +
+        '<div class="hist-panel" id="hist-' + ex.id + '-' + dayIdx + '"></div>' +
+      '</div>' +
+    '</div>';
+
+  card.querySelector('.btn-save').addEventListener('click', function() {
+    saveLog(this.dataset.exid, this.dataset.daykey, parseInt(this.dataset.sets), parseInt(this.dataset.dayidx));
+  });
+  card.querySelector('.btn-hist').addEventListener('click', function() {
+    toggleHist(this.dataset.uid);
+  });
+  card.querySelector('.ex-replace-btn').addEventListener('click', function() {
+    openReplaceModal(this.dataset.exid, parseInt(this.dataset.dayidx), this.dataset.cat);
+  });
   return card;
 }
 
-// ══════════════════════════════════════════════
-// SAVE / HISTORY
-// ══════════════════════════════════════════════
-async function saveLog(exId, dayKey, numSets, dayIdx){
-  if(!currentUser) return;
-  const dateVal=document.getElementById(`date-${dayIdx}`)?.value||new Date().toISOString().slice(0,10);
-  let exName=exId;
-  libraryCache.forEach(e=>{ if(e.id===exId) exName=e.name; });
-  activeProgram?.structure.days.forEach(d=>d.exercises.forEach(e=>{ if(e.id===exId) exName=e.name; }));
-  const rows=[];
-  for(let s=1;s<=numSets;s++){
-    const w=parseFloat(document.getElementById(`w-${exId}-${dayIdx}-${s}`)?.value)||0;
-    const r=parseInt(document.getElementById(`r-${exId}-${dayIdx}-${s}`)?.value)||0;
-    if(w>0||r>0) rows.push({user_id:currentUser.id,exercise_id:exId,exercise_name:exName,day_key:dayKey,session_date:dateVal,set_number:s,weight_kg:w,reps:r});
+// ── SAVE LOG ──
+async function saveLog(exId, dayKey, numSets, dayIdx) {
+  if (!currentUser) return;
+  const dateVal = document.getElementById('date-' + dayIdx)?.value || today();
+  let exName = exId;
+  libraryCache.forEach(e => { if (e.id === exId) exName = e.name; });
+  activeProgram?.structure.days.forEach(d => d.exercises.forEach(e => { if (e.id === exId) exName = e.name; }));
+
+  const rows = [];
+  for (let s = 1; s <= numSets; s++) {
+    const w = parseFloat(document.getElementById('w-' + exId + '-' + dayIdx + '-' + s)?.value) || 0;
+    const r = parseInt(document.getElementById('r-' + exId + '-' + dayIdx + '-' + s)?.value)   || 0;
+    if (w > 0 || r > 0) rows.push({
+      user_id: currentUser.id, exercise_id: exId, exercise_name: exName,
+      day_key: dayKey, session_date: dateVal, set_number: s, weight_kg: w, reps: r
+    });
   }
-  if(!rows.length){alert('Remplis au moins une série.');return;}
-  setSyncStatus('Sauvegarde...','syncing');
-  await sb.from('workout_logs').delete().eq('user_id',currentUser.id).eq('exercise_id',exId).eq('session_date',dateVal);
-  const {error}=await sb.from('workout_logs').insert(rows);
-  if(error){setSyncStatus('Erreur','error');return;}
-  setSyncStatus('✓ Synchronisé','');
-  setTimeout(()=>setSyncStatus('',''),2000);
-  const conf=document.getElementById(`conf-${exId}-${dayIdx}`);
-  if(conf){conf.classList.add('show');setTimeout(()=>conf.classList.remove('show'),2500);}
-  const hist=document.getElementById(`hist-${exId}-${dayIdx}`);
-  if(hist?.classList.contains('open')) loadHist(exId, dayIdx);
+  if (!rows.length) { alert('Remplis au moins une série.'); return; }
+  setSyncStatus('Sauvegarde...', 'syncing');
+  await sb.from('workout_logs').delete().eq('user_id', currentUser.id).eq('exercise_id', exId).eq('session_date', dateVal);
+  const { error } = await sb.from('workout_logs').insert(rows);
+  if (error) { setSyncStatus('Erreur', 'error'); return; }
+  setSyncStatus('✓ Synchronisé', '');
+  setTimeout(() => setSyncStatus('', ''), 2000);
+  const conf = document.getElementById('conf-' + exId + '-' + dayIdx);
+  if (conf) { conf.classList.add('show'); setTimeout(() => conf.classList.remove('show'), 2500); }
+  const hist = document.getElementById('hist-' + exId + '-' + dayIdx);
+  if (hist && hist.classList.contains('open')) loadHist(exId, dayIdx, hist);
 }
 
-async function toggleHist(uid){
-  const panel=document.getElementById(`hist-${uid}`);
-  if(!panel) return;
-  if(panel.classList.contains('open')){panel.classList.remove('open');return;}
+// ── HISTORY ──
+async function toggleHist(uid) {
+  const panel = document.getElementById('hist-' + uid);
+  if (!panel) return;
+  if (panel.classList.contains('open')) { panel.classList.remove('open'); return; }
   panel.classList.add('open');
-  const [exId, dayIdx]=uid.split('-').reduce((a,c,i,arr)=>i<arr.length-1?[a[0]+c,arr[arr.length-1]]:[a[0],c],[['','']]);
-  // Reconstituer exId correctement
-  const parts=uid.split('-');
-  const di=parts[parts.length-1];
-  const eid=parts.slice(0,parts.length-1).join('-');
-  loadHist(eid, di, panel);
+  const parts  = uid.split('-');
+  const dayIdx = parts[parts.length - 1];
+  const exId   = parts.slice(0, parts.length - 1).join('-');
+  loadHist(exId, dayIdx, panel);
 }
 
-async function loadHist(exId, dayIdx, panel){
-  if(!panel) panel=document.getElementById(`hist-${exId}-${dayIdx}`);
-  if(!panel||!currentUser) return;
-  panel.innerHTML='<div style="font-size:11px;color:var(--mut)">Chargement...</div>';
-  const {data}=await sb.from('workout_logs').select('*').eq('user_id',currentUser.id).eq('exercise_id',exId).order('session_date',{ascending:false}).order('set_number',{ascending:true});
-  if(!data?.length){panel.innerHTML='<p class="hist-empty">Aucune donnée encore.</p>';return;}
-  const byDate={};
-  data.forEach(r=>{if(!byDate[r.session_date])byDate[r.session_date]=[];byDate[r.session_date].push(r);});
-  let bestEst=0;
-  data.forEach(r=>{const e=r.weight_kg*(1+r.reps/30);if(e>bestEst)bestEst=e;});
-  let html='';
-  Object.entries(byDate).forEach(([date,rows])=>{
-    const dd=date.split('-').reverse().join('/');
-    const sh=rows.map(r=>{
-      if(!r.weight_kg&&!r.reps)return'';
-      const est=r.weight_kg*(1+r.reps/30);
-      const pr=Math.abs(est-bestEst)<0.5&&est>0;
-      return`<span class="hist-set${pr?' pr':''}">${r.weight_kg}kg×${r.reps}</span>`;
+async function loadHist(exId, dayIdx, panel) {
+  if (!panel) panel = document.getElementById('hist-' + exId + '-' + dayIdx);
+  if (!panel || !currentUser) return;
+  panel.innerHTML = '<div style="font-size:11px;color:var(--mut)">Chargement...</div>';
+  const { data } = await sb.from('workout_logs').select('*')
+    .eq('user_id', currentUser.id).eq('exercise_id', exId)
+    .order('session_date', { ascending: false }).order('set_number', { ascending: true });
+  if (!data || !data.length) { panel.innerHTML = '<p class="hist-empty">Aucune donnée encore.</p>'; return; }
+  const byDate = {};
+  data.forEach(r => { if (!byDate[r.session_date]) byDate[r.session_date] = []; byDate[r.session_date].push(r); });
+  let bestEst = 0;
+  data.forEach(r => { const e = r.weight_kg * (1 + r.reps / 30); if (e > bestEst) bestEst = e; });
+  let html = '';
+  Object.entries(byDate).forEach(([date, rows]) => {
+    const dd = date.split('-').reverse().join('/');
+    const sh = rows.map(r => {
+      if (!r.weight_kg && !r.reps) return '';
+      const est = r.weight_kg * (1 + r.reps / 30);
+      const pr  = Math.abs(est - bestEst) < 0.5 && est > 0;
+      return '<span class="hist-set' + (pr ? ' pr' : '') + '">' + r.weight_kg + 'kg×' + r.reps + '</span>';
     }).join('');
-    if(!sh)return;
-    html+=`<div class="hist-entry"><span class="hist-date">${dd}</span><div class="hist-sets">${sh}</div><button class="hist-del" onclick="deleteLog('${exId}','${date}',${dayIdx})">✕</button></div>`;
+    if (!sh) return;
+    html +=
+      '<div class="hist-entry">' +
+        '<span class="hist-date">' + dd + '</span>' +
+        '<div class="hist-sets">' + sh + '</div>' +
+        '<button class="hist-del" data-exid="' + exId + '" data-date="' + date + '" data-dayidx="' + dayIdx + '">✕</button>' +
+      '</div>';
   });
-  panel.innerHTML=html||'<p class="hist-empty">Aucune donnée.</p>';
+  panel.innerHTML = html || '<p class="hist-empty">Aucune donnée.</p>';
+  panel.querySelectorAll('.hist-del').forEach(btn => {
+    btn.addEventListener('click', function() {
+      deleteLog(this.dataset.exid, this.dataset.date, this.dataset.dayidx);
+    });
+  });
 }
 
-async function deleteLog(exId,date,dayIdx){
-  if(!confirm(`Supprimer la séance du ${date.split('-').reverse().join('/')} ?`))return;
-  await sb.from('workout_logs').delete().eq('user_id',currentUser.id).eq('exercise_id',exId).eq('session_date',date);
-  loadHist(exId,dayIdx);
+async function deleteLog(exId, date, dayIdx) {
+  if (!confirm('Supprimer la séance du ' + date.split('-').reverse().join('/') + ' ?')) return;
+  await sb.from('workout_logs').delete().eq('user_id', currentUser.id).eq('exercise_id', exId).eq('session_date', date);
+  const panel = document.getElementById('hist-' + exId + '-' + dayIdx);
+  if (panel) loadHist(exId, dayIdx, panel);
 }
 
-// ══════════════════════════════════════════════
-// REPLACE EXERCISE
-// ══════════════════════════════════════════════
-function openReplaceModal(exId, dayIdx, category){
-  replaceTarget={exId, dayIdx, category};
-  const modal=document.getElementById('replace-modal');
-  const sub=document.getElementById('replace-modal-sub');
-  const list=document.getElementById('replace-modal-list');
-  sub.textContent=`Remplacer dans le Jour ${dayIdx+1}`;
-  // Exercices du même groupe
-  const candidates=libraryCache.filter(e=>e.category===category && e.id!==exId).slice(0,15);
-  list.innerHTML=candidates.map(e=>`
-    <div class="lib-card" style="margin-bottom:8px">
-      <div class="lib-card-vis">${getSVG(e.id,true)}</div>
-      <div class="lib-card-body">
-        <div class="lib-card-name">${e.name}</div>
-        <div class="lib-card-muscle">${e.muscle_primary}</div>
-        <div class="lib-card-tags">
-          <span class="lib-tag lib-tag-${e.category}">${e.category}</span>
-          <span class="lib-tag lib-tag-${e.level}">${{beginner:'Débutant',intermediate:'Intermédiaire',advanced:'Avancé'}[e.level]||e.level}</span>
-        </div>
-        <button class="lib-add-btn" onclick="confirmReplace('${e.id}','${e.name}','${(e.description||'').replace(/'/g,"\\'")}','${e.category}','${e.reps_recommended||'8-12'}')">Choisir</button>
-      </div>
-    </div>`).join('');
-  modal.classList.add('open');
+// ── REPLACE EXERCISE ──
+function openReplaceModal(exId, dayIdx, category) {
+  replaceTarget = { exId, dayIdx, category };
+  document.getElementById('replace-modal-sub').textContent = 'Remplacer dans Jour ' + (dayIdx + 1);
+  const candidates = libraryCache.filter(e => e.category === category && e.id !== exId).slice(0, 15);
+  const list = document.getElementById('replace-modal-list');
+  list.innerHTML = '';
+  candidates.forEach(e => {
+    const div = document.createElement('div');
+    div.className = 'lib-card';
+    div.style.marginBottom = '8px';
+    div.innerHTML =
+      '<div class="lib-card-vis">' + getSVG(e.id) + '</div>' +
+      '<div class="lib-card-body">' +
+        '<div class="lib-card-name">' + e.name + '</div>' +
+        '<div class="lib-card-muscle">' + e.muscle_primary + '</div>' +
+        '<div class="lib-card-tags">' +
+          '<span class="lib-tag lib-tag-' + e.category + '">' + e.category + '</span>' +
+          '<span class="lib-tag lib-tag-' + e.level + '">' + ({ beginner:'Débutant', intermediate:'Intermédiaire', advanced:'Avancé' }[e.level]||e.level) + '</span>' +
+        '</div>' +
+        '<button class="lib-add-btn" style="background:var(--acc);color:#0f0f0f;border:none;border-radius:4px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;margin-top:6px">Choisir</button>' +
+      '</div>';
+    div.querySelector('.lib-add-btn').addEventListener('click', () => confirmReplace(e));
+    list.appendChild(div);
+  });
+  document.getElementById('replace-modal').classList.add('open');
 }
 
-async function confirmReplace(newId, newName, newDesc, newCat, newRep){
-  if(!replaceTarget||!activeProgram)return;
-  const {dayIdx}=replaceTarget;
-  const day=activeProgram.structure.days[dayIdx];
-  const exIdx=day.exercises.findIndex(e=>e.id===replaceTarget.exId);
-  if(exIdx===-1)return;
-  day.exercises[exIdx]={id:newId,name:newName,desc:newDesc,category:newCat,rep:newRep,sets:day.exercises[exIdx].sets,muscle:newId};
-  // Sauvegarder dans Supabase
-  await sb.from('programs').update({structure:activeProgram.structure}).eq('id',activeProgram.id);
+async function confirmReplace(e) {
+  if (!replaceTarget || !activeProgram) return;
+  const { dayIdx } = replaceTarget;
+  const day = activeProgram.structure.days[dayIdx];
+  const idx = day.exercises.findIndex(ex => ex.id === replaceTarget.exId);
+  if (idx === -1) return;
+  day.exercises[idx] = {
+    id: e.id, name: e.name, desc: e.description || '',
+    category: e.category, rep: e.reps_recommended || '8-12',
+    sets: day.exercises[idx].sets
+  };
+  await sb.from('programs').update({ structure: activeProgram.structure }).eq('id', activeProgram.id);
   closeModal();
-  // Reconstruire les pages
   buildWorkoutPages();
-  const today=new Date().toISOString().slice(0,10);
-  document.querySelectorAll('input[type=date]').forEach(i=>{ if(!i.value) i.value=today; });
-  setSyncStatus('✓ Programme mis à jour','');
-  setTimeout(()=>setSyncStatus('',''),2000);
+  setSyncStatus('✓ Programme mis à jour', '');
+  setTimeout(() => setSyncStatus('', ''), 2000);
 }
 
-function closeModal(){ document.getElementById('replace-modal').classList.remove('open'); replaceTarget=null; }
+function closeModal() {
+  document.getElementById('replace-modal').classList.remove('open');
+  replaceTarget = null;
+}
 
-// ══════════════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════════════
-function setFilter(f, btn){
-  dashFilter=f;
-  document.querySelectorAll('.flt-btn').forEach(b=>b.classList.remove('on'));
+// ── DASHBOARD ──
+document.getElementById('dash-filters').addEventListener('click', function(e) {
+  const btn = e.target.closest('.flt-btn');
+  if (!btn) return;
+  dashFilter = btn.dataset.filter || 'all';
+  document.querySelectorAll('.flt-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   loadDashboard();
-}
+});
 
-async function loadDashboard(){
-  if(!currentUser)return;
-  setSyncStatus('Chargement...','syncing');
-  const {data}=await sb.from('workout_logs').select('*').eq('user_id',currentUser.id).order('session_date',{ascending:true});
-  setSyncStatus('','');
-  const all=data||[];
-  const filtered=dashFilter==='all'?all:all.filter(r=>r.day_key===dashFilter);
+async function loadDashboard() {
+  if (!currentUser) return;
+  setSyncStatus('Chargement...', 'syncing');
+  const { data } = await sb.from('workout_logs').select('*').eq('user_id', currentUser.id).order('session_date', { ascending: true });
+  setSyncStatus('', '');
+  const all      = data || [];
+  const filtered = dashFilter === 'all' ? all : all.filter(r => r.day_key === dashFilter);
 
-  // Stats globales
-  const statsEl=document.getElementById('dash-stats');
-  const dates=new Set(all.map(r=>`${r.day_key}:${r.session_date}`));
-  const totalSets=all.filter(r=>r.weight_kg||r.reps).length;
-  const totalKg=all.reduce((a,r)=>a+(r.weight_kg*r.reps),0);
-  const exDone=new Set(all.map(r=>r.exercise_id)).size;
-  statsEl.innerHTML=`
-    <div class="stat-card"><div class="stat-label">Séances</div><div class="stat-val">${dates.size}</div><div class="stat-sub">enregistrées</div></div>
-    <div class="stat-card"><div class="stat-label">Séries</div><div class="stat-val">${totalSets}</div><div class="stat-sub">toutes séances</div></div>
-    <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-val">${totalKg>=1000?(Math.round(totalKg/100)/10)+'t':Math.round(totalKg)+'kg'}</div><div class="stat-sub">soulevé</div></div>
-    <div class="stat-card"><div class="stat-label">Exercices</div><div class="stat-val">${exDone}</div><div class="stat-sub">suivis</div></div>`;
+  const statsEl  = document.getElementById('dash-stats');
+  const dates    = new Set(all.map(r => r.day_key + ':' + r.session_date));
+  const totalSets= all.filter(r => r.weight_kg || r.reps).length;
+  const totalKg  = all.reduce((a, r) => a + (r.weight_kg * r.reps), 0);
+  const exDone   = new Set(all.map(r => r.exercise_id)).size;
+  statsEl.innerHTML =
+    '<div class="stat-card"><div class="stat-label">Séances</div><div class="stat-val">' + dates.size + '</div><div class="stat-sub">enregistrées</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Séries</div><div class="stat-val">' + totalSets + '</div><div class="stat-sub">toutes séances</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Volume</div><div class="stat-val">' + (totalKg >= 1000 ? (Math.round(totalKg/100)/10) + 't' : Math.round(totalKg) + 'kg') + '</div><div class="stat-sub">soulevé</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Exercices</div><div class="stat-val">' + exDone + '</div><div class="stat-sub">suivis</div></div>';
 
-  // Filtres dynamiques selon le programme actif
-  const filtersEl=document.getElementById('dash-filters');
-  const dayKeys=activeProgram?.structure.days.map(d=>d.key)||[];
-  filtersEl.innerHTML=`<button class="flt-btn${dashFilter==='all'?' on':''}" onclick="setFilter('all',this)">Tout</button>`+
-    dayKeys.map(k=>`<button class="flt-btn${dashFilter===k?' on':''}" onclick="setFilter('${k}',this)">${k}</button>`).join('');
+  const filtersEl = document.getElementById('dash-filters');
+  const dayKeys   = (activeProgram?.structure.days || []).map(d => d.key);
+  filtersEl.innerHTML =
+    '<button class="flt-btn' + (dashFilter==='all'?' on':'') + '" data-filter="all">Tout</button>' +
+    dayKeys.map(k => '<button class="flt-btn' + (dashFilter===k?' on':'') + '" data-filter="' + k + '">' + k + '</button>').join('');
 
-  // Graphiques
-  const chartsEl=document.getElementById('dash-charts');
-  if(!filtered.length){
-    chartsEl.innerHTML=`<div class="dash-empty"><span class="dash-empty-icon">📭</span>Aucune donnée pour le moment.<br>Commence à sauvegarder tes séries !</div>`;
+  const chartsEl = document.getElementById('dash-charts');
+  if (!filtered.length) {
+    chartsEl.innerHTML = '<div class="dash-empty"><span class="dash-empty-icon">📭</span>Aucune donnée.<br>Commence à sauvegarder tes séries !</div>';
     return;
   }
-  const byEx={};
-  filtered.forEach(r=>{if(!byEx[r.exercise_id])byEx[r.exercise_id]=[];byEx[r.exercise_id].push(r);});
-  let html='';
-  Object.entries(byEx).forEach(([id,rows])=>{
-    const byDate={};
-    rows.forEach(r=>{
-      if(!byDate[r.session_date])byDate[r.session_date]={maxW:0,vol:0,best1rm:0};
-      byDate[r.session_date].maxW=Math.max(byDate[r.session_date].maxW,r.weight_kg||0);
-      byDate[r.session_date].vol+=(r.weight_kg||0)*(r.reps||0);
-      const est=(r.weight_kg||0)*(1+(r.reps||0)/30);
-      byDate[r.session_date].best1rm=Math.max(byDate[r.session_date].best1rm,est);
+  const byEx = {};
+  filtered.forEach(r => { if (!byEx[r.exercise_id]) byEx[r.exercise_id] = []; byEx[r.exercise_id].push(r); });
+  let html = '';
+  Object.entries(byEx).forEach(([id, rows]) => {
+    const byDate = {};
+    rows.forEach(r => {
+      if (!byDate[r.session_date]) byDate[r.session_date] = { maxW: 0, vol: 0, best1rm: 0 };
+      byDate[r.session_date].maxW    = Math.max(byDate[r.session_date].maxW, r.weight_kg || 0);
+      byDate[r.session_date].vol    += (r.weight_kg || 0) * (r.reps || 0);
+      byDate[r.session_date].best1rm = Math.max(byDate[r.session_date].best1rm, (r.weight_kg||0) * (1 + (r.reps||0)/30));
     });
-    const pts=Object.entries(byDate).sort((a,b)=>a[0].localeCompare(b[0])).map(([d,v])=>({date:d,...v}));
-    const pr=Math.max(...pts.map(p=>p.best1rm));
-    const exName=rows[0].exercise_name||id;
-    const dk=rows[0].day_key||'';
-    html+=`<div class="ex-chart-block">
-      <div class="ex-chart-head">
-        <span class="ex-chart-name">${exName}</span>
-        <span class="ex-chart-day">${dk}</span>
-        ${pr>0?`<span class="ex-chart-pr">🏆 PR ~${Math.round(pr*10)/10}kg</span>`:''}
-      </div>
-      <div class="chart-area">${buildChart(pts)}</div>
-    </div>`;
+    const pts    = Object.entries(byDate).sort((a,b) => a[0].localeCompare(b[0])).map(([d,v]) => ({ date: d, ...v }));
+    const pr     = Math.max(...pts.map(p => p.best1rm));
+    const exName = rows[0].exercise_name || id;
+    const dk     = rows[0].day_key || '';
+    html +=
+      '<div class="ex-chart-block">' +
+        '<div class="ex-chart-head">' +
+          '<span class="ex-chart-name">' + exName + '</span>' +
+          '<span class="ex-chart-day">' + dk + '</span>' +
+          (pr > 0 ? '<span class="ex-chart-pr">🏆 PR ~' + Math.round(pr*10)/10 + 'kg</span>' : '') +
+        '</div>' +
+        '<div class="chart-area">' + buildChart(pts) + '</div>' +
+      '</div>';
   });
-  chartsEl.innerHTML=html;
+  chartsEl.innerHTML = html;
 }
 
-function buildChart(pts){
-  const vals=pts.map(p=>p.maxW).filter(v=>v>0);
-  if(!vals.length)return'<p style="font-size:11px;color:#444;padding:8px 0;font-style:italic">Sauvegarde un poids pour voir le graphique.</p>';
+function buildChart(pts) {
+  const vals = pts.map(p => p.maxW).filter(v => v > 0);
+  if (!vals.length) return '<p style="font-size:11px;color:#444;padding:8px 0;font-style:italic">Sauvegarde un poids pour voir le graphique.</p>';
   const W=320,H=110,pL=36,pR=10,pT=12,pB=26,iW=W-pL-pR,iH=H-pT-pB;
-  const minV=Math.min(...vals)*.9,maxV=Math.max(...vals)*1.1,range=maxV-minV||1;
-  const n=pts.length;
-  const ptCoords=pts.map((p,i)=>({x:pL+(n>1?i*iW/(n-1):iW/2),y:p.maxW>0?pT+iH-((p.maxW-minV)/range)*iH:null,p})).filter(c=>c.y!==null);
-  if(!ptCoords.length)return'';
-  let grid='',labels='';
-  [0,.5,1].forEach(t=>{
-    const yy=pT+t*iH,val=maxV-t*range;
-    grid+=`<line x1="${pL}" y1="${yy.toFixed(1)}" x2="${W-pR}" y2="${yy.toFixed(1)}" stroke="#222" stroke-width="1"/>`;
-    labels+=`<text x="${pL-3}" y="${(yy+4).toFixed(1)}" text-anchor="end" font-size="8" fill="#555" font-family="Inter,sans-serif">${Math.round(val)}</text>`;
+  const minV = Math.min(...vals) * .9;
+  const maxV = Math.max(...vals) * 1.1;
+  const range = maxV - minV || 1;
+  const n = pts.length;
+  const ptCoords = pts.map((p, i) => ({
+    x: pL + (n > 1 ? i * iW / (n-1) : iW/2),
+    y: p.maxW > 0 ? pT + iH - ((p.maxW - minV) / range) * iH : null,
+    p
+  })).filter(c => c.y !== null);
+  if (!ptCoords.length) return '';
+  let grid = '', labels = '';
+  [0, .5, 1].forEach(t => {
+    const yy = pT + t * iH, val = maxV - t * range;
+    grid   += '<line x1="' + pL + '" y1="' + yy.toFixed(1) + '" x2="' + (W-pR) + '" y2="' + yy.toFixed(1) + '" stroke="#222" stroke-width="1"/>';
+    labels += '<text x="' + (pL-3) + '" y="' + (yy+4).toFixed(1) + '" text-anchor="end" font-size="8" fill="#555" font-family="Inter,sans-serif">' + Math.round(val) + '</text>';
   });
-  const path=ptCoords.map((c,i)=>`${i?'L':'M'}${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(' ');
-  const area=`M${ptCoords[0].x} ${pT+iH} ${ptCoords.map(c=>`L${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(' ')} L${ptCoords[ptCoords.length-1].x} ${pT+iH} Z`;
-  const maxW=Math.max(...pts.map(p=>p.maxW));
-  let dots='',xlab='';
-  const step=Math.max(1,Math.ceil(ptCoords.length/5));
-  ptCoords.forEach((c,i)=>{
-    const isPR=c.p.maxW===maxW;
-    dots+=`<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${isPR?5:3.5}" fill="${isPR?'#C8F135':'#4da6ff'}" stroke="#111" stroke-width="1.5"/>`;
-    if(i%step===0||i===ptCoords.length-1){
-      const d=c.p.date.split('-');
-      xlab+=`<text x="${c.x.toFixed(1)}" y="${H-4}" text-anchor="middle" font-size="7" fill="#555" font-family="Inter,sans-serif">${d[2]}/${d[1]}</text>`;
+  const path = ptCoords.map((c, i) => (i ? 'L' : 'M') + c.x.toFixed(1) + ' ' + c.y.toFixed(1)).join(' ');
+  const area = 'M' + ptCoords[0].x + ' ' + (pT+iH) + ' ' + ptCoords.map(c => 'L' + c.x.toFixed(1) + ' ' + c.y.toFixed(1)).join(' ') + ' L' + ptCoords[ptCoords.length-1].x + ' ' + (pT+iH) + ' Z';
+  const maxW = Math.max(...pts.map(p => p.maxW));
+  let dots = '', xlab = '';
+  const step = Math.max(1, Math.ceil(ptCoords.length / 5));
+  ptCoords.forEach((c, i) => {
+    const isPR = c.p.maxW === maxW;
+    dots += '<circle cx="' + c.x.toFixed(1) + '" cy="' + c.y.toFixed(1) + '" r="' + (isPR?5:3.5) + '" fill="' + (isPR?'#C8F135':'#4da6ff') + '" stroke="#111" stroke-width="1.5"/>';
+    if (i % step === 0 || i === ptCoords.length - 1) {
+      const d = c.p.date.split('-');
+      xlab += '<text x="' + c.x.toFixed(1) + '" y="' + (H-4) + '" text-anchor="middle" font-size="7" fill="#555" font-family="Inter,sans-serif">' + d[2] + '/' + d[1] + '</text>';
     }
   });
-  return`<svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:280px"><defs><linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4da6ff" stop-opacity="0.2"/><stop offset="100%" stop-color="#4da6ff" stop-opacity="0"/></linearGradient></defs>${grid}${labels}<path d="${area}" fill="url(#gc)"/><path d="${path}" fill="none" stroke="#4da6ff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>${dots}${xlab}<text x="${pL}" y="${pT-1}" font-size="7" fill="#555" font-family="Inter,sans-serif">kg max</text></svg>`;
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;min-width:280px">' +
+    '<defs><linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4da6ff" stop-opacity="0.2"/><stop offset="100%" stop-color="#4da6ff" stop-opacity="0"/></linearGradient></defs>' +
+    grid + labels +
+    '<path d="' + area + '" fill="url(#gc)"/>' +
+    '<path d="' + path + '" fill="none" stroke="#4da6ff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>' +
+    dots + xlab +
+    '<text x="' + pL + '" y="' + (pT-1) + '" font-size="7" fill="#555" font-family="Inter,sans-serif">kg max</text>' +
+  '</svg>';
 }
 
-// ══════════════════════════════════════════════
-// BIBLIOTHÈQUE
-// ══════════════════════════════════════════════
-function setLibFilter(f, btn){
-  libFilter=f;
-  document.querySelectorAll('.lib-filter').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderLibrary();
-}
+// ── LIBRARY ──
+document.getElementById('lib-search').addEventListener('input', renderLibrary);
 
-function filterLibrary(){ renderLibrary(); }
+document.querySelectorAll('.lib-filter').forEach(el => {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('.lib-filter').forEach(f => f.classList.remove('on'));
+    this.classList.add('on');
+    libFilter = this.dataset.filter;
+    renderLibrary();
+  });
+});
 
-function renderLibrary(){
-  const grid=document.getElementById('lib-grid');
-  const search=document.getElementById('lib-search')?.value.toLowerCase()||'';
-  let exs=libraryCache;
-  if(libFilter!=='all'){
-    if(['push','pull','legs','core'].includes(libFilter)) exs=exs.filter(e=>e.category===libFilter);
-    else exs=exs.filter(e=>e.level===libFilter);
+function renderLibrary() {
+  const grid   = document.getElementById('lib-grid');
+  if (!grid) return;
+  const search = (document.getElementById('lib-search')?.value || '').toLowerCase();
+  let exs = libraryCache;
+  if (libFilter !== 'all') {
+    if (['push','pull','legs','core'].includes(libFilter)) exs = exs.filter(e => e.category === libFilter);
+    else exs = exs.filter(e => e.level === libFilter);
   }
-  if(search) exs=exs.filter(e=>e.name.toLowerCase().includes(search)||e.muscle_primary.toLowerCase().includes(search));
-  grid.innerHTML=exs.map(e=>`
-    <div class="lib-card">
-      <div class="lib-card-vis">${getSVG(e.id,true)}</div>
-      <div class="lib-card-body">
-        <div class="lib-card-name">${e.name}</div>
-        <div class="lib-card-muscle">${e.muscle_primary}${e.muscles_secondary?.length?` · ${e.muscles_secondary.slice(0,2).join(', ')}`:''}</div>
-        <div class="lib-card-tags">
-          <span class="lib-tag lib-tag-${e.category}">${e.category}</span>
-          <span class="lib-tag lib-tag-${e.level}">${{beginner:'Débutant',intermediate:'Intermédiaire',advanced:'Avancé'}[e.level]||e.level}</span>
-          ${(e.equipment||[]).slice(0,2).map(eq=>`<span class="lib-tag" style="background:rgba(100,100,100,.15);color:var(--mut)">${eq}</span>`).join('')}
-        </div>
-        <div style="font-size:10px;color:var(--mut);margin-top:6px;line-height:1.4">${(e.description||'').slice(0,80)}...</div>
-        ${e.variants?.length?`<div style="font-size:9px;color:#555;margin-top:4px">Variantes : ${e.variants.join(', ')}</div>`:''}
-      </div>
-    </div>`).join('');
+  if (search) exs = exs.filter(e => e.name.toLowerCase().includes(search) || (e.muscle_primary||'').toLowerCase().includes(search));
+  grid.innerHTML = exs.map(e =>
+    '<div class="lib-card">' +
+      '<div class="lib-card-vis">' + getSVG(e.id) + '</div>' +
+      '<div class="lib-card-body">' +
+        '<div class="lib-card-name">' + e.name + '</div>' +
+        '<div class="lib-card-muscle">' + (e.muscle_primary||'') + (e.muscles_secondary?.length ? ' · ' + e.muscles_secondary.slice(0,2).join(', ') : '') + '</div>' +
+        '<div class="lib-card-tags">' +
+          '<span class="lib-tag lib-tag-' + e.category + '">' + e.category + '</span>' +
+          '<span class="lib-tag lib-tag-' + e.level + '">' + ({beginner:'Débutant',intermediate:'Intermédiaire',advanced:'Avancé'}[e.level]||e.level) + '</span>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--mut);margin-top:6px;line-height:1.4">' + (e.description||'').slice(0,80) + '...</div>' +
+      '</div>' +
+    '</div>'
+  ).join('');
 }
 
-// ══════════════════════════════════════════════
-// PROGRAMMES PAGE
-// ══════════════════════════════════════════════
-async function buildProgramsPage(){
-  const list=document.getElementById('prog-list');
-  if(!list)return;
-
-  // Recharger les programmes depuis Supabase à chaque ouverture
-  const {data}=await sb.from('programs')
-    .select('*')
-    .eq('user_id',currentUser.id)
-    .order('created_at',{ascending:false});
-  allPrograms=data||[];
-
-  if(!allPrograms.length){
-    list.innerHTML='Aucun programme trouvé.';
+// ── PROGRAMS PAGE ──
+async function buildProgramsPage() {
+  const list = document.getElementById('prog-list');
+  if (!list || !currentUser) return;
+  list.innerHTML = '<p style="font-size:11px;color:var(--mut);padding:10px">Chargement...</p>';
+  const { data } = await sb.from('programs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+  allPrograms = data || [];
+  if (!allPrograms.length) {
+    list.innerHTML = '<p style="font-size:12px;color:var(--mut);text-align:center;padding:20px">Aucun programme trouvé.</p>';
     return;
   }
+  list.innerHTML = allPrograms.map(p =>
+    '<div class="prog-card' + (p.is_active ? ' active-prog' : '') + '">' +
+      '<div class="prog-card-info">' +
+        '<div class="prog-card-name">' + p.name + '</div>' +
+        '<div class="prog-card-meta">' + (p.structure?.days?.length||0) + ' jours · créé le ' + new Date(p.created_at).toLocaleDateString('fr') + '</div>' +
+      '</div>' +
+      (p.is_active ? '<span class="prog-active-badge">Actif</span>' : '') +
+      '<div class="prog-actions">' +
+        (!p.is_active ? '<button class="prog-action-btn" data-action="switch" data-id="' + p.id + '">Activer</button>' : '') +
+        (!p.is_active ? '<button class="prog-action-btn" data-action="delete" data-id="' + p.id + '">Suppr.</button>' : '') +
+      '</div>' +
+    '</div>'
+  ).join('');
 
-  list.innerHTML=allPrograms.map(p=>`
-    
-      
-        ${p.name}
-        ${p.structure?.days?.length||0} jours · créé le ${new Date(p.created_at).toLocaleDateString('fr')}
-      
-      ${p.is_active?'Actif':''}
-      
-        ${!p.is_active?`Activer`:''}
-        ${!p.is_active?`Suppr.`:''}
-      
-    `).join('');
-}
-  list.innerHTML=allPrograms.map(p=>`
-    <div class="prog-card${p.is_active?' active-prog':''}">
-      <div class="prog-card-info">
-        <div class="prog-card-name">${p.name}</div>
-        <div class="prog-card-meta">${p.structure?.days?.length||0} jours · créé le ${new Date(p.created_at).toLocaleDateString('fr')}</div>
-      </div>
-      ${p.is_active?'<span class="prog-active-badge">Actif</span>':''}
-      <div class="prog-actions">
-        ${!p.is_active?`<button class="prog-action-btn" onclick="switchProgram('${p.id}')">Activer</button>`:''}
-        ${!p.is_active?`<button class="prog-action-btn danger" onclick="deleteProgram('${p.id}')">Suppr.</button>`:''}
-      </div>
-    </div>`).join('');
+  list.querySelectorAll('.prog-action-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (this.dataset.action === 'switch') switchProgram(this.dataset.id);
+      if (this.dataset.action === 'delete') deleteProgram(this.dataset.id);
+    });
+  });
 }
 
-async function switchProgram(id){
-  await sb.from('programs').update({is_active:false}).eq('user_id',currentUser.id);
-  await sb.from('programs').update({is_active:true}).eq('id',id);
+async function switchProgram(id) {
+  await sb.from('programs').update({ is_active: false }).eq('user_id', currentUser.id);
+  await sb.from('programs').update({ is_active: true }).eq('id', id);
   await loadActiveProgram();
   buildNavBar();
   buildWorkoutPages();
   buildWeekOverview();
-  buildProgramsPage();
-  const today=new Date().toISOString().slice(0,10);
-  document.querySelectorAll('input[type=date]').forEach(i=>{ if(!i.value) i.value=today; });
+  await buildProgramsPage();
   goPage(0, document.querySelector('.nav-btn'));
-  setSyncStatus('✓ Programme activé','');
-  setTimeout(()=>setSyncStatus('',''),2000);
+  setSyncStatus('✓ Programme activé', '');
+  setTimeout(() => setSyncStatus('', ''), 2000);
 }
 
-async function deleteProgram(id){
-  if(!confirm('Supprimer ce programme ? Tes données d\'entraînement sont conservées.'))return;
-  await sb.from('programs').delete().eq('id',id);
+async function deleteProgram(id) {
+  if (!confirm('Supprimer ce programme ? Tes données sont conservées.')) return;
+  await sb.from('programs').delete().eq('id', id);
   await loadActiveProgram();
-  buildProgramsPage();
+  await buildProgramsPage();
 }
 
-function startNewProgram(){
-  // Relancer l'onboarding sans le step "utilisateur existant"
-  onbProfile={objective:'',level:'',days_per_week:0,equipment:'',constraints:[]};
-  onbStep=1;
+function startNewProgram() {
+  onbProfile    = { objective: '', level: '', days_per_week: 0, equipment: '', constraints: [] };
+  existingChoice= null;
   showScreen('onboarding');
+  buildOnbDots(5);
   showOnbStep(1);
-  buildOnbDots(5,false);
 }
 
-// ══════════════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════════════
-function showScreen(name){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  if(name==='auth') document.getElementById('auth-screen').classList.add('active');
-  else if(name==='onboarding') document.getElementById('onboarding-screen').classList.add('active');
-  else if(name==='app') document.getElementById('app-screen').classList.add('active');
-}
-
-function setSyncStatus(msg,cls){
-  const el=document.getElementById('sync-status');
-  if(!el)return;
-  el.textContent=msg;
-  el.className='sync-status'+(cls?' '+cls:'');
-}
-
-// ══════════════════════════════════════════════
-// SVG SCHÉMAS
-// ══════════════════════════════════════════════
-function getSVG(id, small=false){
-  const w=small?88:260, h=small?60:140;
-  const svgs={
+// ── SVG ──
+function getSVG(id) {
+  const svgs = {
     'dev-couche-barre':`<svg viewBox="0 0 260 140"><rect x="30" y="100" width="200" height="11" rx="3" fill="#2d2d2d"/><rect x="42" y="111" width="9" height="22" rx="2" fill="#2d2d2d"/><rect x="209" y="111" width="9" height="22" rx="2" fill="#2d2d2d"/><circle cx="198" cy="93" r="11" fill="#555"/><rect x="56" y="85" width="136" height="13" rx="6" fill="#555"/><line x1="94" y1="87" x2="80" y2="57" stroke="#777" stroke-width="6" stroke-linecap="round"/><line x1="150" y1="87" x2="164" y2="57" stroke="#777" stroke-width="6" stroke-linecap="round"/><rect x="20" y="51" width="220" height="7" rx="3" fill="#888"/><rect x="12" y="43" width="11" height="21" rx="3" fill="#C8F135"/><rect x="237" y="43" width="11" height="21" rx="3" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Allongé · barre vers la poitrine</text></svg>`,
     'dev-couche-halt':`<svg viewBox="0 0 260 140"><rect x="28" y="100" width="204" height="11" rx="3" fill="#2d2d2d"/><rect x="42" y="111" width="9" height="22" rx="2" fill="#2d2d2d"/><rect x="209" y="111" width="9" height="22" rx="2" fill="#2d2d2d"/><circle cx="198" cy="92" r="11" fill="#555"/><rect x="58" y="85" width="134" height="12" rx="6" fill="#555"/><line x1="98" y1="87" x2="70" y2="62" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="158" y1="87" x2="186" y2="62" stroke="#777" stroke-width="5" stroke-linecap="round"/><rect x="48" y="54" width="28" height="7" rx="3" fill="#888"/><rect x="44" y="49" width="7" height="17" rx="2" fill="#C8F135"/><rect x="73" y="49" width="7" height="17" rx="2" fill="#C8F135"/><rect x="180" y="54" width="28" height="7" rx="3" fill="#888"/><rect x="176" y="49" width="7" height="17" rx="2" fill="#C8F135"/><rect x="205" y="49" width="7" height="17" rx="2" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Plus grande amplitude que la barre</text></svg>`,
-    'dev-incline-halt':`<svg viewBox="0 0 260 140"><rect x="28" y="102" width="100" height="10" rx="2" fill="#2d2d2d"/><rect x="34" y="112" width="8" height="24" rx="2" fill="#2d2d2d"/><rect x="108" y="112" width="8" height="24" rx="2" fill="#2d2d2d"/><rect x="116" y="56" width="10" height="58" rx="2" fill="#2d2d2d" transform="rotate(-30 121 85)"/><circle cx="158" cy="52" r="12" fill="#555"/><rect x="108" y="64" width="52" height="12" rx="5" fill="#555" transform="rotate(-22 134 70)"/><line x1="118" y1="68" x2="90" y2="44" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="146" y1="64" x2="172" y2="42" stroke="#777" stroke-width="5" stroke-linecap="round"/><rect x="68" y="36" width="28" height="7" rx="3" fill="#888"/><rect x="64" y="31" width="8" height="17" rx="2" fill="#C8F135"/><rect x="93" y="31" width="8" height="17" rx="2" fill="#C8F135"/><rect x="158" y="34" width="28" height="7" rx="3" fill="#888"/><rect x="154" y="29" width="8" height="17" rx="2" fill="#C8F135"/><rect x="183" y="29" width="8" height="17" rx="2" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Banc 30-45° · pousser en haut</text></svg>`,
+    'dev-incline-halt':`<svg viewBox="0 0 260 140"><rect x="28" y="102" width="100" height="10" rx="2" fill="#2d2d2d"/><rect x="34" y="112" width="8" height="24" rx="2" fill="#2d2d2d"/><rect x="108" y="112" width="8" height="24" rx="2" fill="#2d2d2d"/><circle cx="158" cy="52" r="12" fill="#555"/><rect x="108" y="64" width="52" height="12" rx="5" fill="#555" transform="rotate(-22 134 70)"/><line x1="118" y1="68" x2="90" y2="44" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="146" y1="64" x2="172" y2="42" stroke="#777" stroke-width="5" stroke-linecap="round"/><rect x="68" y="36" width="28" height="7" rx="3" fill="#888"/><rect x="64" y="31" width="8" height="17" rx="2" fill="#C8F135"/><rect x="93" y="31" width="8" height="17" rx="2" fill="#C8F135"/><rect x="158" y="34" width="28" height="7" rx="3" fill="#888"/><rect x="154" y="29" width="8" height="17" rx="2" fill="#C8F135"/><rect x="183" y="29" width="8" height="17" rx="2" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Banc 30-45° · pousser en haut</text></svg>`,
     'ecarté-poulie-bas':`<svg viewBox="0 0 260 140"><rect x="4" y="96" width="12" height="40" rx="2" fill="#2d2d2d"/><circle cx="10" cy="100" r="8" fill="#333"/><rect x="244" y="96" width="12" height="40" rx="2" fill="#2d2d2d"/><circle cx="250" cy="100" r="8" fill="#333"/><line x1="10" y1="100" x2="96" y2="76" stroke="#555" stroke-width="1.8" stroke-dasharray="5,3"/><line x1="250" y1="100" x2="164" y2="76" stroke="#555" stroke-width="1.8" stroke-dasharray="5,3"/><circle cx="96" cy="76" r="7" fill="#C8F135"/><circle cx="164" cy="76" r="7" fill="#C8F135"/><circle cx="130" cy="34" r="13" fill="#555"/><rect x="119" y="47" width="22" height="42" rx="5" fill="#555"/><line x1="125" y1="92" x2="116" y2="124" stroke="#555" stroke-width="6" stroke-linecap="round"/><line x1="135" y1="92" x2="144" y2="124" stroke="#555" stroke-width="6" stroke-linecap="round"/><line x1="119" y1="64" x2="96" y2="76" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="141" y1="64" x2="164" y2="76" stroke="#777" stroke-width="5" stroke-linecap="round"/><path d="M 96 76 Q 130 50 164 76" stroke="#C8F135" stroke-width="1.6" fill="none" stroke-dasharray="4,3"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Câbles bas · arc vers le haut</text></svg>`,
     'dev-mili-halt':`<svg viewBox="0 0 260 140"><rect x="94" y="98" width="72" height="9" rx="2" fill="#2d2d2d"/><rect x="100" y="107" width="10" height="28" rx="2" fill="#2d2d2d"/><rect x="150" y="107" width="10" height="28" rx="2" fill="#2d2d2d"/><circle cx="130" cy="42" r="13" fill="#555"/><rect x="119" y="55" width="22" height="44" rx="5" fill="#555"/><line x1="124" y1="96" x2="110" y2="126" stroke="#555" stroke-width="7" stroke-linecap="round"/><line x1="136" y1="96" x2="150" y2="126" stroke="#555" stroke-width="7" stroke-linecap="round"/><line x1="119" y1="64" x2="82" y2="40" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="141" y1="64" x2="178" y2="40" stroke="#777" stroke-width="5" stroke-linecap="round"/><rect x="60" y="32" width="28" height="7" rx="3" fill="#888"/><rect x="56" y="27" width="8" height="17" rx="2" fill="#C8F135"/><rect x="85" y="27" width="8" height="17" rx="2" fill="#C8F135"/><rect x="172" y="32" width="28" height="7" rx="3" fill="#888"/><rect x="168" y="27" width="8" height="17" rx="2" fill="#C8F135"/><rect x="197" y="27" width="8" height="17" rx="2" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Assis · haltères aux oreilles · pousser</text></svg>`,
     'elev-lat':`<svg viewBox="0 0 260 140"><circle cx="130" cy="32" r="13" fill="#555"/><rect x="119" y="45" width="22" height="42" rx="5" fill="#555"/><line x1="124" y1="87" x2="114" y2="122" stroke="#555" stroke-width="6" stroke-linecap="round"/><line x1="136" y1="87" x2="146" y2="122" stroke="#555" stroke-width="6" stroke-linecap="round"/><line x1="119" y1="63" x2="54" y2="60" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="141" y1="63" x2="206" y2="60" stroke="#777" stroke-width="5" stroke-linecap="round"/><rect x="30" y="53" width="26" height="7" rx="3" fill="#888"/><rect x="26" y="48" width="7" height="17" rx="2" fill="#C8F135"/><rect x="53" y="48" width="7" height="17" rx="2" fill="#C8F135"/><rect x="204" y="53" width="26" height="7" rx="3" fill="#888"/><rect x="200" y="48" width="7" height="17" rx="2" fill="#C8F135"/><rect x="227" y="48" width="7" height="17" rx="2" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Bras à l'horizontal · coudes fléchis</text></svg>`,
@@ -1415,7 +1297,7 @@ function getSVG(id, small=false){
     'presse':`<svg viewBox="0 0 260 140"><rect x="6" y="4" width="168" height="132" rx="5" fill="#1a1a1a" stroke="#2a2a2a"/><rect x="10" y="20" width="106" height="88" rx="2" fill="#2a2a2a"/><rect x="22" y="26" width="22" height="8" rx="2" fill="#C8F135" opacity="0.85"/><rect x="64" y="26" width="22" height="8" rx="2" fill="#C8F135" opacity="0.85"/><ellipse cx="123" cy="94" rx="18" ry="9" fill="#555"/><circle cx="143" cy="88" r="11" fill="#555"/><line x1="115" y1="86" x2="80" y2="42" stroke="#777" stroke-width="7" stroke-linecap="round"/><line x1="123" y1="86" x2="88" y2="42" stroke="#777" stroke-width="7" stroke-linecap="round"/><rect x="186" y="12" width="66" height="116" rx="3" fill="#1a1a1a" stroke="#2a2a2a"/><rect x="194" y="20" width="14" height="20" rx="2" fill="#C8F135"/><text x="110" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Pieds sur plateau · 90° puis pousser</text></svg>`,
     'fentes-marchées':`<svg viewBox="0 0 260 140"><circle cx="130" cy="28" r="13" fill="#555"/><rect x="121" y="41" width="18" height="40" rx="5" fill="#555"/><line x1="133" y1="78" x2="162" y2="98" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="162" y1="98" x2="168" y2="126" stroke="#555" stroke-width="8" stroke-linecap="round"/><rect x="158" y="126" width="20" height="6" rx="2" fill="#333"/><line x1="127" y1="78" x2="100" y2="104" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="100" y1="104" x2="94" y2="126" stroke="#555" stroke-width="8" stroke-linecap="round"/><rect x="86" y="126" width="14" height="6" rx="2" fill="#333"/><line x1="121" y1="62" x2="92" y2="67" stroke="#777" stroke-width="4" stroke-linecap="round"/><rect x="68" y="60" width="26" height="7" rx="3" fill="#888"/><rect x="64" y="55" width="7" height="17" rx="2" fill="#C8F135"/><rect x="91" y="55" width="7" height="17" rx="2" fill="#C8F135"/><circle cx="162" cy="98" r="9" fill="none" stroke="#C8F135" stroke-width="1.5" opacity="0.8"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Grand pas · genou arrière vers le sol</text></svg>`,
     'leg-curl-couche':`<svg viewBox="0 0 260 140"><rect x="8" y="50" width="244" height="58" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/><rect x="186" y="20" width="58" height="38" rx="3" fill="#222"/><ellipse cx="108" cy="66" rx="82" ry="11" fill="#555"/><circle cx="24" cy="62" r="11" fill="#555"/><line x1="154" y1="65" x2="192" y2="55" stroke="#777" stroke-width="7" stroke-linecap="round"/><line x1="192" y1="55" x2="204" y2="28" stroke="#777" stroke-width="6" stroke-linecap="round"/><rect x="198" y="22" width="18" height="11" rx="4" fill="#C8F135"/><text x="130" y="122" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Face vers le bas · fléchir les genoux</text></svg>`,
-    'rdl':`<svg viewBox="0 0 260 140"><rect x="34" y="106" width="192" height="8" rx="3" fill="#888"/><circle cx="52" cy="110" r="24" fill="none" stroke="#C8F135" stroke-width="2.5" opacity="0.9"/><circle cx="52" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="208" cy="110" r="24" fill="none" stroke="#C8F135" stroke-width="2.5" opacity="0.9"/><circle cx="208" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="154" cy="28" r="13" fill="#555"/><line x1="148" y1="40" x2="102" y2="72" stroke="#555" stroke-width="16" stroke-linecap="round"/><line x1="104" y1="70" x2="98" y2="114" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="112" y1="62" x2="109" y2="106" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="154" y1="29" x2="104" y2="69" stroke="#C8F135" stroke-width="1.1" opacity="0.45" stroke-dasharray="3,2"/><text x="158" y="42" font-size="9" fill="#C8F135" opacity="0.7" font-family="Inter,sans-serif">dos plat</text><text x="120" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Charnière hanches · jambes quasi tendues</text></svg>`,
+    'rdl':`<svg viewBox="0 0 260 140"><rect x="34" y="106" width="192" height="8" rx="3" fill="#888"/><circle cx="52" cy="110" r="24" fill="none" stroke="#C8F135" stroke-width="2.5" opacity="0.9"/><circle cx="52" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="208" cy="110" r="24" fill="none" stroke="#C8F135" stroke-width="2.5" opacity="0.9"/><circle cx="208" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="154" cy="28" r="13" fill="#555"/><line x1="148" y1="40" x2="102" y2="72" stroke="#555" stroke-width="16" stroke-linecap="round"/><line x1="104" y1="70" x2="98" y2="114" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="112" y1="62" x2="109" y2="106" stroke="#777" stroke-width="5" stroke-linecap="round"/><text x="120" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Charnière hanches · jambes quasi tendues</text></svg>`,
     'mollets-debout':`<svg viewBox="0 0 260 140"><rect x="60" y="100" width="140" height="14" rx="3" fill="#2d2d2d"/><rect x="52" y="114" width="156" height="10" rx="2" fill="#242424"/><circle cx="130" cy="28" r="13" fill="#555"/><rect x="121" y="41" width="16" height="44" rx="5" fill="#555"/><line x1="127" y1="85" x2="124" y2="102" stroke="#555" stroke-width="7" stroke-linecap="round"/><rect x="118" y="96" width="14" height="5" rx="2" fill="#333"/><ellipse cx="124" cy="96" rx="7" ry="11" fill="none" stroke="#C8F135" stroke-width="1.8" opacity="0.85"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Talon dans le vide · monter sur la pointe</text></svg>`,
     'soulevé-terre':`<svg viewBox="0 0 260 140"><rect x="34" y="106" width="192" height="8" rx="3" fill="#888"/><circle cx="52" cy="110" r="26" fill="none" stroke="#C8F135" stroke-width="2.5" opacity="0.9"/><circle cx="52" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="208" cy="110" r="26" fill="none" stroke="#C8F135" stroke-width="2.5" opacity="0.9"/><circle cx="208" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="148" cy="28" r="13" fill="#555"/><line x1="142" y1="40" x2="100" y2="72" stroke="#555" stroke-width="16" stroke-linecap="round"/><line x1="102" y1="70" x2="90" y2="110" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="114" y1="70" x2="128" y2="110" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="110" y1="62" x2="107" y2="106" stroke="#777" stroke-width="5" stroke-linecap="round"/><text x="115" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Dos plat · hanches basses · pousser sol</text></svg>`,
     'dev-mili-barre':`<svg viewBox="0 0 260 140"><rect x="18" y="18" width="224" height="8" rx="3" fill="#888"/><rect x="12" y="10" width="10" height="22" rx="2" fill="#C8F135"/><rect x="238" y="10" width="10" height="22" rx="2" fill="#C8F135"/><circle cx="130" cy="54" r="13" fill="#555"/><rect x="119" y="67" width="22" height="44" rx="5" fill="#555"/><line x1="119" y1="72" x2="82" y2="26" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="141" y1="72" x2="178" y2="26" stroke="#777" stroke-width="5" stroke-linecap="round"/><text x="130" y="136" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Debout · barre des épaules · pousser</text></svg>`,
@@ -1431,17 +1313,18 @@ function getSVG(id, small=false){
     'sdt-roumain':`<svg viewBox="0 0 260 140"><rect x="34" y="106" width="192" height="8" rx="3" fill="#888"/><circle cx="52" cy="110" r="22" fill="none" stroke="#C8F135" stroke-width="2" opacity="0.8"/><circle cx="52" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="208" cy="110" r="22" fill="none" stroke="#C8F135" stroke-width="2" opacity="0.8"/><circle cx="208" cy="110" r="7" fill="#2d2d2d" stroke="#555"/><circle cx="154" cy="30" r="13" fill="#555"/><line x1="148" y1="42" x2="102" y2="72" stroke="#555" stroke-width="16" stroke-linecap="round"/><line x1="104" y1="70" x2="98" y2="114" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="112" y1="62" x2="109" y2="106" stroke="#777" stroke-width="5" stroke-linecap="round"/><text x="120" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Charnière hanches · jambes quasi tendues</text></svg>`,
     'hip-thrust':`<svg viewBox="0 0 260 140"><rect x="30" y="88" width="100" height="12" rx="3" fill="#2d2d2d"/><ellipse cx="120" cy="72" rx="32" ry="10" fill="#555"/><circle cx="82" cy="66" r="11" fill="#555"/><line x1="118" y1="80" x2="108" y2="110" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="128" y1="80" x2="152" y2="100" stroke="#555" stroke-width="9" stroke-linecap="round"/><rect x="144" y="100" width="16" height="6" rx="2" fill="#333"/><rect x="60" y="58" width="120" height="8" rx="3" fill="#888"/><rect x="54" y="50" width="11" height="24" rx="3" fill="#C8F135"/><rect x="181" y="50" width="11" height="24" rx="3" fill="#C8F135"/><text x="130" y="132" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Épaules sur banc · pousser les hanches en haut</text></svg>`,
     'split-squat-bulgare':`<svg viewBox="0 0 260 140"><rect x="160" y="90" width="80" height="12" rx="3" fill="#2d2d2d"/><circle cx="120" cy="30" r="13" fill="#555"/><rect x="110" y="43" width="18" height="38" rx="5" fill="#555"/><line x1="120" y1="78" x2="148" y2="100" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="148" y1="100" x2="152" y2="126" stroke="#555" stroke-width="8" stroke-linecap="round"/><line x1="116" y1="78" x2="88" y2="104" stroke="#555" stroke-width="9" stroke-linecap="round"/><line x1="88" y1="104" x2="86" y2="122" stroke="#555" stroke-width="8" stroke-linecap="round"/><rect x="164" y="102" width="14" height="7" rx="2" fill="#888"/><text x="130" y="138" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Pied arrière sur banc · genou avant dans l'axe</text></svg>`,
-    'leg-extension':`<svg viewBox="0 0 260 140"><rect x="10" y="55" width="240" height="60" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/><rect x="180" y="30" width="60" height="36" rx="3" fill="#222"/><ellipse cx="100" cy="70" rx="70" ry="10" fill="#555"/><circle cx="24" cy="66" r="11" fill="#555"/><line x1="150" y1="68" x2="186" y2="62" stroke="#777" stroke-width="7" stroke-linecap="round"/><line x1="186" y1="62" x2="210" y2="44" stroke="#777" stroke-width="6" stroke-linecap="round"/><rect x="204" y="38" width="18" height="11" rx="4" fill="#C8F135"/><text x="130" y="128" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Machine · étendre les jambes · isolation quadri</text></svg>`,
     'planche':`<svg viewBox="0 0 260 140"><line x1="14" y1="94" x2="246" y2="94" stroke="#2d2d2d" stroke-width="2"/><circle cx="208" cy="54" r="13" fill="#555"/><rect x="60" y="62" width="152" height="12" rx="6" fill="#555"/><line x1="72" y1="62" x2="56" y2="80" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="84" y1="74" x2="70" y2="82" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="70" y1="82" x2="68" y2="94" stroke="#777" stroke-width="4" stroke-linecap="round"/><line x1="54" y1="66" x2="26" y2="80" stroke="#555" stroke-width="6" stroke-linecap="round"/><text x="130" y="118" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Corps droit · avant-bras au sol · gainage</text></svg>`,
-    'crunch':`<svg viewBox="0 0 260 140"><line x1="14" y1="104" x2="246" y2="104" stroke="#2d2d2d" stroke-width="2"/><circle cx="180" cy="78" r="11" fill="#555"/><rect x="100" y="84" width="84" height="12" rx="5" fill="#555"/><line x1="100" y1="86" x2="78" y2="70" stroke="#555" stroke-width="10" stroke-linecap="round"/><line x1="186" y1="86" x2="200" y2="96" stroke="#555" stroke-width="8" stroke-linecap="round"/><line x1="200" y1="96" x2="204" y2="104" stroke="#555" stroke-width="7" stroke-linecap="round"/><text x="130" y="122" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Allongé · soulever les épaules · contracter les abdos</text></svg>`,
+    'crunch':`<svg viewBox="0 0 260 140"><line x1="14" y1="104" x2="246" y2="104" stroke="#2d2d2d" stroke-width="2"/><circle cx="180" cy="78" r="11" fill="#555"/><rect x="100" y="84" width="84" height="12" rx="5" fill="#555"/><line x1="100" y1="86" x2="78" y2="70" stroke="#555" stroke-width="10" stroke-linecap="round"/><line x1="186" y1="86" x2="200" y2="96" stroke="#555" stroke-width="8" stroke-linecap="round"/><line x1="200" y1="96" x2="204" y2="104" stroke="#555" stroke-width="7" stroke-linecap="round"/><text x="130" y="122" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Allongé · soulever les épaules · contracter abdos</text></svg>`,
     'pompes-lestées':`<svg viewBox="0 0 260 140"><line x1="14" y1="94" x2="246" y2="94" stroke="#2d2d2d" stroke-width="2"/><circle cx="208" cy="50" r="13" fill="#555"/><rect x="54" y="57" width="158" height="12" rx="6" fill="#555"/><line x1="72" y1="57" x2="56" y2="84" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="194" y1="57" x2="210" y2="84" stroke="#777" stroke-width="5" stroke-linecap="round"/><circle cx="56" cy="84" r="6" fill="#555"/><circle cx="210" cy="84" r="6" fill="#555"/><rect x="100" y="50" width="76" height="22" rx="4" fill="none" stroke="#C8F135" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/><text x="138" y="65" text-anchor="middle" font-size="9" fill="#C8F135" opacity="0.7" font-family="Inter,sans-serif">lest</text><text x="130" y="112" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Corps gainé · gilet lesté · poitrine au sol</text></svg>`,
     'tractions-pdc':`<svg viewBox="0 0 260 140"><rect x="36" y="10" width="188" height="10" rx="4" fill="#888"/><rect x="26" y="4" width="24" height="22" rx="3" fill="#2d2d2d"/><rect x="210" y="4" width="24" height="22" rx="3" fill="#2d2d2d"/><circle cx="78" cy="15" r="8" fill="#444"/><circle cx="182" cy="15" r="8" fill="#444"/><line x1="78" y1="15" x2="110" y2="50" stroke="#777" stroke-width="5" stroke-linecap="round"/><line x1="182" y1="15" x2="150" y2="50" stroke="#777" stroke-width="5" stroke-linecap="round"/><circle cx="130" cy="50" r="13" fill="#555"/><rect x="119" y="63" width="22" height="38" rx="5" fill="#555"/><line x1="124" y1="101" x2="114" y2="132" stroke="#555" stroke-width="6" stroke-linecap="round"/><line x1="136" y1="101" x2="146" y2="132" stroke="#555" stroke-width="6" stroke-linecap="round"/><text x="130" y="143" text-anchor="middle" font-size="10" fill="#666" font-family="Inter,sans-serif">Prise large · menton au-dessus</text></svg>`,
   };
-  const svg=svgs[id];
-  if(svg) return svg;
-  // SVG générique pour les exercices sans schéma
-  return`<svg viewBox="0 0 260 140"><rect x="20" y="20" width="220" height="100" rx="8" fill="#1a1a1a"/><text x="130" y="65" text-anchor="middle" font-size="18" fill="#333" font-family="Inter,sans-serif">💪</text><text x="130" y="90" text-anchor="middle" font-size="10" fill="#555" font-family="Inter,sans-serif">${id.replace(/-/g,' ')}</text></svg>`;
+  return svgs[id] ||
+    '<svg viewBox="0 0 260 140"><rect x="20" y="20" width="220" height="100" rx="8" fill="#1a1a1a"/>' +
+    '<text x="130" y="65" text-anchor="middle" font-size="18" fill="#333" font-family="Inter,sans-serif">💪</text>' +
+    '<text x="130" y="90" text-anchor="middle" font-size="10" fill="#555" font-family="Inter,sans-serif">' + id.replace(/-/g,' ') + '</text></svg>';
 }
+
+})();
 </script>
 </body>
 </html>
