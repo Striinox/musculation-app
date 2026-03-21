@@ -485,11 +485,24 @@ document.addEventListener('visibilitychange', () => {
 });
 
 sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'SIGNED_OUT') {
+    showScreen('auth');
+    return;
+  }
   if (session && session.user) {
     currentUser = session.user;
     await initUserSession();
   }
 });
+
+// Vérifier la session au démarrage
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session && session.user) {
+    currentUser = session.user;
+    await initUserSession();
+  }
+})();
 // ── INIT ──
 async function initUserSession() {
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
