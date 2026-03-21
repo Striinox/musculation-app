@@ -491,13 +491,20 @@ document.addEventListener('visibilitychange', async () => {
     }
   }
 });
-  sb.auth.onAuthStateChange(async (event, session) => {
+ sb.auth.onAuthStateChange(async (event, session) => {
   if (session && session.user) {
-    currentUser = session.user;
-    await initUserSession();
+    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
+      currentUser = session.user;
+      if (event === 'SIGNED_IN') {
+        await initUserSession();
+      } else if (document.getElementById('app-screen').classList.contains('active')) {
+        setSyncStatus('', '');
+      } else {
+        await initUserSession();
+      }
+    }
   }
 });
-
 // ── INIT ──
 async function initUserSession() {
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
