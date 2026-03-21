@@ -489,21 +489,10 @@ document.getElementById('btn-close-modal').addEventListener('click', closeModal)
 document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
 
 // ══════════════════════════════════════
-// SESSION INIT
-// Au démarrage : lire la session depuis localStorage
-// Si connecté → charger l'app directement sans passer par le login
-// ══════════════════════════════════════
-(async function init() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session && session.user) {
-    currentUser = session.user;
-    await initUserSession();
-  }
-})();
 
 // Écouter uniquement les connexions explicites (login form)
 sb.auth.onAuthStateChange(async function(event, session) {
-  if (event === 'SIGNED_IN' && session && session.user && !appReady) {
+  if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session && session.user && !appReady) {
     currentUser = session.user;
     await initUserSession();
   }
