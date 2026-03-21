@@ -472,19 +472,6 @@ document.getElementById('btn-close-modal').addEventListener('click', closeModal)
 document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
 
 // ── AUTH STATE ──
-sb.auth.onAuthStateChange(async (event, session) => {
-  if (event === 'SIGNED_OUT') {
-    showScreen('auth');
-    return;
-  }
-  if (session && session.user) {
-    currentUser = session.user;
-    if (!document.getElementById('app-screen').classList.contains('active')) {
-      await initUserSession();
-    }
-  }
-});
-
 (async () => {
   const { data: { session } } = await sb.auth.getSession();
   if (session && session.user) {
@@ -492,6 +479,17 @@ sb.auth.onAuthStateChange(async (event, session) => {
     await initUserSession();
   }
 })();
+
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'SIGNED_IN') {
+    currentUser = session.user;
+    await initUserSession();
+  }
+  if (event === 'SIGNED_OUT') {
+    currentUser = null;
+    showScreen('auth');
+  }
+});
   
 // ── INIT ──
 async function initUserSession() {
