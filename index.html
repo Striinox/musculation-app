@@ -1120,7 +1120,7 @@ async function loadDashboard() {
   try {
     const { data, error } = await Promise.race([
       sb.from('workout_logs').select('*').eq('user_id', currentUser.id).order('session_date', { ascending: true }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000))
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
     ]);
     if (error) throw error;
     setSyncStatus('', '');
@@ -1273,7 +1273,7 @@ async function buildProgramsPage() {
     console.log('buildProgramsPage: start');
     const { data, error } = await Promise.race([
       sb.from('programs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000))
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
     ]);
     console.log('buildProgramsPage: data', data ? data.length : 'null', 'error', error);
     if (error || !data) throw new Error('no data');
