@@ -1427,21 +1427,20 @@ function startTimer() {
   }, 1000);
 }
 
-document.querySelectorAll('.timer-opt').forEach(function(opt) {
-  opt.addEventListener('click', function() {
-    if (timerRunning) return;
+document.getElementById('timer-overlay').addEventListener('click', function(e) {
+  const opt = e.target.closest('.timer-opt');
+  if (opt && !timerRunning) {
     document.querySelectorAll('.timer-opt').forEach(function(o) { o.classList.remove('selected'); });
-    this.classList.add('selected');
-    const secs = parseInt(this.dataset.secs);
+    opt.classList.add('selected');
+    const secs = parseInt(opt.dataset.secs);
     timerRemaining = secs;
     timerTotal     = secs;
     document.getElementById('timer-display').textContent = formatTime(secs);
     document.getElementById('timer-bar-fill').style.width = '100%';
-  });
+  }
+  if (e.target.id === 'timer-start') startTimer();
+  if (e.target.id === 'timer-skip') closeTimer();
 });
-
-document.getElementById('timer-start').addEventListener('click', startTimer);
-document.getElementById('timer-skip').addEventListener('click', closeTimer);
 })();
 </script>
   <!-- TIMER -->
