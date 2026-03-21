@@ -409,9 +409,14 @@ let appReady      = false; // true quand l'app est complètement initialisée
 // reste connecté automatiquement via getSession() au redémarrage.
 // On utilise appReady pour ne pas recharger pendant le chargement initial.
 // ══════════════════════════════════════
-document.addEventListener('visibilitychange', function() {
-  if (document.visibilityState === 'visible' && appReady) {
-    location.reload();
+document.addEventListener('visibilitychange', async function() {
+  if (document.visibilityState === 'visible' && appReady && currentUser) {
+    const activePage = document.querySelector('.page.on');
+    if (!activePage) return;
+    const pid = activePage.id;
+    if (pid === 'page-programs')  buildProgramsPage();
+    if (pid === 'page-dashboard') loadDashboard();
+    if (pid === 'page-library')   renderLibrary();
   }
 });
 
@@ -492,7 +497,7 @@ document.getElementById('btn-new-prog').addEventListener('click', startNewProgra
 
 // Écouter uniquement les connexions explicites (login form)
 sb.auth.onAuthStateChange(async function(event, session) {
-  if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session && session.user && !appReady) {
+  if (event === 'SIGNED_IN' && session && session.user && !appReady) {
     currentUser = session.user;
     await initUserSession();
   }
@@ -502,7 +507,6 @@ sb.auth.onAuthStateChange(async function(event, session) {
     showScreen('auth');
   }
 });
-
 // ══════════════════════════════════════
 // INIT USER SESSION
 // ══════════════════════════════════════
