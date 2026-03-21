@@ -469,6 +469,7 @@ document.getElementById('btn-new-prog').addEventListener('click', startNewProgra
 // ── AUTH STATE ──
 document.addEventListener('visibilitychange', async () => {
   if (document.visibilityState === 'visible') {
+    await new Promise(r => setTimeout(r, 800));
     const { data } = await sb.auth.getSession();
     if (!data.session) {
       if (currentUser) location.reload();
