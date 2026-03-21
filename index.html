@@ -467,12 +467,13 @@ document.getElementById('btn-close-modal').addEventListener('click', closeModal)
 document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
 
 // ── AUTH STATE ──
-  document.addEventListener('visibilitychange', async () => {
-  if (document.visibilityState === 'visible' && currentUser) {
+document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'visible') {
     const { data } = await sb.auth.getSession();
     if (!data.session) {
-      location.reload();
+      if (currentUser) location.reload();
     } else {
+      currentUser = data.session.user;
       setSyncStatus('', '');
       const activePage = document.querySelector('.page.on');
       if (activePage) {
