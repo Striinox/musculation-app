@@ -491,16 +491,20 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
   
+let isRefreshing = false;
 document.addEventListener('visibilitychange', async () => {
   console.log('visibility:', document.visibilityState, 'user:', currentUser ? 'ok' : 'null');
-  if (document.visibilityState === 'visible' && currentUser) {
+  if (document.visibilityState === 'visible' && currentUser && !isRefreshing) {
+    isRefreshing = true;
     setSyncStatus('', '');
     const activePage = document.querySelector('.page.on');
-    if (!activePage) return;
-    const pid = activePage.id;
-    if (pid === 'page-programs')  buildProgramsPage();
-    if (pid === 'page-dashboard') loadDashboard();
-    if (pid === 'page-library')   renderLibrary();
+    if (activePage) {
+      const pid = activePage.id;
+      if (pid === 'page-programs')  await buildProgramsPage();
+      if (pid === 'page-dashboard') await loadDashboard();
+      if (pid === 'page-library')   renderLibrary();
+    }
+    isRefreshing = false;
   }
 });
   
@@ -1170,10 +1174,10 @@ async function loadDashboard() {
     });
     chartsEl.innerHTML = html;
 
-  } catch(e) {
-    setSyncStatus('', '');
-    setTimeout(() => loadDashboard(), 1500);
-  }
+} catch(e) {
+  console.log('loadDashboard: error', e.message);
+  setSyncStatus('', '');
+}
 }
   
 function buildChart(pts) {
@@ -1297,11 +1301,10 @@ async function buildProgramsPage() {
       });
     });
     console.log('buildProgramsPage: done');
-  } catch(e) {
-    console.log('buildProgramsPage: error', e.message);
-    list.innerHTML = '<p style="font-size:11px;color:var(--mut);padding:10px">Chargement...</p>';
-    setTimeout(() => buildProgramsPage(), 1500);
-  }
+} catch(e) {
+  console.log('buildProgramsPage: error', e.message);
+  list.innerHTML = '<p style="font-size:12px;color:var(--mut);text-align:center;padding:20px">Erreur de chargement. Change de page et reviens.</p>';
+}
 }
   
 async function switchProgram(id) {
