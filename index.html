@@ -1426,39 +1426,39 @@ function startTimer() {
     }
   }, 1000);
 }
+  
+window.startTimer = startTimer;
+window.closeTimer = closeTimer;
+window.openTimer  = openTimer;
 
-document.getElementById('timer-overlay').addEventListener('click', function(e) {
-  const opt = e.target.closest('.timer-opt');
-  if (opt && !timerRunning) {
-    document.querySelectorAll('.timer-opt').forEach(function(o) { o.classList.remove('selected'); });
-    opt.classList.add('selected');
-    const secs = parseInt(opt.dataset.secs);
-    timerRemaining = secs;
-    timerTotal     = secs;
-    document.getElementById('timer-display').textContent = formatTime(secs);
-    document.getElementById('timer-bar-fill').style.width = '100%';
-  }
-  if (e.target.id === 'timer-start') startTimer();
-  if (e.target.id === 'timer-skip') closeTimer();
-});
+  window.selectTimerOpt = function(el) {
+  if (timerRunning) return;
+  document.querySelectorAll('.timer-opt').forEach(function(o) { o.classList.remove('selected'); });
+  el.classList.add('selected');
+  const secs = parseInt(el.dataset.secs);
+  timerRemaining = secs;
+  timerTotal     = secs;
+  document.getElementById('timer-display').textContent = formatTime(secs);
+  document.getElementById('timer-bar-fill').style.width = '100%';
+};
 })();
 </script>
   <!-- TIMER -->
 <div class="timer-overlay" id="timer-overlay">
   <div class="timer-header">
     <span class="timer-title" id="timer-ex-name">Repos</span>
-    <button class="timer-skip" id="timer-skip">Passer ✕</button>
+    <button class="timer-skip" id="timer-skip" onclick="closeTimer()">Passer ✕</button>
   </div>
   <div class="timer-bar"><div class="timer-bar-fill" id="timer-bar-fill"></div></div>
   <div class="timer-display" id="timer-display">1:30</div>
   <div class="timer-options">
-    <div class="timer-opt" data-secs="45">45s</div>
-    <div class="timer-opt" data-secs="60">1min</div>
-    <div class="timer-opt selected" data-secs="90">1m30</div>
-    <div class="timer-opt" data-secs="120">2min</div>
-    <div class="timer-opt" data-secs="180">3min</div>
+<div class="timer-opt" data-secs="45" onclick="selectTimerOpt(this)">45s</div>
+<div class="timer-opt" data-secs="60" onclick="selectTimerOpt(this)">1min</div>
+<div class="timer-opt selected" data-secs="90" onclick="selectTimerOpt(this)">1m30</div>
+<div class="timer-opt" data-secs="120" onclick="selectTimerOpt(this)">2min</div>
+<div class="timer-opt" data-secs="180" onclick="selectTimerOpt(this)">3min</div>
   </div>
-  <button class="timer-start" id="timer-start">▶ Démarrer le repos</button>
+  <button class="timer-start" id="timer-start" onclick="startTimer()">▶ Démarrer le repos</button>
 </div>
 </body>
 </html>
