@@ -195,7 +195,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .tip .ic{font-size:14px;flex-shrink:0;margin-top:1px}
 .tip strong{display:block;font-size:11px;font-weight:600;margin-bottom:1px}
 .tip span{font-size:10px;color:var(--mut)}
-.timer-overlay{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--sur);border-top:2px solid var(--acc);padding:16px 20px calc(16px + var(--safe-bot));display:none;flex-direction:column;gap:12px}
+.timer-overlay{position:fixed;.timer-overlay{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--sur);border-top:2px solid var(--acc);padding:16px 20px calc(16px + var(--safe-bot));display:none;flex-direction:column;gap:12px;pointer-events:none}
+.timer-overlay.open{display:flex;pointer-events:all}bottom:0;left:0;right:0;z-index:100;background:var(--sur);border-top:2px solid var(--acc);padding:16px 20px calc(16px + var(--safe-bot));display:none;flex-direction:column;gap:12px}
 .timer-overlay.open{display:flex}
 .timer-header{display:flex;align-items:center;justify-content:space-between}
 .timer-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mut)}
