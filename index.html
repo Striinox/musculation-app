@@ -403,24 +403,6 @@ let replaceTarget = null;
 let appReady      = false; // true quand l'app est complètement initialisée
 
 // ══════════════════════════════════════
-// SAFARI IOS FIX
-// Quand Safari revient au premier plan après avoir été en arrière-plan,
-// on recharge la page. La session est dans localStorage donc l'utilisateur
-// reste connecté automatiquement via getSession() au redémarrage.
-// On utilise appReady pour ne pas recharger pendant le chargement initial.
-// ══════════════════════════════════════
-document.addEventListener('visibilitychange', async function() {
-  if (document.visibilityState === 'visible' && appReady && currentUser) {
-    const activePage = document.querySelector('.page.on');
-    if (!activePage) return;
-    const pid = activePage.id;
-    if (pid === 'page-programs')  buildProgramsPage();
-    if (pid === 'page-dashboard') loadDashboard();
-    if (pid === 'page-library')   renderLibrary();
-  }
-});
-
-// ══════════════════════════════════════
 // UTILS
 // ══════════════════════════════════════
 function showScreen(name) {
@@ -497,9 +479,9 @@ document.getElementById('btn-new-prog').addEventListener('click', startNewProgra
 
 // Écouter uniquement les connexions explicites (login form)
 sb.auth.onAuthStateChange(async function(event, session) {
-  if (event === 'SIGNED_IN' && session && session.user && !appReady) {
+  if (event === 'SIGNED_IN' && session && session.user) {
     currentUser = session.user;
-    await initUserSession();
+    if (!appReady) await initUserSession();
   }
   if (event === 'SIGNED_OUT') {
     appReady = false;
@@ -507,6 +489,14 @@ sb.auth.onAuthStateChange(async function(event, session) {
     showScreen('auth');
   }
 });
+
+(async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session && session.user) {
+    currentUser = session.user;
+    await initUserSession();
+  }
+})();
 // ══════════════════════════════════════
 // INIT USER SESSION
 // ══════════════════════════════════════
