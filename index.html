@@ -472,37 +472,16 @@ document.getElementById('btn-close-modal').addEventListener('click', closeModal)
 document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
 
 // ── AUTH STATE ──
-document.addEventListener('visibilitychange', async () => {
+document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
-    await new Promise(r => setTimeout(r, 500));
-    const { data: { session } } = await sb.auth.getSession();
-    if (session) {
-      currentUser = session.user;
-      setSyncStatus('', '');
-      const activePage = document.querySelector('.page.on');
-      if (activePage) {
-        const pid = activePage.id;
-        if (pid === 'page-programs')  buildProgramsPage();
-        if (pid === 'page-dashboard') loadDashboard();
-        if (pid === 'page-library')   renderLibrary();
-      }
-    } else {
-      location.reload();
-    }
+    location.reload();
   }
 });
- sb.auth.onAuthStateChange(async (event, session) => {
+
+sb.auth.onAuthStateChange(async (event, session) => {
   if (session && session.user) {
-    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
-      currentUser = session.user;
-      if (event === 'SIGNED_IN') {
-        await initUserSession();
-      } else if (document.getElementById('app-screen').classList.contains('active')) {
-        setSyncStatus('', '');
-      } else {
-        await initUserSession();
-      }
-    }
+    currentUser = session.user;
+    await initUserSession();
   }
 });
 // ── INIT ──
