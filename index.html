@@ -1305,7 +1305,10 @@ async function buildProgramsPage() {
     console.log('buildProgramsPage: done');
 } catch(e) {
   console.log('buildProgramsPage: error', e.message);
-  list.innerHTML = '<p style="font-size:12px;color:var(--mut);text-align:center;padding:20px">Erreur de chargement. Change de page et reviens.</p>';
+  list.innerHTML = '<div style="text-align:center;padding:20px">' +
+    '<p style="font-size:12px;color:var(--mut);margin-bottom:12px">Connexion lente au retour de Safari.</p>' +
+    '<button onclick="buildProgramsPage()" style="background:var(--acc);color:#0f0f0f;border:none;border-radius:6px;padding:10px 20px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;cursor:pointer">Réessayer</button>' +
+    '</div>';
 }
 }
   
