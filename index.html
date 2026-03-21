@@ -472,6 +472,12 @@ document.getElementById('btn-close-modal').addEventListener('click', closeModal)
 document.getElementById('btn-new-prog').addEventListener('click', startNewProgram);
 
 // ── AUTH STATE ──
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    location.reload();
+  }
+});
+
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
     location.reload();
