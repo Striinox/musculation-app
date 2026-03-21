@@ -1097,61 +1097,72 @@ document.getElementById('dash-filters').addEventListener('click', function(e) {
 async function loadDashboard() {
   if (!currentUser) return;
   setSyncStatus('Chargement...', 'syncing');
-  const { data } = await sb.from('workout_logs').select('*').eq('user_id', currentUser.id).order('session_date', { ascending: true });
-  setSyncStatus('', '');
-  const all      = data || [];
-  const filtered = dashFilter === 'all' ? all : all.filter(r => r.day_key === dashFilter);
+  
+  try {
+    const { data, error } = await Promise.race([
+      sb.from('workout_logs').select('*').eq('user_id', currentUser.id).order('session_date', { ascending: true }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000))
+    ]);
+    if (error) throw error;
+    setSyncStatus('', '');
+    const all      = data || [];
+    const filtered = dashFilter === 'all' ? all : all.filter(r => r.day_key === dashFilter);
 
-  const statsEl  = document.getElementById('dash-stats');
-  const dates    = new Set(all.map(r => r.day_key + ':' + r.session_date));
-  const totalSets= all.filter(r => r.weight_kg || r.reps).length;
-  const totalKg  = all.reduce((a, r) => a + (r.weight_kg * r.reps), 0);
-  const exDone   = new Set(all.map(r => r.exercise_id)).size;
-  statsEl.innerHTML =
-    '<div class="stat-card"><div class="stat-label">Séances</div><div class="stat-val">' + dates.size + '</div><div class="stat-sub">enregistrées</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Séries</div><div class="stat-val">' + totalSets + '</div><div class="stat-sub">toutes séances</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Volume</div><div class="stat-val">' + (totalKg >= 1000 ? (Math.round(totalKg/100)/10) + 't' : Math.round(totalKg) + 'kg') + '</div><div class="stat-sub">soulevé</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Exercices</div><div class="stat-val">' + exDone + '</div><div class="stat-sub">suivis</div></div>';
+    const statsEl  = document.getElementById('dash-stats');
+    const dates    = new Set(all.map(r => r.day_key + ':' + r.session_date));
+    const totalSets= all.filter(r => r.weight_kg || r.reps).length;
+    const totalKg  = all.reduce((a, r) => a + (r.weight_kg * r.reps), 0);
+    const exDone   = new Set(all.map(r => r.exercise_id)).size;
+    statsEl.innerHTML =
+      '<div class="stat-card"><div class="stat-label">Séances</div><div class="stat-val">' + dates.size + '</div><div class="stat-sub">enregistrées</div></div>' +
+      '<div class="stat-card"><div class="stat-label">Séries</div><div class="stat-val">' + totalSets + '</div><div class="stat-sub">toutes séances</div></div>' +
+      '<div class="stat-card"><div class="stat-label">Volume</div><div class="stat-val">' + (totalKg >= 1000 ? (Math.round(totalKg/100)/10) + 't' : Math.round(totalKg) + 'kg') + '</div><div class="stat-sub">soulevé</div></div>' +
+      '<div class="stat-card"><div class="stat-label">Exercices</div><div class="stat-val">' + exDone + '</div><div class="stat-sub">suivis</div></div>';
 
-  const filtersEl = document.getElementById('dash-filters');
-  const dayKeys   = (activeProgram?.structure.days || []).map(d => d.key);
-  filtersEl.innerHTML =
-    '<button class="flt-btn' + (dashFilter==='all'?' on':'') + '" data-filter="all">Tout</button>' +
-    dayKeys.map(k => '<button class="flt-btn' + (dashFilter===k?' on':'') + '" data-filter="' + k + '">' + k + '</button>').join('');
+    const filtersEl = document.getElementById('dash-filters');
+    const dayKeys   = (activeProgram?.structure.days || []).map(d => d.key);
+    filtersEl.innerHTML =
+      '<button class="flt-btn' + (dashFilter==='all'?' on':'') + '" data-filter="all">Tout</button>' +
+      dayKeys.map(k => '<button class="flt-btn' + (dashFilter===k?' on':'') + '" data-filter="' + k + '">' + k + '</button>').join('');
 
-  const chartsEl = document.getElementById('dash-charts');
-  if (!filtered.length) {
-    chartsEl.innerHTML = '<div class="dash-empty"><span class="dash-empty-icon">📭</span>Aucune donnée.<br>Commence à sauvegarder tes séries !</div>';
-    return;
-  }
-  const byEx = {};
-  filtered.forEach(r => { if (!byEx[r.exercise_id]) byEx[r.exercise_id] = []; byEx[r.exercise_id].push(r); });
-  let html = '';
-  Object.entries(byEx).forEach(([id, rows]) => {
-    const byDate = {};
-    rows.forEach(r => {
-      if (!byDate[r.session_date]) byDate[r.session_date] = { maxW: 0, vol: 0, best1rm: 0 };
-      byDate[r.session_date].maxW    = Math.max(byDate[r.session_date].maxW, r.weight_kg || 0);
-      byDate[r.session_date].vol    += (r.weight_kg || 0) * (r.reps || 0);
-      byDate[r.session_date].best1rm = Math.max(byDate[r.session_date].best1rm, (r.weight_kg||0) * (1 + (r.reps||0)/30));
+    const chartsEl = document.getElementById('dash-charts');
+    if (!filtered.length) {
+      chartsEl.innerHTML = '<div class="dash-empty"><span class="dash-empty-icon">📭</span>Aucune donnée.<br>Commence à sauvegarder tes séries !</div>';
+      return;
+    }
+    const byEx = {};
+    filtered.forEach(r => { if (!byEx[r.exercise_id]) byEx[r.exercise_id] = []; byEx[r.exercise_id].push(r); });
+    let html = '';
+    Object.entries(byEx).forEach(([id, rows]) => {
+      const byDate = {};
+      rows.forEach(r => {
+        if (!byDate[r.session_date]) byDate[r.session_date] = { maxW: 0, vol: 0, best1rm: 0 };
+        byDate[r.session_date].maxW    = Math.max(byDate[r.session_date].maxW, r.weight_kg || 0);
+        byDate[r.session_date].vol    += (r.weight_kg || 0) * (r.reps || 0);
+        byDate[r.session_date].best1rm = Math.max(byDate[r.session_date].best1rm, (r.weight_kg||0) * (1 + (r.reps||0)/30));
+      });
+      const pts    = Object.entries(byDate).sort((a,b) => a[0].localeCompare(b[0])).map(([d,v]) => ({ date: d, ...v }));
+      const pr     = Math.max(...pts.map(p => p.best1rm));
+      const exName = rows[0].exercise_name || id;
+      const dk     = rows[0].day_key || '';
+      html +=
+        '<div class="ex-chart-block">' +
+          '<div class="ex-chart-head">' +
+            '<span class="ex-chart-name">' + exName + '</span>' +
+            '<span class="ex-chart-day">' + dk + '</span>' +
+            (pr > 0 ? '<span class="ex-chart-pr">🏆 PR ~' + Math.round(pr*10)/10 + 'kg</span>' : '') +
+          '</div>' +
+          '<div class="chart-area">' + buildChart(pts) + '</div>' +
+        '</div>';
     });
-    const pts    = Object.entries(byDate).sort((a,b) => a[0].localeCompare(b[0])).map(([d,v]) => ({ date: d, ...v }));
-    const pr     = Math.max(...pts.map(p => p.best1rm));
-    const exName = rows[0].exercise_name || id;
-    const dk     = rows[0].day_key || '';
-    html +=
-      '<div class="ex-chart-block">' +
-        '<div class="ex-chart-head">' +
-          '<span class="ex-chart-name">' + exName + '</span>' +
-          '<span class="ex-chart-day">' + dk + '</span>' +
-          (pr > 0 ? '<span class="ex-chart-pr">🏆 PR ~' + Math.round(pr*10)/10 + 'kg</span>' : '') +
-        '</div>' +
-        '<div class="chart-area">' + buildChart(pts) + '</div>' +
-      '</div>';
-  });
-  chartsEl.innerHTML = html;
-}
+    chartsEl.innerHTML = html;
 
+  } catch(e) {
+    setSyncStatus('', '');
+    setTimeout(() => loadDashboard(), 1500);
+  }
+}
+  
 function buildChart(pts) {
   const vals = pts.map(p => p.maxW).filter(v => v > 0);
   if (!vals.length) return '<p style="font-size:11px;color:#444;padding:8px 0;font-style:italic">Sauvegarde un poids pour voir le graphique.</p>';
@@ -1238,34 +1249,43 @@ async function buildProgramsPage() {
   const list = document.getElementById('prog-list');
   if (!list || !currentUser) return;
   list.innerHTML = '<p style="font-size:11px;color:var(--mut);padding:10px">Chargement...</p>';
-  const { data } = await sb.from('programs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
-  allPrograms = data || [];
-  if (!allPrograms.length) {
-    list.innerHTML = '<p style="font-size:12px;color:var(--mut);text-align:center;padding:20px">Aucun programme trouvé.</p>';
-    return;
-  }
-  list.innerHTML = allPrograms.map(p =>
-    '<div class="prog-card' + (p.is_active ? ' active-prog' : '') + '">' +
-      '<div class="prog-card-info">' +
-        '<div class="prog-card-name">' + p.name + '</div>' +
-        '<div class="prog-card-meta">' + (p.structure?.days?.length||0) + ' jours · créé le ' + new Date(p.created_at).toLocaleDateString('fr') + '</div>' +
-      '</div>' +
-      (p.is_active ? '<span class="prog-active-badge">Actif</span>' : '') +
-      '<div class="prog-actions">' +
-        (!p.is_active ? '<button class="prog-action-btn" data-action="switch" data-id="' + p.id + '">Activer</button>' : '') +
-        (!p.is_active ? '<button class="prog-action-btn" data-action="delete" data-id="' + p.id + '">Suppr.</button>' : '') +
-      '</div>' +
-    '</div>'
-  ).join('');
-
-  list.querySelectorAll('.prog-action-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      if (this.dataset.action === 'switch') switchProgram(this.dataset.id);
-      if (this.dataset.action === 'delete') deleteProgram(this.dataset.id);
+  
+  try {
+    const { data, error } = await Promise.race([
+      sb.from('programs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000))
+    ]);
+    if (error || !data) throw new Error('no data');
+    allPrograms = data;
+    if (!allPrograms.length) {
+      list.innerHTML = '<p style="font-size:12px;color:var(--mut);text-align:center;padding:20px">Aucun programme trouvé.</p>';
+      return;
+    }
+    list.innerHTML = allPrograms.map(p =>
+      '<div class="prog-card' + (p.is_active ? ' active-prog' : '') + '">' +
+        '<div class="prog-card-info">' +
+          '<div class="prog-card-name">' + p.name + '</div>' +
+          '<div class="prog-card-meta">' + (p.structure?.days?.length||0) + ' jours · créé le ' + new Date(p.created_at).toLocaleDateString('fr') + '</div>' +
+        '</div>' +
+        (p.is_active ? '<span class="prog-active-badge">Actif</span>' : '') +
+        '<div class="prog-actions">' +
+          (!p.is_active ? '<button class="prog-action-btn" data-action="switch" data-id="' + p.id + '">Activer</button>' : '') +
+          (!p.is_active ? '<button class="prog-action-btn" data-action="delete" data-id="' + p.id + '">Suppr.</button>' : '') +
+        '</div>' +
+      '</div>'
+    ).join('');
+    list.querySelectorAll('.prog-action-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (this.dataset.action === 'switch') switchProgram(this.dataset.id);
+        if (this.dataset.action === 'delete') deleteProgram(this.dataset.id);
+      });
     });
-  });
+  } catch(e) {
+    list.innerHTML = '<p style="font-size:11px;color:var(--mut);padding:10px">Chargement...</p>';
+    setTimeout(() => buildProgramsPage(), 1500);
+  }
 }
-
+  
 async function switchProgram(id) {
   await sb.from('programs').update({ is_active: false }).eq('user_id', currentUser.id);
   await sb.from('programs').update({ is_active: true }).eq('id', id);
