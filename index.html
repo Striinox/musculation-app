@@ -705,7 +705,6 @@ async function generateProgram() {
 // ══════════════════════════════════════
 function buildProgramFromProfile(p) {
   const { objective:obj, level:lv, days_per_week:d, equipment:eq, constraints:cst } = p;
-  console.log('buildProgram:', d, 'days,', lv, 'level');
   if (eq === 'bodyweight') return buildBodyweightProgram(Math.min(d, 3));
   if (cst.includes('upper_only')) return buildUpperOnlyProgram(d, eq, obj, lv);
   if (cst.includes('lower_only')) return buildLowerOnlyProgram(d, eq, obj, lv);
@@ -764,7 +763,6 @@ const sorted = exercises.slice().sort(function(a, b) {
   if (diff !== 0) return diff;
   return Math.random() - 0.5;
 });
-  console.log('pick scores:', sorted.slice(0,6).map(function(e){ 
     return e.id + ':' + scoreExercise(e, objective, level); 
   }));
 
@@ -818,7 +816,6 @@ function buildFullBodyProgram(days, eq, obj, lv) {
   const arr = [];
   const usedIds = [];
   for (let i = 0; i < days; i++) {
-    console.log('loop:', i, 'usedIds:', usedIds.length);
     const pushAvail = getExercises({category:'push', equipment:eq}).filter(function(e) { return e.id && !usedIds.includes(e.id); });
     const pullAvail = getExercises({category:'pull', equipment:eq}).filter(function(e) { return e.id && !usedIds.includes(e.id); });
     const legsAvail = getExercises({category:'legs', equipment:eq}).filter(function(e) { return e.id && !usedIds.includes(e.id); });
@@ -826,7 +823,6 @@ function buildFullBodyProgram(days, eq, obj, lv) {
     const pullDay = pick(pullAvail, 2, obj, lv);
     const legsDay = pick(legsAvail, 2, obj, lv);
     const exs = pushDay.concat(pullDay).concat(legsDay).filter(Boolean);
-    console.log('day', i, 'exs count:', exs.length);
     exs.forEach(function(e) { if (e && e.id) usedIds.push(e.id); });
     arr.push({
       key:'J'+(i+1),
