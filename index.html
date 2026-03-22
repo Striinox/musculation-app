@@ -818,6 +818,7 @@ function buildFullBodyProgram(days, eq, obj, lv) {
   const arr = [];
   const usedIds = [];
   for (let i = 0; i < days; i++) {
+    console.log('loop iteration:', i, 'of', days);
     const pushAvail = getExercises({category:'push', equipment:eq}).filter(function(e) { return !usedIds.includes(e.id); });
     const pullAvail = getExercises({category:'pull', equipment:eq}).filter(function(e) { return !usedIds.includes(e.id); });
     const legsAvail = getExercises({category:'legs', equipment:eq}).filter(function(e) { return !usedIds.includes(e.id); });
