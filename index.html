@@ -810,15 +810,14 @@ function buildUpperLowerProgram(eq, obj, lv) {
 }
 
 function buildFullBodyProgram(days, eq, obj, lv) {
-  const pushAll = getExercises({category:'push', equipment:eq});
-  const pullAll = getExercises({category:'pull', equipment:eq});
-  const legsAll = getExercises({category:'legs', equipment:eq});
+  const pushAll = pick(getExercises({category:'push', equipment:eq}), Math.max(days*2, 6), obj, lv);
+  const pullAll = pick(getExercises({category:'pull', equipment:eq}), Math.max(days*2, 6), obj, lv);
+  const legsAll = pick(getExercises({category:'legs', equipment:eq}), Math.max(days*2, 6), obj, lv);
   const arr = [];
   for (let i = 0; i < days; i++) {
-    const offset = i * 2;
-    const exs = pick(pushAll.slice(offset), 2, obj, lv)
-      .concat(pick(pullAll.slice(offset), 2, obj, lv))
-      .concat(pick(legsAll.slice(offset), 2, obj, lv));
+    const exs = pushAll.slice(i*2, i*2+2)
+      .concat(pullAll.slice(i*2, i*2+2))
+      .concat(legsAll.slice(i*2, i*2+2));
     arr.push({ key:'J'+(i+1), label:'Full Body '+String.fromCharCode(65+i), subtitle:'Corps complet', exercises:exs });
   }
   return { type:'FullBody', days:arr };
