@@ -871,17 +871,6 @@ function buildUpperLowerProgram(eq, obj, lv) {
   ]};
 }
 
-function buildFullBodyProgram(days, eq, obj) {
-  const exs = pick(getExercises({category:'push',equipment:eq}),2)
-    .concat(pick(getExercises({category:'pull',equipment:eq}),2))
-    .concat(pick(getExercises({category:'legs',equipment:eq}),2));
-  const arr = [];
-  for (let i = 0; i < days; i++) {
-    arr.push({ key:'J'+(i+1), label:'Full Body '+String.fromCharCode(65+i), subtitle:'Corps complet', exercises:exs });
-  }
-  return { type:'FullBody', days:arr };
-}
-
 function buildBodyweightProgram(days) { return buildFullBodyProgram(days, 'bodyweight', 'fitness'); }
 
 function buildUpperOnlyProgram(days, eq) {
