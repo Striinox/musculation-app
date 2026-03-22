@@ -811,9 +811,9 @@ function buildUpperLowerProgram(eq, obj, lv) {
 
 function buildFullBodyProgram(days, eq, obj, lv) {
   const pushAll = pick(getExercises({category:'push', equipment:eq}), Math.max(days*2, 6), obj, lv);
-  console.log('pushAll ids:', pushAll.map(function(e){return e.id;}));
   const pullAll = pick(getExercises({category:'pull', equipment:eq}), Math.max(days*2, 6), obj, lv);
   const legsAll = pick(getExercises({category:'legs', equipment:eq}), Math.max(days*2, 6), obj, lv);
+  console.log('pushAll ids:', pushAll.map(function(e){return e.id;}));
   const arr = [];
   for (let i = 0; i < days; i++) {
     const exs = pushAll.slice(i*2, i*2+2)
