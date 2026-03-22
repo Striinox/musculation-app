@@ -511,8 +511,12 @@ console.log('before init');
 (async function init() {
   console.log('before getSession');
   try {
-    const { data: { session }, error } = await sb.auth.getSession();
-    console.log('after getSession:', session ? 'found' : 'null', 'error:', error);
+    const sessionPromise = sb.auth.getSession();
+    const timeoutPromise = new Promise(function(resolve) {
+      setTimeout(function() { resolve({ data: { session: null } }); }, 3000);
+    });
+    const { data: { session }, error } = await Promise.race([sessionPromise, timeoutPromise]);
+    console.log('after getSession:', session ? 'found' : 'null');
     if (session && session.user) {
       currentUser = session.user;
       await initUserSession();
