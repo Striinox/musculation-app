@@ -815,16 +815,17 @@ function buildUpperLowerProgram(eq, obj, lv) {
 }
 
 function buildFullBodyProgram(days, eq, obj, lv) {
-  const needed = days * 2 + 2;
-  const pushAll = pick(getExercises({category:'push', equipment:eq}), needed, obj, lv);
-  const pullAll = pick(getExercises({category:'pull', equipment:eq}), needed, obj, lv);
-  const legsAll = pick(getExercises({category:'legs', equipment:eq}), needed, obj, lv);
   const arr = [];
+  const usedIds = [];
   for (let i = 0; i < days; i++) {
-    const exs = [pushAll[i*2], pushAll[i*2+1]]
-      .concat([pullAll[i*2], pullAll[i*2+1]])
-      .concat([legsAll[i*2], legsAll[i*2+1]])
-      .filter(Boolean);
+    const pushAvail = getExercises({category:'push', equipment:eq}).filter(function(e) { return !usedIds.includes(e.id); });
+    const pullAvail = getExercises({category:'pull', equipment:eq}).filter(function(e) { return !usedIds.includes(e.id); });
+    const legsAvail = getExercises({category:'legs', equipment:eq}).filter(function(e) { return !usedIds.includes(e.id); });
+    const pushDay = pick(pushAvail, 2, obj, lv);
+    const pullDay = pick(pullAvail, 2, obj, lv);
+    const legsDay = pick(legsAvail, 2, obj, lv);
+    const exs = pushDay.concat(pullDay).concat(legsDay);
+    exs.forEach(function(e) { usedIds.push(e.id); });
     arr.push({
       key:'J'+(i+1),
       label:'Full Body '+String.fromCharCode(65+i),
