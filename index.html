@@ -826,7 +826,7 @@ function buildFullBodyProgram(days, eq, obj, lv) {
     const legsDay = pick(legsAvail, 2, obj, lv);
     const exs = pushDay.concat(pullDay).concat(legsDay);
     exs.forEach(function(e) { usedIds.push(e.id); });
-    console.log('usedIds after day 0:', JSON.stringify(usedIds));
+    console.log('day:', i, 'usedIds:', JSON.stringify(usedIds));;
     arr.push({
       key:'J'+(i+1),
       label:'Full Body '+String.fromCharCode(65+i),
