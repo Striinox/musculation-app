@@ -7,31 +7,52 @@ Application web progressive (PWA) de suivi d'entraînement musculation, optimis�
 ## Fonctionnalités
 
 ### Programme personnalisé
-- Questionnaire d'onboarding en 5 étapes (objectif, niveau, jours, matériel, contraintes)
-- Algorithme de recommandation avec scoring intelligent adapté au profil
+- Questionnaire d'onboarding en 5 étapes (objectif, niveau, jours, équipement, contraintes)
+- Algorithme de recommandation avec scoring intelligent qui génère le programme adapté au profil
 - Programmes supportés : Push/Pull/Legs, Upper/Lower, Full Body, Poids du corps, Haut uniquement, Bas uniquement
-- Variété entre les jours — exercices différents à chaque séance Full Body
+- Variété des exercices entre les jours (Jour A ≠ Jour B)
 - Gestion de plusieurs programmes avec possibilité de switcher
 - Remplacement d'exercices dans le programme depuis la bibliothèque
+
+### Algorithme de scoring
+Chaque exercice est noté selon le profil de l'utilisateur :
+- **Type de mouvement** : polyarticulaire (compound) ou isolation
+- **Objectif** : masse, sèche ou forme générale
+- **Niveau** : débutant, intermédiaire, avancé
+- Pour la masse : 70% d'exercices polyarticulaires + 30% d'isolation
+- Les exercices trop avancés sont déprioritisés mais conservés si nécessaire
 
 ### Suivi des séances
 - Saisie des poids et répétitions par série
 - Sélection de la date de séance
 - Sauvegarde automatique dans Supabase (cloud)
 - Historique par exercice avec détection automatique des PRs (1RM estimé)
-- Timer de repos entre les séries — choix du temps (45s / 1min / 1m30 / 2min / 3min), mémorisation du dernier temps utilisé par exercice, vibration à la fin
+
+### Timer de repos
+- Se déclenche automatiquement après chaque sauvegarde de série
+- Choix du temps de repos : 45s / 1min / 1m30 / 2min / 3min
+- Mémorisation du dernier temps choisi par exercice
+- Barre de progression visuelle
+- Passage en rouge dans les 10 dernières secondes
+- Vibration à la fin du timer
 
 ### Bibliothèque d'exercices
 - 67 exercices catalogués avec schémas SVG
-- Filtres par catégorie (Push, Pull, Legs, Core) et niveau (Débutant, Intermédiaire, Avancé)
+- Classés par type (compound/isolation) et objectif (masse, sèche, forme)
+- Filtres par catégorie (Push, Pull, Legs, Core) et niveau
 - Recherche par nom ou muscle ciblé
-- Détails : muscle principal, muscles secondaires, description technique, variantes, matériel requis
 
 ### Dashboard de progression
 - Statistiques globales : séances, séries, volume total soulevé, exercices suivis
 - Graphiques de progression par exercice (poids max dans le temps)
 - Détection et affichage des records personnels (PR)
 - Filtres par jour d'entraînement
+
+### Session persistante
+- Connexion maintenue après fermeture de Safari
+- Connexion maintenue après verrouillage de l'iPhone
+- Connexion maintenue après rechargement de la page
+- Compatible Safari iOS et Chrome
 
 ---
 
@@ -88,56 +109,46 @@ user_id, exercise_id, exercise_name, day_key, session_date, set_number, weight_k
 
 ---
 
-## Développement
-
-### Structure du projet
+## Structure du projet
 ```
 musculation-app/
-├── index.html    # Application complète (HTML + CSS + JS)
-└── README.md     # Documentation
+└── index.html    # Application complète (HTML + CSS + JS)
 ```
 
-### Algorithme de recommandation
+---
 
-**Sélection du type de programme** selon le profil :
+## Algorithme de recommandation
+
+### Sélection du type de programme
 
 | Condition | Programme généré |
 |-----------|-----------------|
 | Poids du corps | Full Body 3j max |
 | Contrainte haut uniquement | Push/Pull alternés |
 | Contrainte bas uniquement | Legs A/B/C |
-| 2-3 jours (tous niveaux) | Full Body A/B/C avec exercices variés |
+| 2-3 jours (tous niveaux) | Full Body |
 | Débutant 4 jours | Upper / Lower |
 | Débutant 5-6 jours | Push / Pull / Legs |
 | Intermédiaire/Avancé 4 jours | Upper / Lower |
 | Intermédiaire/Avancé 5-6 jours | Push / Pull / Legs |
 
-**Scoring des exercices** — chaque exercice reçoit un score selon le profil :
+### Scoring des exercices
 
-| Critère | Points |
-|---------|--------|
-| Niveau correspond exactement | +3 |
-| Niveau trop avancé | -5 |
-| Niveau plus facile | +1 |
-| Objectif correspond | +3 |
-| Polyarticulaire + objectif masse | +3 |
-| Isolation + objectif masse | +1 |
-| Isolation + objectif sèche/forme | +2 |
-| Polyarticulaire + objectif forme | +2 |
-
-**Répartition masse** : 70% polyarticulaires + 30% isolation
-
-**Variété Full Body** : chaque jour exclut les exercices des jours précédents pour assurer une rotation complète.
+```
+score = 0
+Niveau correspond parfaitement    → +3
+Niveau trop avancé                → -5
+Niveau plus facile                → +1
+Objectif inclus dans l'exercice   → +3
+Masse + exercice polyarticulaire  → +3
+Masse + exercice isolation        → +1
+Sèche + exercice isolation        → +2
+Forme + exercice polyarticulaire  → +2
+```
 
 ---
 
 ## Roadmap
-
-### Livré
-- Timer de repos entre les séries
-- Algorithme de scoring des exercices
-- Variété des exercices entre les jours Full Body
-- Correction bug Safari iOS (session persistante)
 
 ### Planifié
 - Pré-remplissage avec les valeurs de la dernière séance
@@ -145,6 +156,7 @@ musculation-app/
 - Export PDF de la progression
 - Accès coach (lecture seule)
 - Mode hors-ligne (Service Worker)
+- Personnalisation du programme (ajouter/supprimer exercices)
 
 ### Futur
 - Système de paiement (Stripe)
@@ -155,28 +167,25 @@ musculation-app/
 
 ## Historique des versions
 
-### v4 — Mars 2026
-- Timer de repos entre les séries (45s / 1min / 1m30 / 2min / 3min)
-- Algorithme de scoring intelligent des exercices
-- Variété des exercices entre les jours Full Body
-- Correction bug création de programme (double définition de fonction)
-- Ajout colonnes `movement_type` et `objectives` dans `exercises_library`
-
 ### v3 — Mars 2026
-- Correction bug Safari iOS (session persistante, chargement au retour)
+- Session persistante après refresh, fermeture de Safari et verrouillage iPhone
+- Timer de repos avec choix du temps et mémorisation par exercice
+- Algorithme de scoring intelligent pour la recommandation d'exercices
+- Variété des exercices entre les jours Full Body
+- Correction bug double définition de fonction
 - Refactoring complet du code JavaScript
 
 ### v2 — Mars 2026
-- Questionnaire d'onboarding
+- Questionnaire d'onboarding 5 étapes
 - Algorithme de recommandation de programme
-- Bibliothèque de 67 exercices
-- Gestion multi-programmes
-- Remplacement d'exercices
+- Bibliothèque de 67 exercices avec filtres
+- Gestion multi-programmes avec switch
+- Remplacement d'exercices dans le programme
 - Migration utilisateurs existants
 
 ### v1 — Mars 2026
-- Programme Push/Pull/Legs 5 jours codé en dur
+- Programme Push/Pull/Legs 5 jours
 - Système de logging avec sauvegarde Supabase
-- Dashboard de progression
+- Dashboard de progression avec graphiques
 - Schémas SVG des exercices
 - Déploiement GitHub Pages + PWA iPhone
