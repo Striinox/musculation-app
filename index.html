@@ -759,9 +759,10 @@ function scoreExercise(e, objective, level) {
 
 function pick(exercises, n, objective, level) {
   // Trier par score décroissant
-  const sorted = exercises.slice().sort(function(a, b) {
-    return scoreExercise(b, objective, level) - scoreExercise(a, objective, level);
-  });
+const sorted = exercises.slice().sort(function(a, b) {
+  const diff = scoreExercise(b, objective, level) - scoreExercise(a, objective, level);
+  return diff !== 0 ? diff : (Math.random() - 0.5) * 0.1;
+});
 
   // Pour masse : 70% compound + 30% isolation
   if (objective === 'mass' && n >= 3) {
@@ -810,16 +811,22 @@ function buildUpperLowerProgram(eq, obj, lv) {
 }
 
 function buildFullBodyProgram(days, eq, obj, lv) {
-  const pushAll = pick(getExercises({category:'push', equipment:eq}), Math.max(days*2, 6), obj, lv);
-  const pullAll = pick(getExercises({category:'pull', equipment:eq}), Math.max(days*2, 6), obj, lv);
-  const legsAll = pick(getExercises({category:'legs', equipment:eq}), Math.max(days*2, 6), obj, lv);
-  console.log('pushAll ids:', pushAll.map(function(e){return e.id;}));
+  const needed = days * 2 + 2;
+  const pushAll = pick(getExercises({category:'push', equipment:eq}), needed, obj, lv);
+  const pullAll = pick(getExercises({category:'pull', equipment:eq}), needed, obj, lv);
+  const legsAll = pick(getExercises({category:'legs', equipment:eq}), needed, obj, lv);
   const arr = [];
   for (let i = 0; i < days; i++) {
-    const exs = pushAll.slice(i*2, i*2+2)
-      .concat(pullAll.slice(i*2, i*2+2))
-      .concat(legsAll.slice(i*2, i*2+2));
-    arr.push({ key:'J'+(i+1), label:'Full Body '+String.fromCharCode(65+i), subtitle:'Corps complet', exercises:exs });
+    const exs = [pushAll[i*2], pushAll[i*2+1]]
+      .concat([pullAll[i*2], pullAll[i*2+1]])
+      .concat([legsAll[i*2], legsAll[i*2+1]])
+      .filter(Boolean);
+    arr.push({
+      key:'J'+(i+1),
+      label:'Full Body '+String.fromCharCode(65+i),
+      subtitle:'Corps complet',
+      exercises:exs
+    });
   }
   return { type:'FullBody', days:arr };
 }
