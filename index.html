@@ -758,11 +758,13 @@ function scoreExercise(e, objective, level) {
 }
 
 function pick(exercises, n, objective, level) {
-  // Trier par score décroissant
-const sorted = exercises.slice().sort(function(a, b) {
-  const diff = scoreExercise(b, objective, level) - scoreExercise(a, objective, level);
-  return diff !== 0 ? diff : (Math.random() - 0.5) * 0.1;
-});
+  const sorted = exercises.slice().sort(function(a, b) {
+    const diff = scoreExercise(b, objective, level) - scoreExercise(a, objective, level);
+    return diff !== 0 ? diff : (Math.random() - 0.5) * 0.1;
+  });
+  console.log('pick scores:', sorted.slice(0,6).map(function(e){ 
+    return e.id + ':' + scoreExercise(e, objective, level); 
+  }));
 
   // Pour masse : 70% compound + 30% isolation
   if (objective === 'mass' && n >= 3) {
