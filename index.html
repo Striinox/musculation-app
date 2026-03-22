@@ -408,6 +408,8 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
 // ══════════════════════════════════════
 let currentUser   = null;
 let activeProgram = null;
+let appReady = false;
+let isInitializing = false; // nouveau
 let allPrograms   = [];
 let libraryCache  = [];
 let libFilter     = 'all';
@@ -539,6 +541,8 @@ console.log('before init');
 // INIT USER SESSION
 // ══════════════════════════════════════
 async function initUserSession() {
+  if (isInitializing) { console.log('already initializing, skip'); return; }
+  isInitializing = true;
   console.log('initUserSession started');
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
   console.log('library loaded:', lib ? lib.length : 0);
@@ -558,6 +562,7 @@ async function initUserSession() {
     initAppUI();
     appReady = true;
   }
+    isInitializing = false;
 }
 
 // ══════════════════════════════════════
