@@ -680,9 +680,6 @@ async function migrateExistingProgram() {
 async function generateProgram() {
   showOnbStep(6);
   const prof = onbProfile;
-  console.log('profile:', JSON.stringify(prof));
-  console.log('libraryCache size:', libraryCache.length);
-  console.log('first exercise:', JSON.stringify(libraryCache[0]));
   await sb.from('user_profiles').upsert({
     user_id: currentUser.id, objective: prof.objective, level: prof.level,
     days_per_week: prof.days_per_week, equipment: prof.equipment, constraints: prof.constraints
