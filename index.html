@@ -417,6 +417,7 @@ let onbStep       = 1;
 let existingChoice= null;
 let replaceTarget = null;
 let appReady      = false; // true quand l'app est complètement initialisée
+console.log('state initialized');
 
 // ══════════════════════════════════════
 // UTILS
@@ -506,6 +507,7 @@ sb.auth.onAuthStateChange(async function(event, session) {
   }
 });
 
+console.log('before init');
 (async function init() {
   const { data: { session } } = await sb.auth.getSession();
   console.log('init session:', session ? 'found' : 'null');
