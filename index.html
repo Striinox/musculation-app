@@ -387,7 +387,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 
 <script>
 (function() {
-console.log('script started');
 
 // ══════════════════════════════════════
 // SUPABASE
@@ -418,7 +417,6 @@ let onbProfile    = { objective:'', level:'', days_per_week:0, equipment:'', con
 let onbStep       = 1;
 let existingChoice= null;
 let replaceTarget = null;
-console.log('state initialized');
 
 // ══════════════════════════════════════
 // UTILS
@@ -508,32 +506,27 @@ sb.auth.onAuthStateChange(async function(event, session) {
   }
 });
 
-console.log('before init');
 (async function init() {
-  console.log('before getSession');
   try {
     // Lire la session depuis localStorage directement
     const storageKey = 'sb-rqymrinhvihfrlgklkfi-auth-token';
     const raw = localStorage.getItem(storageKey);
-    console.log('localStorage session:', raw ? 'found' : 'null');
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && parsed.user) {
         currentUser = parsed.user;
-        console.log('user from storage:', currentUser.email);
         await initUserSession();
         return;
       }
     }
     // Fallback sur getSession
     const { data: { session } } = await sb.auth.getSession();
-    console.log('after getSession:', session ? 'found' : 'null');
     if (session && session.user) {
       currentUser = session.user;
       await initUserSession();
     }
   } catch(e) {
-    console.log('init error:', e.message);
+    // init failed silently
   }
 })();
 // ══════════════════════════════════════
@@ -542,14 +535,11 @@ console.log('before init');
 async function initUserSession() {
   if (isInitializing) { console.log('already initializing, skip'); return; }
   isInitializing = true;
-  console.log('initUserSession started');
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
-  console.log('library loaded:', lib ? lib.length : 0);
   libraryCache = lib || [];
 
   const { data: profile, error: profileError } = await sb.from('user_profiles')
     .select('*').eq('user_id', currentUser.id).single();
-  console.log('profile loaded:', profile ? 'found' : 'null', 'error:', profileError?.message);
 
   if (!profile) {
     const { data: logs } = await sb.from('workout_logs')
