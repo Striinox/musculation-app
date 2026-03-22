@@ -494,9 +494,9 @@ document.getElementById('btn-new-prog').addEventListener('click', startNewProgra
 
 // Écouter uniquement les connexions explicites (login form)
 sb.auth.onAuthStateChange(async function(event, session) {
-  if (event === 'SIGNED_IN' && session && session.user) {
+  if (event === 'SIGNED_IN' && session && session.user && !appReady) {
     currentUser = session.user;
-    if (!appReady) await initUserSession();
+    await initUserSession();
   }
   if (event === 'SIGNED_OUT') {
     appReady = false;
