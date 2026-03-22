@@ -539,6 +539,7 @@ console.log('before init');
 // INIT USER SESSION
 // ══════════════════════════════════════
 async function initUserSession() {
+  console.log('initUserSession started');
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
   libraryCache = lib || [];
 
