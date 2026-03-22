@@ -810,11 +810,15 @@ function buildUpperLowerProgram(eq, obj, lv) {
 }
 
 function buildFullBodyProgram(days, eq, obj, lv) {
-  const exs = pick(getExercises({category:'push',equipment:eq}),2,obj,lv)
-    .concat(pick(getExercises({category:'pull',equipment:eq}),2,obj,lv))
-    .concat(pick(getExercises({category:'legs',equipment:eq}),2,obj,lv));
+  const pushAll = getExercises({category:'push', equipment:eq});
+  const pullAll = getExercises({category:'pull', equipment:eq});
+  const legsAll = getExercises({category:'legs', equipment:eq});
   const arr = [];
   for (let i = 0; i < days; i++) {
+    const offset = i * 2;
+    const exs = pick(pushAll.slice(offset), 2, obj, lv)
+      .concat(pick(pullAll.slice(offset), 2, obj, lv))
+      .concat(pick(legsAll.slice(offset), 2, obj, lv));
     arr.push({ key:'J'+(i+1), label:'Full Body '+String.fromCharCode(65+i), subtitle:'Corps complet', exercises:exs });
   }
   return { type:'FullBody', days:arr };
