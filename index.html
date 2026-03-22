@@ -710,7 +710,9 @@ function buildProgramFromProfile(p) {
   if (eq === 'bodyweight') return buildBodyweightProgram(Math.min(d, 3));
   if (cst.includes('upper_only')) return buildUpperOnlyProgram(d, eq, obj, lv);
   if (cst.includes('lower_only')) return buildLowerOnlyProgram(d, eq, obj, lv);
-  if (d <= 3 || lv === 'beginner') return buildFullBodyProgram(d, eq, obj, lv);
+  if (d <= 3) return buildFullBodyProgram(d, eq, obj, lv);
+  if (lv === 'beginner' && d === 4) return buildUpperLowerProgram(eq, obj, lv);
+  if (lv === 'beginner' && d >= 5) return buildPPLProgram(eq, obj, lv, d);
   if (d === 4) return buildUpperLowerProgram(eq, obj, lv);
   return buildPPLProgram(eq, obj, lv, d);
 }
