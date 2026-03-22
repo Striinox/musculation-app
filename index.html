@@ -507,8 +507,10 @@ sb.auth.onAuthStateChange(async function(event, session) {
 
 (async function init() {
   const { data: { session } } = await sb.auth.getSession();
+  console.log('init session:', session ? 'found' : 'null');
   if (session && session.user) {
     currentUser = session.user;
+    console.log('init user:', currentUser.email);
     await initUserSession();
   }
 })();
