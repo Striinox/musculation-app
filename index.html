@@ -509,12 +509,16 @@ sb.auth.onAuthStateChange(async function(event, session) {
 
 console.log('before init');
 (async function init() {
-  const { data: { session } } = await sb.auth.getSession();
-  console.log('init session:', session ? 'found' : 'null');
-  if (session && session.user) {
-    currentUser = session.user;
-    console.log('init user:', currentUser.email);
-    await initUserSession();
+  console.log('before getSession');
+  try {
+    const { data: { session }, error } = await sb.auth.getSession();
+    console.log('after getSession:', session ? 'found' : 'null', 'error:', error);
+    if (session && session.user) {
+      currentUser = session.user;
+      await initUserSession();
+    }
+  } catch(e) {
+    console.log('getSession error:', e.message);
   }
 })();
 // ══════════════════════════════════════
