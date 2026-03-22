@@ -705,6 +705,7 @@ async function generateProgram() {
 // ══════════════════════════════════════
 function buildProgramFromProfile(p) {
   const { objective:obj, level:lv, days_per_week:d, equipment:eq, constraints:cst } = p;
+  console.log('buildProgram:', d, 'days,', lv, 'level');
   if (eq === 'bodyweight') return buildBodyweightProgram(Math.min(d, 3));
   if (cst.includes('upper_only')) return buildUpperOnlyProgram(d, eq, obj, lv);
   if (cst.includes('lower_only')) return buildLowerOnlyProgram(d, eq, obj, lv);
