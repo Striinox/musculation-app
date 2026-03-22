@@ -541,10 +541,12 @@ console.log('before init');
 async function initUserSession() {
   console.log('initUserSession started');
   const { data: lib } = await sb.from('exercises_library').select('*').order('name');
+  console.log('library loaded:', lib ? lib.length : 0);
   libraryCache = lib || [];
 
-  const { data: profile } = await sb.from('user_profiles')
+  const { data: profile, error: profileError } = await sb.from('user_profiles')
     .select('*').eq('user_id', currentUser.id).single();
+  console.log('profile loaded:', profile ? 'found' : 'null', 'error:', profileError?.message);
 
   if (!profile) {
     const { data: logs } = await sb.from('workout_logs')
