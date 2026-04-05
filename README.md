@@ -8,19 +8,20 @@ Application web progressive (PWA) de suivi d'entraînement musculation, optimis�
 
 ### Programme personnalisé
 - Questionnaire d'onboarding en 5 étapes (objectif, niveau, jours, équipement, contraintes)
-- Algorithme de recommandation avec scoring intelligent qui génère le programme adapté au profil
+- Algorithme de recommandation avec scoring intelligent adapté au profil
 - Programmes supportés : Push/Pull/Legs, Upper/Lower, Full Body, Poids du corps, Haut uniquement, Bas uniquement
-- Variété des exercices entre les jours (Jour A ≠ Jour B)
+- Variété des exercices entre les jours (Jour A ≠ Jour B, Push ≠ Push Bis)
+- Aucun doublon de mouvement dans la même séance (ex: pas deux types de curl ensemble)
 - Gestion de plusieurs programmes avec possibilité de switcher
 - Remplacement d'exercices dans le programme depuis la bibliothèque
 
 ### Algorithme de scoring
 Chaque exercice est noté selon le profil de l'utilisateur :
 - **Type de mouvement** : polyarticulaire (compound) ou isolation
-- **Objectif** : masse, sèche ou forme générale
-- **Niveau** : débutant, intermédiaire, avancé
-- Pour la masse : 70% d'exercices polyarticulaires + 30% d'isolation
-- Les exercices trop avancés sont déprioritisés mais conservés si nécessaire
+- **Objectif** : masse, sèche ou forme générale — pour la masse : 70% compound + 30% isolation
+- **Niveau** : correspondance parfaite +3, trop avancé -5, plus facile +1
+- **Pattern de mouvement** : limité à 1 exercice par pattern (dip, curl, squat, row...)
+- **Muscle primaire** : limité à 2 exercices par groupe musculaire par séance
 
 ### Suivi des séances
 - Saisie des poids et répétitions par série
@@ -37,10 +38,11 @@ Chaque exercice est noté selon le profil de l'utilisateur :
 - Vibration à la fin du timer
 
 ### Bibliothèque d'exercices
-- 67 exercices catalogués avec schémas SVG
-- Classés par type (compound/isolation) et objectif (masse, sèche, forme)
+- 67 exercices catalogués avec illustrations DALL-E
+- Classés par type (compound/isolation), objectif et pattern de mouvement
 - Filtres par catégorie (Push, Pull, Legs, Core) et niveau
 - Recherche par nom ou muscle ciblé
+- Description technique de chaque exercice
 
 ### Dashboard de progression
 - Statistiques globales : séances, séries, volume total soulevé, exercices suivis
@@ -64,7 +66,18 @@ Chaque exercice est noté selon le profil de l'utilisateur :
 | Hébergement | GitHub Pages |
 | Base de données | Supabase (PostgreSQL) |
 | Authentification | Supabase Auth (email / mot de passe) |
-| Schémas exercices | SVG inline |
+| Illustrations | DALL-E + Supabase Storage |
+
+---
+
+## Environnements
+
+| Environnement | URL | Usage |
+|---------------|-----|-------|
+| Production | striinox.github.io/musculation-app | App stable utilisée en salle |
+| Sandbox | striinox.github.io/musculation-app-dev | Développement et tests |
+
+Toutes les modifications passent d'abord par la sandbox avant d'être promues en production.
 
 ---
 
@@ -82,16 +95,20 @@ user_id, objective, level, days_per_week, equipment, constraints
 user_id, name, is_active, structure (JSONB)
 ```
 
-**`exercises_library`** — Bibliothèque des exercices (lecture publique)
+**`exercises_library`** — Bibliothèque des exercices
 ```
 id, name, muscle_primary, muscles_secondary, category, equipment, level,
-reps_recommended, description, tips, variants, movement_type, objectives
+reps_recommended, description, tips, variants,
+movement_type, objectives, movement_pattern
 ```
 
 **`workout_logs`** — Logs des séances
 ```
 user_id, exercise_id, exercise_name, day_key, session_date, set_number, weight_kg, reps
 ```
+
+### Storage
+- Bucket `exercise-images` — illustrations DALL-E des exercices (public)
 
 ### Sécurité
 - Row Level Security (RLS) activé sur toutes les tables
@@ -106,14 +123,6 @@ user_id, exercise_id, exercise_name, day_key, session_date, set_number, weight_k
 2. Appuyer sur le bouton **Partager** (carré avec flèche)
 3. Sélectionner **"Sur l'écran d'accueil"**
 4. L'app s'installe comme une application native
-
----
-
-## Structure du projet
-```
-musculation-app/
-└── index.html    # Application complète (HTML + CSS + JS)
-```
 
 ---
 
@@ -146,12 +155,27 @@ Sèche + exercice isolation        → +2
 Forme + exercice polyarticulaire  → +2
 ```
 
+### Règles anti-doublon par séance
+- Maximum 1 exercice par `movement_pattern` (curl, dip, squat, row, pulldown...)
+- Maximum 2 exercices par `muscle_primary`
+- Exercices déjà utilisés dans la séance A exclus de la séance B
+
+### Répartition des niveaux
+- Débutant : 28 exercices
+- Intermédiaire : 30 exercices
+- Avancé : 9 exercices
+
 ---
 
 ## Roadmap
 
+### En cours
+- Illustrations manquantes : écarté poulie basse, leg curl assis, squat barre
+
 ### Planifié
 - Pré-remplissage avec les valeurs de la dernière séance
+- Politique de confidentialité RGPD
+- Icône PWA personnalisée
 - Notifications de rappel d'entraînement
 - Export PDF de la progression
 - Accès coach (lecture seule)
@@ -167,12 +191,19 @@ Forme + exercice polyarticulaire  → +2
 
 ## Historique des versions
 
+### v4 — Mars 2026
+- Illustrations DALL-E pour 60+ exercices stockées dans Supabase Storage
+- Algorithme anti-doublon avec `movement_pattern`
+- Correction niveaux exercices (débutant/intermédiaire/avancé)
+- Variété des exercices entre Upper A/B et Push/Push Bis
+- Sandbox de développement séparée (`musculation-app-dev`)
+- Workflow sandbox → production établi
+
 ### v3 — Mars 2026
 - Session persistante après refresh, fermeture de Safari et verrouillage iPhone
 - Timer de repos avec choix du temps et mémorisation par exercice
-- Algorithme de scoring intelligent pour la recommandation d'exercices
+- Algorithme de scoring intelligent (`movement_type`, `objectives`)
 - Variété des exercices entre les jours Full Body
-- Correction bug double définition de fonction
 - Refactoring complet du code JavaScript
 
 ### v2 — Mars 2026
