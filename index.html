@@ -210,6 +210,9 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .timer-bar{height:3px;background:var(--brd);border-radius:2px;overflow:hidden}
 .timer-bar-fill{height:100%;background:var(--acc);transition:width 1s linear;width:100%}
 .timer-bar-fill.urgent{background:var(--red)}
+.wday .wst{font-size:14px;margin-top:4px}
+.wday.done{border-color:var(--acc);background:rgba(21,101,192,.06)}
+.wday .wvol{font-size:9px;color:var(--acc);font-weight:600;margin-top:3px}
 </style>
 </head>
 <body>
@@ -1176,21 +1179,160 @@ if (lastLogs) {
   });
 }
 
-function buildWeekOverview() {
+async function buildWeekOverview() {
   const el = document.getElementById('week-overview');
-  if (!activeProgram) { el.innerHTML=''; return; }
-  const days  = activeProgram.structure.days;
-  const names = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-  let html = '<div class="week-grid">';
-  for (let i = 0; i < 7; i++) {
-    const d = days[i];
-    if (d) html += '<div class="wday"><div class="wn">'+names[i]+'</div><div class="wt">'+d.label+'</div></div>';
-    else   html += '<div class="wday rest"><div class="wn">'+names[i]+'</div><div class="wt">Repos</div></div>';
+  if (!activeProgram) { el.innerHTML = ''; return; }
+
+  const days = activeProgram.structure.days;
+  const assignments = activeProgram.structure.day_assignments || {};
+
+  if (!Object.keys(assignments).length) {
+    days.forEach(function(d, i) { assignments[d.key] = i; });
   }
+
+  const dayMap = {};
+  Object.keys(assignments).forEach(function(key) {
+    dayMap[assignments[key]] = key;
+  });
+
+  // Logs semaine en cours
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const weekStart = monday.toISOString().slice(0, 10);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  const weekEnd = sunday.toISOString().slice(0, 10);
+
+  const { data: weekLogs } = await sb.from('workout_logs')
+    .select('day_key, session_date')
+    .eq('user_id', currentUser.id)
+    .gte('session_date', weekStart)
+    .lte('session_date', weekEnd);
+
+  const doneDays = new Set((weekLogs || []).map(function(l) { return l.day_key; }));
+
+  // Dernière date par day_key + volume
+  const { data: allLogs } = await sb.from('workout_logs')
+    .select('day_key, session_date, weight_kg, reps')
+    .eq('user_id', currentUser.id)
+    .order('session_date', { ascending: false });
+
+  // Pour chaque day_key : trouver la dernière session_date et son volume
+  const lastSession = {};
+  (allLogs || []).forEach(function(l) {
+    if (!lastSession[l.day_key]) lastSession[l.day_key] = { date: l.session_date, volume: 0 };
+    if (l.session_date === lastSession[l.day_key].date) {
+      lastSession[l.day_key].volume += (l.weight_kg || 0) * (l.reps || 0);
+    }
+  });
+
+  const names = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+  let html = '<div class="week-grid">';
+
+  for (let i = 0; i < 7; i++) {
+    const key = dayMap[i];
+    const d = key ? days.find(function(x) { return x.key === key; }) : null;
+    const done = key && doneDays.has(key);
+    const last = key && lastSession[key];
+
+if (d) {
+  html += '<div class="wday' + (done ? ' done' : '') + '" draggable="true" data-key="' + key + '" data-idx="' + i + '">' +
+    '<div class="wn">' + names[i] + '</div>' +
+    '<div class="wt">' + d.label + '</div>' +
+    '<div class="wst">' + (done ? '✅' : '⬜') + '</div>' +
+    (last ? '<div class="wvol">' + Math.round(last.volume) + ' kg</div>' : '') +
+    '</div>';
+} else {
+  html += '<div class="wday rest" draggable="true" data-idx="' + i + '">' +
+  '<div class="wn">' + names[i] + '</div>' +
+  '<div class="wt">Repos</div>' +
+  '<div class="wst">😴</div>' +
+  '</div>';
+}
+  }
+
   html += '</div>';
   el.innerHTML = html;
+  initWeekDragDrop(assignments);
+}
+  
+function initWeekDragDrop(assignments) {
+  const cards = document.querySelectorAll('#week-overview .wday');
+  let draggedKey = null;
+  let draggedIdx = null;
+
+  cards.forEach(function(card) {
+    // Desktop
+    card.addEventListener('dragstart', function() {
+      draggedKey = this.dataset.key;
+      draggedIdx = parseInt(this.dataset.idx);
+      this.style.opacity = '0.5';
+    });
+    card.addEventListener('dragend', function() {
+      this.style.opacity = '1';
+    });
+    card.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.style.borderColor = 'var(--acc)';
+    });
+    card.addEventListener('dragleave', function() {
+      this.style.borderColor = '';
+    });
+    card.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '';
+      const targetIdx = parseInt(this.dataset.idx);
+      const targetKey = this.dataset.key || null;
+      if (draggedIdx === targetIdx) return;
+      // Déplacer la séance vers le nouvel index
+      if (draggedKey) assignments[draggedKey] = targetIdx;
+      // Si la cible avait une séance, elle prend la place de la source
+      if (targetKey) assignments[targetKey] = draggedIdx;
+      // Si la cible était un repos, supprimer l'ancienne assignation de la source
+      // pour que l'ancien emplacement devienne repos
+      if (!targetKey) {
+        // Retirer draggedKey de son ancien slot — déjà fait via assignments[draggedKey] = targetIdx
+        // Rien d'autre à faire, l'ancien slot n'a plus de key pointant dessus
+      }
+      saveWeekAssignments(assignments);
+  });
+
+    // Mobile touch
+    let touchStartX, touchStartY;
+    card.addEventListener('touchstart', function(e) {
+      draggedKey = this.dataset.key;
+      draggedIdx = parseInt(this.dataset.idx);
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      this.style.opacity = '0.5';
+    }, { passive: true });
+    card.addEventListener('touchend', function(e) {
+      this.style.opacity = '1';
+      const touch = e.changedTouches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      const targetCard = target ? target.closest('.wday') : null;
+      if (!targetCard || targetCard === this) return;
+      const targetIdx = parseInt(targetCard.dataset.idx);
+      const targetKey = targetCard.dataset.key || null;
+      if (draggedIdx === targetIdx) return;
+      if (draggedKey) assignments[draggedKey] = targetIdx;
+      if (targetKey) assignments[targetKey] = draggedIdx;
+      saveWeekAssignments(assignments);
+    }, { passive: true });
+  });
 }
 
+async function saveWeekAssignments(assignments) {
+  activeProgram.structure.day_assignments = assignments;
+  await sb.from('programs')
+    .update({ structure: activeProgram.structure })
+    .eq('id', activeProgram.id);
+  await buildWeekOverview();
+  setSyncStatus('Planning sauvegardé', '');
+  setTimeout(function() { setSyncStatus(''); }, 2000);
+}
+  
 function goPage(page, btn) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('on'); });
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('on'); });
