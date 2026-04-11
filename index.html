@@ -304,8 +304,53 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
         <div class="onb-opt" data-cst="upper_only"><span class="onb-opt-icon">💪</span><div class="onb-opt-text"><strong>Haut du corps uniquement</strong><span>Blessure ou contrainte aux jambes</span></div></div>
         <div class="onb-opt" data-cst="lower_only"><span class="onb-opt-icon">🦵</span><div class="onb-opt-text"><strong>Bas du corps uniquement</strong><span>Blessure ou contrainte au haut du corps</span></div></div>
       </div>
-      <div class="onb-nav"><button class="btn-secondary" id="btn-back-5">Retour</button><button class="btn-primary" id="btn-generate">Générer mon programme 🚀</button></div>
+      <div class="onb-nav"><button class="btn-secondary" id="btn-back-5">Retour</button><button class="btn-primary" id="btn-next-5" style="flex:2">Suivant</button></div>
     </div>
+    <div class="onb-step" id="onb-step-method">
+  <div class="onb-question">Méthode d'entraînement</div>
+  <div class="onb-hint">Choisissez comment vous allez structurer vos séries.</div>
+  <div class="onb-options" id="method-options">
+    <div class="onb-opt selected" data-method="classic">
+      <span class="onb-opt-icon">📋</span>
+      <div class="onb-opt-text">
+        <strong>Classique</strong>
+        <span>Séries fixes · même poids et mêmes reps sur chaque série</span>
+      </div>
+    </div>
+    <div class="onb-opt" data-method="pyramid">
+      <span class="onb-opt-icon">📐</span>
+      <div class="onb-opt-text">
+        <strong>Pyramidal</strong>
+        <span>Poids croissant · reps décroissantes · 15-12-10-8</span>
+      </div>
+    </div>
+    <div class="onb-opt" data-method="superset">
+      <span class="onb-opt-icon">⚡</span>
+      <div class="onb-opt-text">
+        <strong>Super-sets</strong>
+        <span>Enchaîner 2 exercices antagonistes sans repos</span>
+      </div>
+    </div>
+    <div class="onb-opt" data-method="gvt">
+      <span class="onb-opt-icon">🔟</span>
+      <div class="onb-opt-text">
+        <strong>10×10 (GVT)</strong>
+        <span>10 séries de 10 reps · un seul exercice polyarticulaire</span>
+      </div>
+    </div>
+    <div class="onb-opt" data-method="prefatigue">
+      <span class="onb-opt-icon">🔥</span>
+      <div class="onb-opt-text">
+        <strong>Pré-fatigue</strong>
+        <span>Isolation avant compound · cibler le muscle principal</span>
+      </div>
+    </div>
+  </div>
+  <div class="onb-nav">
+    <button class="btn-secondary" id="btn-back-method">Retour</button>
+    <button class="btn-primary" id="btn-generate">Générer mon programme 🚀</button>
+  </div>
+</div>
     <div class="onb-step" id="onb-step-6">
       <div style="text-align:center;padding:40px 20px">
         <div style="font-size:48px;margin-bottom:16px" id="gen-icon">⚙️</div>
@@ -414,7 +459,7 @@ let allPrograms   = [];
 let libraryCache  = [];
 let libFilter     = 'all';
 let dashFilter    = 'all';
-let onbProfile    = { objective:'', level:'', days_per_week:0, equipment:'', constraints:[] };
+let onbProfile = { objective:'', level:'', days_per_week:0, equipment:'', constraints:[], method:'classic' };
 let onbStep       = 1;
 let existingChoice= null;
 let replaceTarget = null;
@@ -560,7 +605,7 @@ async function initUserSession() {
 // ══════════════════════════════════════
 function startOnboarding(isExisting) {
   showScreen('onboarding');
-  buildOnbDots(isExisting ? 7 : 5);
+  buildOnbDots(isExisting ? 8 : 6);
   showOnbStep(isExisting ? 0 : 1);
 }
 
@@ -585,7 +630,7 @@ function updateOnbDots() {
 
 function showOnbStep(n) {
   document.querySelectorAll('.onb-step').forEach(s => s.classList.remove('active'));
-  const el = document.getElementById('onb-step-' + n);
+  const el = document.getElementById('onb-step-' + n) || document.getElementById('onb-step-method');
   if (el) el.classList.add('active');
   onbStep = n;
   updateOnbDots();
@@ -648,7 +693,6 @@ document.getElementById('btn-back-2').addEventListener('click', function() { sho
 document.getElementById('btn-back-3').addEventListener('click', function() { showOnbStep(onbStep - 1); });
 document.getElementById('btn-back-4').addEventListener('click', function() { showOnbStep(onbStep - 1); });
 document.getElementById('btn-back-5').addEventListener('click', function() { showOnbStep(onbStep - 1); });
-
 document.getElementById('btn-next-1').addEventListener('click', function() {
   if (!onbProfile.objective) { alert('Choisis un objectif.'); return; }
   showOnbStep(2);
@@ -665,6 +709,33 @@ document.getElementById('btn-next-4').addEventListener('click', function() {
   if (!onbProfile.equipment) { alert('Choisis ton équipement.'); return; }
   showOnbStep(5);
 });
+document.getElementById('btn-next-5').addEventListener('click', function() {
+  const methodOptions = document.querySelectorAll('#method-options .onb-opt');
+  methodOptions.forEach(function(opt) {
+    const method = opt.dataset.method;
+    if (onbProfile.level === 'beginner') {
+      opt.style.display = method === 'classic' ? '' : 'none';
+    } else if (onbProfile.level === 'intermediate') {
+      opt.style.display = ['classic','pyramid','superset'].includes(method) ? '' : 'none';
+    } else {
+      opt.style.display = '';
+    }
+  });
+  if (onbProfile.level === 'beginner') {
+    onbProfile.method = 'classic';
+    showOnbStep('6');
+  } else {
+    showOnbStep('method');
+  }
+});
+document.querySelectorAll('#method-options .onb-opt').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('#method-options .onb-opt').forEach(function(o) { o.classList.remove('selected'); });
+    this.classList.add('selected');
+    onbProfile.method = this.dataset.method;
+  });
+});
+document.getElementById('btn-back-method').addEventListener('click', function() { showOnbStep('5'); });
 document.getElementById('btn-generate').addEventListener('click', generateProgram);
 
 // ══════════════════════════════════════
@@ -725,15 +796,15 @@ async function generateProgram() {
 // ALGORITHM
 // ══════════════════════════════════════
 function buildProgramFromProfile(p) {
-  const { objective:obj, level:lv, days_per_week:d, equipment:eq, constraints:cst } = p;
+  const { objective:obj, level:lv, days_per_week:d, equipment:eq, constraints:cst, method:mth } = p;
   if (eq === 'bodyweight') return buildBodyweightProgram(Math.min(d, 3));
-  if (cst.includes('upper_only')) return buildUpperOnlyProgram(d, eq, obj, lv);
-  if (cst.includes('lower_only')) return buildLowerOnlyProgram(d, eq, obj, lv);
-  if (d <= 3) return buildFullBodyProgram(d, eq, obj, lv);
-  if (lv === 'beginner' && d === 4) return buildUpperLowerProgram(eq, obj, lv);
-  if (lv === 'beginner' && d >= 5) return buildPPLProgram(eq, obj, lv, d);
-  if (d === 4) return buildUpperLowerProgram(eq, obj, lv);
-  return buildPPLProgram(eq, obj, lv, d);
+  if (cst.includes('upper_only')) return buildUpperOnlyProgram(d, eq, obj, lv, mth);
+  if (cst.includes('lower_only')) return buildLowerOnlyProgram(d, eq, obj, lv, mth);
+  if (d <= 3) return buildFullBodyProgram(d, eq, obj, lv, mth);
+  if (lv === 'beginner' && d === 4) return buildUpperLowerProgram(eq, obj, lv, mth);
+  if (lv === 'beginner' && d >= 5) return buildPPLProgram(eq, obj, lv, d, mth);
+  if (d === 4) return buildUpperLowerProgram(eq, obj, lv, mth);
+  return buildPPLProgram(eq, obj, lv, d, mth);
 }
   
 function buildProgramName(p) {
@@ -834,8 +905,25 @@ function getRepsForObjective(obj, lv) {
   if (obj === 'fitness') return '10-12';
   return '8-12';
 }
+
+function getPyramidReps(lv) {
+  if (lv === 'intermediate') return [15, 12, 10, 8];
+  return [15, 12, 10, 8, 6];
+}
+
+function applyMethod(exercises, method, obj, lv) {
+  if (method === 'pyramid') {
+    const reps = getPyramidReps(lv);
+    exercises.forEach(function(e) {
+      e.sets = reps.length;
+      e.pyramid_reps = reps;
+      e.rep = '📐 Pyramidal';
+    });
+  }
+  return exercises;
+}
   
-function buildPPLProgram(eq, obj, lv, days) {
+function buildPPLProgram(eq, obj, lv, days, mth) {
   const exCount  = lv === 'beginner' ? 3 : lv === 'intermediate' ? 4 : 5;
   const setCount = lv === 'beginner' ? 3 : 4;
   const usedIds  = [];
@@ -854,6 +942,7 @@ function buildPPLProgram(eq, obj, lv, days) {
 const reps = getRepsForObjective(obj, lv);
 [push, pull, legs, pushBis, pullBis].forEach(function(arr) {
   arr.forEach(function(e) { e.sets = setCount; e.rep = reps; });
+  applyMethod(arr, mth, obj, lv);
 });
 
   const arr = [
@@ -871,7 +960,7 @@ const reps = getRepsForObjective(obj, lv);
   return { type:'PPL', days:arr };
 }
 
-function buildUpperLowerProgram(eq, obj, lv) {
+function buildUpperLowerProgram(eq, obj, lv, mth) {
   const exCount  = lv === 'beginner' ? 3 : lv === 'intermediate' ? 4 : 5;
   const setCount = lv === 'beginner' ? 3 : 4;
   const usedIds  = [];
@@ -889,8 +978,9 @@ function buildUpperLowerProgram(eq, obj, lv) {
   const reps = getRepsForObjective(obj, lv);
   [pushA, pullA, legsA, pushB, pullB, legsB].forEach(function(arr) {
   arr.forEach(function(e) { e.sets = setCount; e.rep = reps; });
+  applyMethod(arr, mth, obj, lv);
 });
-
+  
   return { type:'UpperLower', days:[
     { key:'J1', label:'Upper A', subtitle:'Force · Haut du corps',  exercises:pushA.concat(pullA) },
     { key:'J2', label:'Lower A', subtitle:'Force · Bas du corps',   exercises:legsA },
@@ -899,7 +989,7 @@ function buildUpperLowerProgram(eq, obj, lv) {
   ]};
 }
 
-function buildFullBodyProgram(days, eq, obj, lv) {
+function buildFullBodyProgram(days, eq, obj, lv, mth) {
   const pushCount = lv === 'beginner' ? 1 : 2;
   const pullCount = lv === 'beginner' ? 1 : 2;
   const legsCount = lv === 'beginner' ? 2 : 2;
@@ -915,13 +1005,20 @@ function buildFullBodyProgram(days, eq, obj, lv) {
     const legsDay = pick(legsAvail, legsCount, obj, lv);
     const exs = pushDay.concat(pullDay).concat(legsDay).filter(Boolean);
     const reps = getRepsForObjective(obj, lv);
-    exs.forEach(function(e) { 
+    exs.forEach(function(e) {
       if (e && e.id) {
         usedIds.push(e.id);
         e.sets = setCount;
         e.rep = reps;
       }
-});
+    });
+    applyMethod(exs, mth, obj, lv);
+    arr.push({
+      key:'J'+(i+1),
+      label:'Full Body '+String.fromCharCode(65+i),
+      subtitle:'Corps complet',
+      exercises:exs
+    });
   }
   return { type:'FullBody', days:arr };
 }
@@ -1126,12 +1223,13 @@ function buildExCard(ex, dayKey, dayIdx, lastSession, prData) {
   : '';
   let setsHTML = '';
   for (let s = 1; s <= n; s++) {
-    const lastSet = lastEx && lastEx.sets[s];
-    const wVal  = lastSet ? lastSet.weight : '';
-    const rVal  = lastSet ? lastSet.reps   : '';
+   const lastSet = lastEx && lastEx.sets[s];
+    const pyramidRep = ex.pyramid_reps ? ex.pyramid_reps[s-1] : null;
+    const wVal   = lastSet ? lastSet.weight : '';
+    const rVal   = pyramidRep ? pyramidRep : (lastSet ? lastSet.reps : '');
     const wStyle = lastSet ? ' style="color:var(--blue)"' : '';
-    const rStyle = lastSet ? ' style="color:var(--blue)"' : '';
-  setsHTML +=
+    const rStyle = pyramidRep ? ' style="color:#FFD700"' : '';
+   setsHTML +=
     '<div class="set-row">' +
       '<span class="set-num">Série '+s+'</span>' +
       '<input type="number" id="w-'+ex.id+'-'+dayIdx+'-'+s+'" inputmode="decimal" placeholder="kg" min="0" max="500" step="0.5" value="'+wVal+'"'+wStyle+'>' +
@@ -1523,7 +1621,7 @@ function startNewProgram() {
   existingChoice = null;
   appReady       = false;
   showScreen('onboarding');
-  buildOnbDots(5);
+  buildOnbDots(6);
   showOnbStep(1);
 }
 
