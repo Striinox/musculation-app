@@ -72,9 +72,23 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .btn-logout{background:none;border:1px solid var(--brd);border-radius:4px;padding:4px 8px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif}
 .app-content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .page{display:none;padding:16px 14px 24px}.page.on{display:block}
-.bottom-nav{background:var(--sur);border-top:1px solid var(--brd);display:grid;padding-bottom:var(--safe-bot);flex-shrink:0}
-.nav-btn{background:none;border:none;border-top:2px solid transparent;padding:8px 2px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
-.nav-btn .ni{font-size:18px;line-height:1}
+.bottom-nav{background:var(--sur);border-top:1px solid var(--brd);display:flex;padding:0 env(safe-area-inset-right) var(--safe-bot) env(safe-area-inset-left);flex-shrink:0}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:4px 0}
+.cal-day-headers{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-dh{text-align:center;font-size:9px;font-weight:600;color:var(--mut);text-transform:uppercase}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;border-radius:8px;padding:2px}
+.cal-week.current-week{background:rgba(21,101,192,.05);border:1px solid rgba(21,101,192,.15)}
+.cal-day{background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 2px;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.cal-day.cal-out{opacity:.35}
+.cal-day.cal-today{border-color:var(--acc);border-width:2px}
+.cal-day.cal-done{background:rgba(21,101,192,.08);border-color:rgba(21,101,192,.3)}
+.cal-day.cal-draggable{cursor:grab}
+.cal-date{font-size:10px;font-weight:600;color:var(--txt)}
+.cal-label{font-size:8px;font-weight:600;color:var(--acc);line-height:1.2;text-align:center}
+.cal-vol{font-size:8px;color:var(--mut);font-weight:500}
+.cal-status{font-size:10px}
+.nav-btn{background:none;border:none;border-top:2px solid transparent;padding:12px 6px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;min-width:0;flex:1}
+.nav-btn .ni{font-size:26px;line-height:1}
 .nav-btn .nl{font-size:8px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;text-align:center}
 .nav-btn.on{border-top-color:var(--acc)}.nav-btn.on .nl{color:var(--acc)}
 .nav-btn.dash.on{border-top-color:var(--blue)}.nav-btn.dash.on .nl{color:var(--blue)}
@@ -213,6 +227,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .wday .wst{font-size:14px;margin-top:4px}
 .wday.done{border-color:var(--acc);background:rgba(21,101,192,.06)}
 .wday .wvol{font-size:9px;color:var(--acc);font-weight:600;margin-top:3px}
+.wday{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 </style>
 </head>
 <body>
@@ -378,7 +393,16 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
     <div id="workout-pages"></div>
     <div class="page" id="page-semaine">
       <div class="page-head"><span class="page-num">↗</span><div class="page-info"><h2>Semaine Type</h2><p>Organisation de ton programme actif</p></div></div>
-      <div id="week-overview"></div>
+      <div id="week-overview">
+  <p style="font-size:11px;color:var(--mut);text-align:center;margin-bottom:8px;">Maintenez appuyé pour déplacer les séances de la semaine en cours</p>
+  <div class="cal-header">
+  <button onclick="window.calOffset--;window.buildWeekOverview()" style="background:none;border:1px solid var(--brd);border-radius:4px;padding:3px 10px;font-size:14px;color:var(--mut);cursor:pointer;">‹</button>
+  <span id="cal-month-label" style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--acc);flex:1;text-align:center;"></span>
+  <button onclick="window.calOffset=0;window.buildWeekOverview()" style="background:none;border:1px solid var(--brd);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--mut);cursor:pointer;font-family:'Inter',sans-serif;flex:1;max-width:80px;margin:0 auto;">Auj.</button>
+  <button onclick="window.calOffset++;window.buildWeekOverview()" style="background:none;border:1px solid var(--brd);border-radius:4px;padding:3px 10px;font-size:14px;color:var(--mut);cursor:pointer;">›</button>
+</div>
+  <div id="cal-grid"></div>
+</div>
       <div class="tips-box">
         <h3>Principes Clés</h3>
         <div class="tips-grid">
@@ -1179,145 +1203,194 @@ if (lastLogs) {
   });
 }
 
+window.calOffset = 0;
+  
 async function buildWeekOverview() {
-  const el = document.getElementById('week-overview');
-  if (!activeProgram) { el.innerHTML = ''; return; }
+  const el = document.getElementById('cal-grid');
+  const labelEl = document.getElementById('cal-month-label');
+  if (!activeProgram || !el) return;
 
   const days = activeProgram.structure.days;
   const assignments = activeProgram.structure.day_assignments || {};
-
   if (!Object.keys(assignments).length) {
     days.forEach(function(d, i) { assignments[d.key] = i; });
   }
-
   const dayMap = {};
   Object.keys(assignments).forEach(function(key) {
     dayMap[assignments[key]] = key;
   });
 
-  // Logs semaine en cours
+  // Semaine affichée
   const now = new Date();
   const monday = new Date(now);
-  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-  const weekStart = monday.toISOString().slice(0, 10);
+  monday.setDate(now.getDate() - ((now.getDay()+6)%7) + window.calOffset*7);
   const sunday = new Date(monday);
-  sunday.setDate(monday.getDate() + 6);
-  const weekEnd = sunday.toISOString().slice(0, 10);
+  sunday.setDate(monday.getDate()+6);
 
-  const { data: weekLogs } = await sb.from('workout_logs')
-    .select('day_key, session_date')
+  const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const mStart = monthNames[monday.getMonth()];
+  const mEnd = monthNames[sunday.getMonth()];
+  labelEl.textContent = mStart === mEnd ? mStart + ' ' + monday.getFullYear() : mStart + ' — ' + mEnd + ' ' + sunday.getFullYear();
+
+  const weekStart = monday.toISOString().slice(0,10);
+  const weekEnd = sunday.toISOString().slice(0,10);
+  const todayStr = now.toISOString().slice(0,10);
+  const isCurrentWeek = window.calOffset === 0;
+
+  const { data: logs } = await sb.from('workout_logs')
+    .select('day_key, session_date, weight_kg, reps')
     .eq('user_id', currentUser.id)
     .gte('session_date', weekStart)
     .lte('session_date', weekEnd);
 
-  const doneDays = new Set((weekLogs || []).map(function(l) { return l.day_key; }));
-
-  // Dernière date par day_key + volume
-  const { data: allLogs } = await sb.from('workout_logs')
-    .select('day_key, session_date, weight_kg, reps')
-    .eq('user_id', currentUser.id)
-    .order('session_date', { ascending: false });
-
-  // Pour chaque day_key : trouver la dernière session_date et son volume
-  const lastSession = {};
-  (allLogs || []).forEach(function(l) {
-    if (!lastSession[l.day_key]) lastSession[l.day_key] = { date: l.session_date, volume: 0 };
-    if (l.session_date === lastSession[l.day_key].date) {
-      lastSession[l.day_key].volume += (l.weight_kg || 0) * (l.reps || 0);
-    }
+  const logsByDate = {};
+  (logs || []).forEach(function(l) {
+    if (!logsByDate[l.session_date]) logsByDate[l.session_date] = { day_key: l.day_key, volume: 0 };
+    logsByDate[l.session_date].volume += (l.weight_kg||0) * (l.reps||0);
   });
 
-  const names = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+  const names = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
   let html = '<div class="week-grid">';
 
   for (let i = 0; i < 7; i++) {
+    const d2 = new Date(monday);
+    d2.setDate(monday.getDate()+i);
+    const dateStr = d2.toISOString().slice(0,10);
     const key = dayMap[i];
-    const d = key ? days.find(function(x) { return x.key === key; }) : null;
-    const done = key && doneDays.has(key);
-    const last = key && lastSession[key];
+    const d = key ? days.find(function(x){ return x.key===key; }) : null;
+    const log = logsByDate[dateStr];
+    const done = !!log;
+    const isToday = dateStr === todayStr;
 
-if (d) {
-  html += '<div class="wday' + (done ? ' done' : '') + '" draggable="true" data-key="' + key + '" data-idx="' + i + '">' +
-    '<div class="wn">' + names[i] + '</div>' +
-    '<div class="wt">' + d.label + '</div>' +
-    '<div class="wst">' + (done ? '✅' : '⬜') + '</div>' +
-    (last ? '<div class="wvol">' + Math.round(last.volume) + ' kg</div>' : '') +
-    '</div>';
-} else {
-  html += '<div class="wday rest" draggable="true" data-idx="' + i + '">' +
-  '<div class="wn">' + names[i] + '</div>' +
-  '<div class="wt">Repos</div>' +
-  '<div class="wst">😴</div>' +
-  '</div>';
-}
+    if (d) {
+      html += '<div class="wday' + (done ? ' done' : '') + (isToday ? ' today' : '') + '"' +
+        (isCurrentWeek ? ' draggable="true" data-key="'+key+'" data-idx="'+i+'"' : '') +
+        ' data-idx="'+i+'">' +
+        '<div class="wn">'+names[i]+' '+d2.getDate()+'</div>' +
+        '<div class="wt">'+d.label+'</div>' +
+        '<div class="wst">'+(done?'✅':'⬜')+'</div>' +
+        (log ? '<div class="wvol">'+Math.round(log.volume)+'kg</div>' : '') +
+        '</div>';
+    } else {
+      html += '<div class="wday rest"' +
+        (isCurrentWeek ? ' draggable="true"' : '') +
+        ' data-idx="'+i+'">' +
+        '<div class="wn">'+names[i]+' '+d2.getDate()+'</div>' +
+        '<div class="wt">Repos</div>' +
+        '<div class="wst">😴</div>' +
+        '</div>';
+    }
   }
 
   html += '</div>';
   el.innerHTML = html;
-  initWeekDragDrop(assignments);
+
+if (isCurrentWeek) initWeekDragDrop(assignments);
 }
   
 function initWeekDragDrop(assignments) {
   const cards = document.querySelectorAll('#week-overview .wday');
-  let draggedKey = null;
-  let draggedIdx = null;
+  let dragCard = null;
+  let ghost = null;
+  let dragKey = null;
+  let dragIdx = null;
+  let startX = 0, startY = 0;
 
   cards.forEach(function(card) {
-    // Desktop
+    // Desktop drag & drop
+    card.setAttribute('draggable', card.dataset.idx !== undefined ? 'true' : 'false');
     card.addEventListener('dragstart', function() {
-      draggedKey = this.dataset.key;
-      draggedIdx = parseInt(this.dataset.idx);
-      this.style.opacity = '0.5';
+      dragKey = this.dataset.key || null;
+      dragIdx = parseInt(this.dataset.idx);
+      this.style.opacity = '0.4';
     });
     card.addEventListener('dragend', function() {
       this.style.opacity = '1';
     });
-    card.addEventListener('dragover', function(e) {
-      e.preventDefault();
-      this.style.borderColor = 'var(--acc)';
-    });
-    card.addEventListener('dragleave', function() {
-      this.style.borderColor = '';
-    });
+    card.addEventListener('dragover', function(e) { e.preventDefault(); this.style.outline = '2px solid var(--acc)'; });
+    card.addEventListener('dragleave', function() { this.style.outline = ''; });
     card.addEventListener('drop', function(e) {
       e.preventDefault();
-      this.style.borderColor = '';
+      this.style.outline = '';
       const targetIdx = parseInt(this.dataset.idx);
       const targetKey = this.dataset.key || null;
-      if (draggedIdx === targetIdx) return;
-      // Déplacer la séance vers le nouvel index
-      if (draggedKey) assignments[draggedKey] = targetIdx;
-      // Si la cible avait une séance, elle prend la place de la source
-      if (targetKey) assignments[targetKey] = draggedIdx;
-      // Si la cible était un repos, supprimer l'ancienne assignation de la source
-      // pour que l'ancien emplacement devienne repos
-      if (!targetKey) {
-        // Retirer draggedKey de son ancien slot — déjà fait via assignments[draggedKey] = targetIdx
-        // Rien d'autre à faire, l'ancien slot n'a plus de key pointant dessus
-      }
+      if (dragIdx === targetIdx) return;
+      if (dragKey) assignments[dragKey] = targetIdx;
+      if (targetKey) assignments[targetKey] = dragIdx;
       saveWeekAssignments(assignments);
-  });
+    });
 
-    // Mobile touch
-    let touchStartX, touchStartY;
+    // Mobile touch custom
     card.addEventListener('touchstart', function(e) {
-      draggedKey = this.dataset.key;
-      draggedIdx = parseInt(this.dataset.idx);
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      this.style.opacity = '0.5';
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      dragCard = this;
+      dragKey = this.dataset.key || null;
+      dragIdx = parseInt(this.dataset.idx);
+
+      // Créer le ghost après 200ms d'appui
+      dragCard._ghostTimer = setTimeout(function() {
+        const rect = dragCard.getBoundingClientRect();
+        ghost = dragCard.cloneNode(true);
+        ghost.style.cssText = 'position:fixed;z-index:999;width:'+rect.width+'px;left:'+rect.left+'px;top:'+rect.top+'px;opacity:0.85;pointer-events:none;border:2px solid var(--acc);border-radius:6px;background:var(--card);transition:none;transform:scale(1.05);box-shadow:0 8px 24px rgba(0,0,0,0.2);';
+        document.body.appendChild(ghost);
+        dragCard.style.opacity = '0.3';
+        if (navigator.vibrate) navigator.vibrate(40);
+      }, 200);
     }, { passive: true });
+
+    card.addEventListener('touchmove', function(e) {
+      if (!ghost) {
+        // Pas encore en mode drag — annuler si mouvement trop tôt
+        const dx = Math.abs(e.touches[0].clientX - startX);
+        const dy = Math.abs(e.touches[0].clientY - startY);
+        if (dx > 8 || dy > 8) {
+          clearTimeout(dragCard._ghostTimer);
+          dragCard = null;
+        }
+        return;
+      }
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = dragCard.getBoundingClientRect();
+      ghost.style.left = (touch.clientX - rect.width/2) + 'px';
+      ghost.style.top = (touch.clientY - rect.height/2) + 'px';
+
+      // Highlight la carte en dessous
+      ghost.style.display = 'none';
+      const el = document.elementFromPoint(touch.clientX, touch.clientY);
+      ghost.style.display = '';
+      const target = el ? el.closest('.wday') : null;
+      cards.forEach(function(c) { c.style.outline = ''; });
+      if (target && target !== dragCard) target.style.outline = '2px solid var(--acc)';
+    }, { passive: false });
+
     card.addEventListener('touchend', function(e) {
-      this.style.opacity = '1';
+      clearTimeout(dragCard && dragCard._ghostTimer);
+      if (!ghost) { dragCard = null; return; }
+
       const touch = e.changedTouches[0];
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      const targetCard = target ? target.closest('.wday') : null;
-      if (!targetCard || targetCard === this) return;
-      const targetIdx = parseInt(targetCard.dataset.idx);
-      const targetKey = targetCard.dataset.key || null;
-      if (draggedIdx === targetIdx) return;
-      if (draggedKey) assignments[draggedKey] = targetIdx;
-      if (targetKey) assignments[targetKey] = draggedIdx;
+      ghost.style.display = 'none';
+      const el = document.elementFromPoint(touch.clientX, touch.clientY);
+      ghost.style.display = '';
+      const target = el ? el.closest('.wday') : null;
+
+      // Cleanup
+      ghost.remove();
+      ghost = null;
+      if (dragCard) dragCard.style.opacity = '1';
+      cards.forEach(function(c) { c.style.outline = ''; });
+
+      if (!target || target === dragCard) { dragCard = null; return; }
+
+      const targetIdx = parseInt(target.dataset.idx);
+      const targetKey = target.dataset.key || null;
+      if (dragIdx === targetIdx) { dragCard = null; return; }
+
+      if (dragKey) assignments[dragKey] = targetIdx;
+      if (targetKey) assignments[targetKey] = dragIdx;
+      dragCard = null;
       saveWeekAssignments(assignments);
     }, { passive: true });
   });
@@ -1927,6 +2000,8 @@ function startTimer() {
 window.startTimer = startTimer;
 window.closeTimer = closeTimer;
 window.openTimer  = openTimer;
+window.buildWeekOverview = buildWeekOverview;
+
 
   window.selectTimerOpt = function(el) {
   if (timerRunning) return;
