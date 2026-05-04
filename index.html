@@ -83,10 +83,65 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
 .page{display:none;padding:16px 14px 24px}.page.on{display:block}
 .bottom-nav{background:var(--bg);border-top:1px solid var(--brd);display:flex;padding:0 env(safe-area-inset-right) var(--safe-bot) env(safe-area-inset-left);flex-shrink:0;overflow-x:auto}
 .bottom-nav::-webkit-scrollbar{display:none}
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:4px 0;gap:8px}
-.cal-nav-btn{background:transparent;border:1px solid var(--brd);border-radius:6px;padding:4px 10px;font-size:14px;color:var(--mut);cursor:pointer;line-height:1;font-family:var(--font-body)}
-.cal-today-btn{background:transparent;border:1px solid var(--brd);border-radius:6px;padding:4px 10px;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.14em;color:var(--mut);cursor:pointer;text-transform:uppercase;flex:1;max-width:70px}
-.cal-month-label{font-family:var(--font-display);font-size:14px;letter-spacing:.02em;color:var(--acc);flex:1;text-align:center;text-transform:uppercase}
+.cal-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px;gap:10px}
+.cal-title{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.cal-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.cal-display{font-family:var(--font-display);font-size:26px;letter-spacing:-.02em;line-height:1;color:var(--txt);text-transform:uppercase}
+.cal-nav{display:flex;gap:4px;flex-shrink:0}
+.cal-nav-btn{width:32px;height:32px;background:transparent;border:1px solid var(--brd);border-radius:6px;color:var(--mut);cursor:pointer;line-height:1;font-family:var(--font-body);display:grid;place-items:center;font-size:14px}
+.cal-today-btn{height:32px;padding:0 10px;background:transparent;border:1px solid var(--acc);border-radius:6px;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.15em;color:var(--acc);cursor:pointer;text-transform:uppercase}
+.cal-month-label{display:none}
+.vol-strip{background:var(--sur);border:1px solid var(--brd);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.vol-strip-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:8px}
+.vol-strip-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.vol-strip-total{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.05em;white-space:nowrap}
+.vol-strip-total-val{color:var(--acc)}
+.vol-strip-total-goal{color:var(--mut)}
+.vol-strip-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;height:70px}
+.vol-col{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%}
+.vol-bar{width:100%;border-radius:3px 3px 0 0;background:color-mix(in oklch,var(--acc) 40%,transparent);transition:height .3s;min-height:4px}
+.vol-bar.is-today{background:var(--acc)}
+.vol-bar.is-rest{background:var(--brd)}
+.vol-label{font-family:var(--font-mono);font-size:8px;color:var(--mut);font-weight:700;letter-spacing:.08em}
+.vol-label.is-today{color:var(--acc)}
+.cal-hint{display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:10px;background:color-mix(in oklch,var(--acc) 8%,transparent);border:1px dashed color-mix(in oklch,var(--acc) 30%,transparent);border-radius:8px;font-family:var(--font-mono);font-size:9.5px;color:var(--acc);letter-spacing:.12em;font-weight:700;text-transform:uppercase}
+.cal-pool{position:sticky;bottom:0;margin:0 -14px -24px;padding:10px 14px 14px;background:linear-gradient(to top,var(--bg) 80%,transparent);border-top:1px solid var(--brd);z-index:5}
+.cal-pool-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.cal-pool-eyebrow{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.cal-pool-count{font-family:var(--font-mono);font-size:9px;color:var(--mut);letter-spacing:.12em;font-weight:700}
+.cal-pool-list{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.cal-pool-list::-webkit-scrollbar{display:none}
+.cal-pool-card{flex-shrink:0;min-width:120px;background:var(--sur);border:1px solid var(--brd);border-left:3px solid var(--acc);border-radius:8px;padding:9px 10px;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:opacity .15s,transform .12s}
+.cal-pool-card:active{cursor:grabbing;transform:scale(.98)}
+.cal-pool-card.is-on-day{opacity:.55}
+.cal-pool-card-label{font-family:var(--font-display);font-size:13px;letter-spacing:.02em;color:var(--txt);text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-pool-card-meta{font-family:var(--font-mono);font-size:8.5px;color:var(--mut);letter-spacing:.08em;margin-top:3px;font-weight:600;text-transform:uppercase}
+.cal-pool.is-drop-target{background:linear-gradient(to top,color-mix(in oklch,var(--acc) 12%,var(--bg)) 80%,transparent)}
+.cal-hint .ic{font-size:12px;line-height:1}
+.week-list{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.wrow{background:var(--sur);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;min-height:56px;transition:background .15s,border-color .15s,opacity .15s;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.wrow.is-empty{border-style:dashed}
+.wrow.is-today{border-left:3px solid var(--acc);padding-left:10px}
+.wrow.is-done{background:color-mix(in oklch,var(--acc) 6%,var(--sur));border-color:color-mix(in oklch,var(--acc) 25%,var(--brd))}
+.wrow.is-rest{opacity:.75}
+.wrow.is-hovered{border:2px dashed var(--acc);background:color-mix(in oklch,var(--acc) 10%,var(--sur));padding:9px 11px}
+.wrow-date{width:40px;text-align:center;flex-shrink:0}
+.wrow-day{font-family:var(--font-mono);font-size:9px;color:var(--mut);letter-spacing:.15em;font-weight:700;text-transform:uppercase}
+.wrow-num{font-family:var(--font-display);font-size:20px;color:var(--txt);margin-top:1px;letter-spacing:-.02em;line-height:1}
+.wrow.is-today .wrow-num{color:var(--acc)}
+.wrow-body{flex:1;border-left:1px solid var(--brd);padding-left:12px;cursor:grab;touch-action:none;display:flex;align-items:center;gap:10px;min-width:0}
+.wrow-body.is-empty{border-left-style:dashed;cursor:default;font-family:var(--font-mono);font-size:10px;color:var(--mut);letter-spacing:.15em;font-weight:700;text-transform:uppercase}
+.wrow-bar{width:3px;height:28px;border-radius:2px;flex-shrink:0}
+.wrow-info{flex:1;min-width:0}
+.wrow-label{font-family:var(--font-display);font-size:15px;color:var(--txt);letter-spacing:.02em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrow.is-rest .wrow-label{color:var(--mut)}
+.wrow-meta{font-family:var(--font-mono);font-size:9.5px;color:var(--mut);margin-top:3px;letter-spacing:.08em;font-weight:600}
+.wrow-end{flex-shrink:0;display:flex;align-items:center;gap:8px}
+.wrow-check{width:24px;height:24px;border-radius:12px;background:var(--acc);display:grid;place-items:center;color:var(--acc-ink);font-size:13px;font-weight:900}
+.wrow-play{color:var(--acc);font-size:14px;line-height:1}
+.wrow-handle{display:flex;flex-direction:column;gap:2px;padding:0 2px;opacity:.5}
+.wrow-handle span{width:3px;height:3px;background:var(--mut);border-radius:1px;display:inline-block}
+.wrow-handle-row{display:flex;gap:2px}
 .cal-day-headers{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
 .cal-dh{text-align:center;font-size:9px;font-weight:600;color:var(--mut);text-transform:uppercase}
 .cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;border-radius:8px;padding:2px}
@@ -233,18 +288,6 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
 .modal-close{background:transparent;border:1px solid var(--brd);border-radius:6px;color:var(--mut);width:30px;height:30px;cursor:pointer;float:right;margin-top:-4px;font-family:var(--font-mono);font-size:13px;line-height:1;display:grid;place-items:center;padding:0}
 .sync-status{font-size:10px;color:var(--mut);text-align:center;padding:4px;flex-shrink:0;min-height:20px}
 .sync-status.syncing{color:var(--acc)}.sync-status.error{color:var(--red)}
-.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px}
-.wday{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:10px 4px;text-align:center;transition:.15s}
-.wday .wn{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--mut);margin-bottom:6px;font-weight:700}
-.wday .wt{font-family:var(--font-display);font-size:11px;letter-spacing:.02em;color:var(--acc);text-transform:uppercase;line-height:1.1}
-.wday.rest .wt{color:var(--mut)}
-.tips-box{padding:16px;background:var(--card);border:1px solid var(--brd);border-radius:14px}
-.tips-box h3{font-family:var(--font-display);font-size:16px;letter-spacing:.02em;color:var(--txt);margin-bottom:12px;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--brd)}
-.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tip{display:flex;gap:8px;align-items:flex-start}
-.tip .ic{font-size:16px;flex-shrink:0;line-height:1;margin-top:1px}
-.tip strong{display:block;font-size:11px;font-weight:800;margin-bottom:2px;color:var(--txt);font-family:var(--font-body);letter-spacing:.01em}
-.tip span{font-size:10px;color:var(--mut);line-height:1.4;font-family:var(--font-body)}
 .timer-overlay{position:fixed;inset:0;z-index:100;background:color-mix(in oklch, var(--bg) 92%, transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;flex-direction:column;padding:calc(var(--safe-top) + 24px) 20px calc(var(--safe-bot) + 20px);pointer-events:none}
 .timer-overlay.open{display:flex;pointer-events:all;animation:timerFadeUp .25s ease-out}
 @keyframes timerFadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -278,11 +321,6 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
 .timer-action.ghost{flex:1;background:transparent;border:1px solid var(--brd);color:var(--txt)}
 .timer-action.primary{flex:2;background:var(--acc);color:var(--acc-ink)}
 .timer-action:active{transform:scale(.98)}
-.wday .wst{font-size:13px;margin-top:4px}
-.wday.done{border-color:color-mix(in oklch,var(--acc) 35%,var(--brd));background:color-mix(in oklch,var(--acc) 6%,var(--card))}
-.wday.today{border-color:var(--acc);box-shadow:0 0 0 2px color-mix(in oklch,var(--acc) 20%,transparent)}
-.wday .wvol{font-family:var(--font-mono);font-size:9px;color:var(--acc);font-weight:700;margin-top:3px;letter-spacing:.05em}
-.wday{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 
 /* ───────── Session hero card (étape 1a) ───────── */
 .session-hero{position:relative;overflow:hidden;border-radius:16px;margin-bottom:14px;padding:16px 18px 18px;color:var(--acc-ink);background:linear-gradient(135deg,var(--acc) 0%,color-mix(in oklch,var(--acc) 72%,var(--txt)) 100%)}
@@ -509,28 +547,24 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
   <div class="app-content" id="app-content">
     <div id="workout-pages"></div>
     <div class="page" id="page-semaine">
-      <div class="page-head"><span class="page-num">↗</span><div class="page-info"><h2>Semaine Type</h2><p>Organisation de ton programme actif</p></div></div>
-      <div id="week-overview">
-  <p style="font-size:11px;color:var(--mut);text-align:center;margin-bottom:8px;">Maintenez appuyé pour déplacer les séances de la semaine en cours</p>
-  <div class="cal-header">
-  <button class="cal-nav-btn" onclick="window.calOffset--;window.buildWeekOverview()">‹</button>
-  <span id="cal-month-label" class="cal-month-label"></span>
-  <button class="cal-today-btn" onclick="window.calOffset=0;window.buildWeekOverview()">Auj.</button>
-  <button class="cal-nav-btn" onclick="window.calOffset++;window.buildWeekOverview()">›</button>
-</div>
-  <div id="cal-grid"></div>
-</div>
-      <div class="tips-box">
-        <h3>Principes Clés</h3>
-        <div class="tips-grid">
-          <div class="tip"><span class="ic">📈</span><div><strong>Surcharge Progressive</strong><span>+poids ou +reps chaque semaine.</span></div></div>
-          <div class="tip"><span class="ic">⏱️</span><div><strong>Repos</strong><span>90s–2min lourd · 60s isolation.</span></div></div>
-          <div class="tip"><span class="ic">🎯</span><div><strong>RIR</strong><span>1–2 reps en réserve par série.</span></div></div>
-          <div class="tip"><span class="ic">🍗</span><div><strong>Nutrition</strong><span>+300 kcal · 2g protéines/kg.</span></div></div>
-          <div class="tip"><span class="ic">😴</span><div><strong>Sommeil</strong><span>7–9h · les muscles poussent au repos.</span></div></div>
-          <div class="tip"><span class="ic">🔁</span><div><strong>Fréquence</strong><span>Chaque muscle 2× par semaine.</span></div></div>
+      <div class="cal-header">
+        <div class="cal-title">
+          <div class="cal-eyebrow" id="cal-eyebrow">PROGRAMME · SEMAINE 00</div>
+          <div class="cal-display">LA SEMAINE</div>
+        </div>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="window.calOffset--;window.buildWeekOverview()" aria-label="Semaine précédente">‹</button>
+          <button class="cal-today-btn" onclick="window.calOffset=0;window.buildWeekOverview()">AUJ.</button>
+          <button class="cal-nav-btn" onclick="window.calOffset++;window.buildWeekOverview()" aria-label="Semaine suivante">›</button>
         </div>
       </div>
+      <div id="week-overview">
+        <div id="vol-strip"></div>
+        <div class="cal-hint"><span class="ic">⇅</span><span>Glisse une séance sur un jour</span></div>
+        <span id="cal-month-label" class="cal-month-label"></span>
+        <div id="cal-grid"></div>
+      </div>
+      <div id="cal-pool"></div>
     </div>
     <div class="page" id="page-dashboard">
       <div class="page-head"><span class="page-num">📊</span><div class="page-info"><h2>Progression</h2><p>Tes performances dans le temps</p></div></div>
@@ -1354,12 +1388,13 @@ async function renderWorkout() {
     }
   }
 
-  // Fetch logs de toute la semaine (pour les dots de statut)
+  // Fetch logs de toute la semaine (pour les dots de statut) — filtrés sur le programme actif
   const { data: weekLogs } = await sb.from('workout_logs')
     .select('day_key, exercise_id, set_number, weight_kg, reps, session_date')
     .eq('user_id', currentUser.id)
     .gte('session_date', wi.weekStart)
-    .lte('session_date', wi.weekEnd);
+    .lte('session_date', wi.weekEnd)
+    .or('program_id.eq.'+activeProgram.id+',program_id.is.null');
 
   page.innerHTML = renderWorkoutWeekNav(wi) + renderWorkoutDayGrid(wi, idxToDayKey, weekLogs||[]) + '<div id="workout-body"></div>';
 
@@ -1568,7 +1603,8 @@ async function refreshSessionHero(dayIdx) {
     .select('weight_kg, reps')
     .eq('user_id', currentUser.id)
     .eq('day_key', day.key)
-    .eq('session_date', dateVal);
+    .eq('session_date', dateVal)
+    .or('program_id.eq.'+activeProgram.id+',program_id.is.null');
   const stats = computeSessionStats(day, logs || []);
   const selected = { date: dateVal, isToday: dateVal === today() };
   const statusLabel = computeStatusLabel(selected, false, stats);
@@ -1640,9 +1676,42 @@ window.refreshTicker = refreshTicker;
 
 window.calOffset = 0;
   
+// Mapping label séance → type (pour color bar)
+function getDayType(label) {
+  if (!label) return 'rest';
+  const l = label.toLowerCase();
+  if (l.indexOf('repos') >= 0 || l.indexOf('rest') >= 0) return 'rest';
+  if (l.indexOf('push') >= 0) return 'push';
+  if (l.indexOf('pull') >= 0) return 'pull';
+  if (l.indexOf('legs') >= 0 || l.indexOf('lower') >= 0) return 'legs';
+  if (l.indexOf('upper') >= 0) return 'upper';
+  if (l.indexOf('full') >= 0) return 'full';
+  return 'other';
+}
+function getDayTypeColor(type) {
+  switch (type) {
+    case 'push':  return 'var(--acc)';
+    case 'pull':  return 'var(--acc2)';
+    case 'legs':  return 'var(--green)';
+    case 'upper': return 'var(--blue)';
+    case 'full':  return 'var(--orange)';
+    case 'rest':  return 'var(--mut)';
+    default:      return 'var(--acc)';
+  }
+}
+
+// Numéro ISO de semaine
+function isoWeekNum(d) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay()||7));
+  const yearStart = new Date(Date.UTC(t.getUTCFullYear(),0,1));
+  return Math.ceil((((t - yearStart) / 86400000) + 1)/7);
+}
+
 async function buildWeekOverview() {
   const el = document.getElementById('cal-grid');
   const labelEl = document.getElementById('cal-month-label');
+  const eyebrowEl = document.getElementById('cal-eyebrow');
   if (!activeProgram || !el) return;
 
   const days = activeProgram.structure.days;
@@ -1680,10 +1749,12 @@ async function buildWeekOverview() {
     dayMap[weekAssignments[key]] = key;
   });
 
+  // Eyebrow + label mois (legacy, hidden)
+  if (eyebrowEl) eyebrowEl.textContent = 'PROGRAMME · SEMAINE ' + String(isoWeekNum(monday)).padStart(2,'0');
   const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   const mStart = monthNames[monday.getMonth()];
   const mEnd = monthNames[sunday.getMonth()];
-  labelEl.textContent = mStart === mEnd ? mStart + ' ' + monday.getFullYear() : mStart + ' — ' + mEnd + ' ' + sunday.getFullYear();
+  if (labelEl) labelEl.textContent = mStart === mEnd ? mStart + ' ' + monday.getFullYear() : mStart + ' — ' + mEnd + ' ' + sunday.getFullYear();
 
   const weekEnd = sunday.toISOString().slice(0,10);
   const todayStr = now.toISOString().slice(0,10);
@@ -1692,16 +1763,61 @@ async function buildWeekOverview() {
     .select('day_key, session_date, weight_kg, reps')
     .eq('user_id', currentUser.id)
     .gte('session_date', weekStart)
-    .lte('session_date', weekEnd);
+    .lte('session_date', weekEnd)
+    .or('program_id.eq.'+activeProgram.id+',program_id.is.null');
 
   const logsByDate = {};
   (logs || []).forEach(function(l) {
-    if (!logsByDate[l.session_date]) logsByDate[l.session_date] = { day_key: l.day_key, volume: 0 };
+    if (!logsByDate[l.session_date]) logsByDate[l.session_date] = { day_key: l.day_key, volume: 0, sets: 0 };
     logsByDate[l.session_date].volume += (l.weight_kg||0) * (l.reps||0);
+    logsByDate[l.session_date].sets += 1;
   });
 
-  const names = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-  let html = '<div class="week-grid">';
+  const names = ['LUN','MAR','MER','JEU','VEN','SAM','DIM'];
+
+  // Pré-calcul volume par jour (pour le strip + les rows)
+  const dayVolumes = [];
+  for (let i = 0; i < 7; i++) {
+    const d2 = new Date(monday);
+    d2.setDate(monday.getDate()+i);
+    const dateStr = d2.toISOString().slice(0,10);
+    const key = dayMap[i];
+    const d = key ? days.find(function(x){ return x.key===key; }) : null;
+    const log = logsByDate[dateStr];
+    dayVolumes.push({
+      volume: log ? log.volume : 0,
+      isRest: !d,
+      isToday: dateStr === todayStr,
+    });
+  }
+  const maxVol = Math.max.apply(null, dayVolumes.map(function(v){ return v.volume; }).concat([1]));
+  const totalVol = dayVolumes.reduce(function(a,v){ return a + v.volume; }, 0);
+  const goalVol = 30000;
+
+  // Volume strip
+  const stripEl = document.getElementById('vol-strip');
+  if (stripEl) {
+    let stripHtml = '<div class="vol-strip">';
+    stripHtml += '<div class="vol-strip-head">';
+    stripHtml += '<div class="vol-strip-eyebrow">Volume hebdo</div>';
+    stripHtml += '<div class="vol-strip-total"><span class="vol-strip-total-val">'+Math.round(totalVol).toLocaleString('fr-FR')+'</span> <span class="vol-strip-total-goal">/ '+goalVol.toLocaleString('fr-FR')+' KG</span></div>';
+    stripHtml += '</div>';
+    stripHtml += '<div class="vol-strip-grid">';
+    dayVolumes.forEach(function(dv, i) {
+      const h = dv.volume > 0 ? Math.max(8, (dv.volume/maxVol)*100) : 6;
+      let barClass = 'vol-bar';
+      if (dv.isRest) barClass += ' is-rest';
+      else if (dv.isToday) barClass += ' is-today';
+      stripHtml += '<div class="vol-col">';
+      stripHtml += '<div class="'+barClass+'" style="height:'+h+'%"></div>';
+      stripHtml += '<div class="vol-label'+(dv.isToday?' is-today':'')+'">'+names[i]+'</div>';
+      stripHtml += '</div>';
+    });
+    stripHtml += '</div></div>';
+    stripEl.innerHTML = stripHtml;
+  }
+
+  let html = '<div class="week-list">';
 
   for (let i = 0; i < 7; i++) {
     const d2 = new Date(monday);
@@ -1712,79 +1828,174 @@ async function buildWeekOverview() {
     const log = logsByDate[dateStr];
     const done = !!log;
     const isToday = dateStr === todayStr;
+    const isPast = dateStr < todayStr;
+
+    const rowClasses = ['wrow'];
+    if (isToday) rowClasses.push('is-today');
+    if (done) rowClasses.push('is-done');
+    if (!d) { rowClasses.push('is-rest'); rowClasses.push('is-empty'); }
+
+    const dragAttrs = isDraggable
+      ? ' draggable="true" data-key="'+(key||'')+'" data-idx="'+i+'"'
+      : ' data-idx="'+i+'"';
+
+    html += '<div class="'+rowClasses.join(' ')+'"'+dragAttrs+'>';
+    html += '<div class="wrow-date"><div class="wrow-day">'+names[i]+'</div><div class="wrow-num">'+String(d2.getDate()).padStart(2,'0')+'</div></div>';
 
     if (d) {
-      html += '<div class="wday' + (done ? ' done' : '') + (isToday ? ' today' : '') + '"' +
-        (isDraggable ? ' draggable="true" data-key="'+key+'" data-idx="'+i+'"' : '') +
-        ' data-idx="'+i+'">' +
-        '<div class="wn">'+names[i]+' '+d2.getDate()+'</div>' +
-        '<div class="wt">'+d.label+'</div>' +
-        '<div class="wst">'+(done?'✅':'⬜')+'</div>' +
-        (log ? '<div class="wvol">'+Math.round(log.volume)+'kg</div>' : '') +
-        '</div>';
+      const type = getDayType(d.label);
+      const barColor = getDayTypeColor(type);
+      let metaParts = [];
+      if (log) metaParts.push(Math.round(log.volume).toLocaleString('fr-FR')+' KG');
+      else if (d.exercises) metaParts.push(d.exercises.length+' EXOS');
+      if (done) metaParts.push('TERMINÉ');
+      else if (isToday) metaParts.push('EN COURS');
+      else if (isPast) metaParts.push('MANQUÉ');
+      else metaParts.push('À VENIR');
+
+      html += '<div class="wrow-body"><div class="wrow-bar" style="background:'+barColor+'"></div>';
+      html += '<div class="wrow-info"><div class="wrow-label">'+d.label+'</div><div class="wrow-meta">'+metaParts.join(' · ')+'</div></div>';
+      html += '<div class="wrow-end">';
+      if (done) html += '<div class="wrow-check">✓</div>';
+      else if (isToday) html += '<div class="wrow-play">▶</div>';
+      if (isDraggable) html += '<div class="wrow-handle"><div class="wrow-handle-row"><span></span><span></span></div><div class="wrow-handle-row"><span></span><span></span></div><div class="wrow-handle-row"><span></span><span></span></div></div>';
+      html += '</div></div>';
     } else {
-      html += '<div class="wday rest"' +
-        (isDraggable ? ' draggable="true"' : '') +
-        ' data-idx="'+i+'">' +
-        '<div class="wn">'+names[i]+' '+d2.getDate()+'</div>' +
-        '<div class="wt">Repos</div>' +
-        '<div class="wst">😴</div>' +
-        '</div>';
+      html += '<div class="wrow-body is-empty">'+(isDraggable ? '+ Déposer une séance' : '· Repos ·')+'</div>';
     }
+    html += '</div>';
   }
 
   html += '</div>';
   el.innerHTML = html;
 
-  if (isDraggable) initWeekDragDrop(weekAssignments, weekStart);
+  // Pool sticky bottom (templates draggables vers les jours)
+  const poolEl = document.getElementById('cal-pool');
+  if (poolEl) {
+    if (!isDraggable) {
+      poolEl.style.display = 'none';
+      poolEl.innerHTML = '';
+    } else {
+      poolEl.style.display = '';
+      const placedKeys = Object.keys(weekAssignments);
+      let poolHtml = '<div class="cal-pool-head">';
+      poolHtml += '<div class="cal-pool-eyebrow">Séances · Glisser vers un jour</div>';
+      poolHtml += '<div class="cal-pool-count">'+(days.length+1)+'</div>';
+      poolHtml += '</div>';
+      poolHtml += '<div class="cal-pool-list">';
+      days.forEach(function(d) {
+        const type = getDayType(d.label);
+        const color = getDayTypeColor(type);
+        const isPlaced = placedKeys.indexOf(d.key) >= 0;
+        poolHtml += '<div class="cal-pool-card'+(isPlaced?' is-on-day':'')+'" data-key="'+d.key+'" draggable="true" style="border-left-color:'+color+'">';
+        poolHtml += '<div class="cal-pool-card-label">'+d.label+'</div>';
+        poolHtml += '<div class="cal-pool-card-meta">'+(d.exercises ? d.exercises.length+' EX' : '—')+'</div>';
+        poolHtml += '</div>';
+      });
+      // Carte synthétique Repos
+      poolHtml += '<div class="cal-pool-card" data-key="__rest__" draggable="true" style="border-left-color:var(--mut)">';
+      poolHtml += '<div class="cal-pool-card-label">Repos</div>';
+      poolHtml += '<div class="cal-pool-card-meta">Récup.</div>';
+      poolHtml += '</div>';
+      poolHtml += '</div>';
+      poolEl.innerHTML = poolHtml;
+    }
+  }
+
+  if (isDraggable) initWeekPlanner(weekAssignments, weekStart);
 }
   
-function initWeekDragDrop(assignments, weekStart) {
-  const cards = document.querySelectorAll('#week-overview .wday');
+function initWeekPlanner(assignments, weekStart) {
+  const dayCards = document.querySelectorAll('#week-overview .wrow');
+  const poolCards = document.querySelectorAll('#cal-pool .cal-pool-card');
+  const poolEl = document.getElementById('cal-pool');
+
+  let dragKey = null;
+  let dragIdx = null;     // null si drag depuis le pool
+  let fromPool = false;
   let dragCard = null;
   let ghost = null;
-  let dragKey = null;
-  let dragIdx = null;
   let startX = 0, startY = 0;
 
-  cards.forEach(function(card) {
-    // Desktop drag & drop
-    card.setAttribute('draggable', card.dataset.idx !== undefined ? 'true' : 'false');
+  function keyOnDay(idx) {
+    return Object.keys(assignments).find(function(k){ return assignments[k] === idx; });
+  }
+  function applyDayDrop(targetIdx) {
+    if (dragKey === '__rest__') {
+      // Repos efface le jour cible
+      const tk = keyOnDay(targetIdx);
+      if (tk) delete assignments[tk];
+    } else if (fromPool) {
+      // Pool → Jour : assigne le template, renvoie le précédent au pool
+      const tk = keyOnDay(targetIdx);
+      if (tk && tk !== dragKey) delete assignments[tk];
+      assignments[dragKey] = targetIdx;
+    } else {
+      // Jour → Jour : swap
+      if (dragIdx === targetIdx) return;
+      const tk = keyOnDay(targetIdx);
+      if (dragKey) assignments[dragKey] = targetIdx;
+      if (tk && tk !== dragKey) assignments[tk] = dragIdx;
+    }
+    saveWeekAssignments(assignments, weekStart);
+  }
+  function applyPoolDrop() {
+    // Renvoyer une séance d'un jour vers le pool
+    if (!fromPool && dragKey) {
+      delete assignments[dragKey];
+      saveWeekAssignments(assignments, weekStart);
+    }
+  }
+  function clearHover() {
+    dayCards.forEach(function(c) { c.classList.remove('is-hovered'); });
+    if (poolEl) poolEl.classList.remove('is-drop-target');
+  }
+
+  // ─── Desktop drag (HTML5) ───
+  function setupDesktop(card, isPool) {
     card.addEventListener('dragstart', function() {
       dragKey = this.dataset.key || null;
-      dragIdx = parseInt(this.dataset.idx);
+      dragIdx = isPool ? null : parseInt(this.dataset.idx);
+      fromPool = isPool;
       this.style.opacity = '0.4';
     });
     card.addEventListener('dragend', function() {
       this.style.opacity = '1';
+      clearHover();
+      dragKey = null; dragIdx = null; fromPool = false;
     });
-    card.addEventListener('dragover', function(e) { e.preventDefault(); this.style.outline = '2px solid var(--acc)'; });
-    card.addEventListener('dragleave', function() { this.style.outline = ''; });
+  }
+  dayCards.forEach(function(card) {
+    setupDesktop(card, false);
+    card.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('is-hovered'); });
+    card.addEventListener('dragleave', function() { this.classList.remove('is-hovered'); });
     card.addEventListener('drop', function(e) {
       e.preventDefault();
-      this.style.outline = '';
+      this.classList.remove('is-hovered');
       const targetIdx = parseInt(this.dataset.idx);
-      const targetKey = this.dataset.key || null;
-      if (dragIdx === targetIdx) return;
-      if (dragKey) assignments[dragKey] = targetIdx;
-      if (targetKey) assignments[targetKey] = dragIdx;
-      saveWeekAssignments(assignments, weekStart);
+      applyDayDrop(targetIdx);
     });
+  });
+  poolCards.forEach(function(card) { setupDesktop(card, true); });
+  if (poolEl) {
+    poolEl.addEventListener('dragover', function(e) { if (!fromPool) { e.preventDefault(); poolEl.classList.add('is-drop-target'); } });
+    poolEl.addEventListener('dragleave', function() { poolEl.classList.remove('is-drop-target'); });
+    poolEl.addEventListener('drop', function(e) { e.preventDefault(); poolEl.classList.remove('is-drop-target'); applyPoolDrop(); });
+  }
 
-    // Mobile touch custom
+  // ─── Mobile touch ───
+  function setupTouch(card, isPool) {
     card.addEventListener('touchstart', function(e) {
       const touch = e.touches[0];
-      startX = touch.clientX;
-      startY = touch.clientY;
+      startX = touch.clientX; startY = touch.clientY;
       dragCard = this;
       dragKey = this.dataset.key || null;
-      dragIdx = parseInt(this.dataset.idx);
-
-      // Créer le ghost après 200ms d'appui
+      dragIdx = isPool ? null : parseInt(this.dataset.idx);
+      fromPool = isPool;
       dragCard._ghostTimer = setTimeout(function() {
         const rect = dragCard.getBoundingClientRect();
         ghost = dragCard.cloneNode(true);
-        ghost.style.cssText = 'position:fixed;z-index:999;width:'+rect.width+'px;left:'+rect.left+'px;top:'+rect.top+'px;opacity:0.85;pointer-events:none;border:2px solid var(--acc);border-radius:6px;background:var(--card);transition:none;transform:scale(1.05);box-shadow:0 8px 24px rgba(0,0,0,0.2);';
+        ghost.style.cssText = 'position:fixed;z-index:999;width:'+rect.width+'px;left:'+rect.left+'px;top:'+rect.top+'px;opacity:0.85;pointer-events:none;border:2px solid var(--acc);border-radius:10px;background:var(--card);transition:none;transform:scale(1.05);box-shadow:0 8px 24px rgba(0,0,0,0.2);';
         document.body.appendChild(ghost);
         dragCard.style.opacity = '0.3';
         if (navigator.vibrate) navigator.vibrate(40);
@@ -1793,13 +2004,9 @@ function initWeekDragDrop(assignments, weekStart) {
 
     card.addEventListener('touchmove', function(e) {
       if (!ghost) {
-        // Pas encore en mode drag — annuler si mouvement trop tôt
         const dx = Math.abs(e.touches[0].clientX - startX);
         const dy = Math.abs(e.touches[0].clientY - startY);
-        if (dx > 8 || dy > 8) {
-          clearTimeout(dragCard._ghostTimer);
-          dragCard = null;
-        }
+        if (dx > 8 || dy > 8) { clearTimeout(dragCard && dragCard._ghostTimer); dragCard = null; }
         return;
       }
       e.preventDefault();
@@ -1807,44 +2014,38 @@ function initWeekDragDrop(assignments, weekStart) {
       const rect = dragCard.getBoundingClientRect();
       ghost.style.left = (touch.clientX - rect.width/2) + 'px';
       ghost.style.top = (touch.clientY - rect.height/2) + 'px';
-
-      // Highlight la carte en dessous
       ghost.style.display = 'none';
       const el = document.elementFromPoint(touch.clientX, touch.clientY);
       ghost.style.display = '';
-      const target = el ? el.closest('.wday') : null;
-      cards.forEach(function(c) { c.style.outline = ''; });
-      if (target && target !== dragCard) target.style.outline = '2px solid var(--acc)';
+      const targetRow = el ? el.closest('.wrow') : null;
+      const targetPool = el ? el.closest('#cal-pool') : null;
+      clearHover();
+      if (targetRow && targetRow !== dragCard) targetRow.classList.add('is-hovered');
+      else if (targetPool && !fromPool) targetPool.classList.add('is-drop-target');
     }, { passive: false });
 
     card.addEventListener('touchend', function(e) {
       clearTimeout(dragCard && dragCard._ghostTimer);
       if (!ghost) { dragCard = null; return; }
-
       const touch = e.changedTouches[0];
       ghost.style.display = 'none';
       const el = document.elementFromPoint(touch.clientX, touch.clientY);
       ghost.style.display = '';
-      const target = el ? el.closest('.wday') : null;
-
-      // Cleanup
-      ghost.remove();
-      ghost = null;
+      const targetRow = el ? el.closest('.wrow') : null;
+      const targetPool = el ? el.closest('#cal-pool') : null;
+      ghost.remove(); ghost = null;
       if (dragCard) dragCard.style.opacity = '1';
-      cards.forEach(function(c) { c.style.outline = ''; });
-
-      if (!target || target === dragCard) { dragCard = null; return; }
-
-      const targetIdx = parseInt(target.dataset.idx);
-      const targetKey = target.dataset.key || null;
-      if (dragIdx === targetIdx) { dragCard = null; return; }
-
-      if (dragKey) assignments[dragKey] = targetIdx;
-      if (targetKey) assignments[targetKey] = dragIdx;
+      clearHover();
+      if (targetRow && targetRow !== dragCard) {
+        applyDayDrop(parseInt(targetRow.dataset.idx));
+      } else if (targetPool && !fromPool) {
+        applyPoolDrop();
+      }
       dragCard = null;
-      saveWeekAssignments(assignments, weekStart);
     }, { passive: true });
-  });
+  }
+  dayCards.forEach(function(c) { setupTouch(c, false); });
+  poolCards.forEach(function(c) { setupTouch(c, true); });
 }
 
 async function saveWeekAssignments(assignments, weekStart) {
@@ -2064,7 +2265,8 @@ async function refreshExCardState(exId, dayIdx) {
     .eq('user_id', currentUser.id)
     .eq('exercise_id', exId)
     .eq('day_key', day.key)
-    .eq('session_date', dateVal);
+    .eq('session_date', dateVal)
+    .or('program_id.eq.'+activeProgram.id+',program_id.is.null');
   const todaySets = {};
   (logs||[]).forEach(function(l){
     if ((l.weight_kg||0) > 0 || (l.reps||0) > 0) todaySets[l.set_number] = true;
@@ -2146,7 +2348,8 @@ async function toggleSet(exId, dayKey, dayIdx, setNumber, checkEl) {
     const { error } = await sb.from('workout_logs').insert({
       user_id: currentUser.id, exercise_id: exId, exercise_name: exName,
       day_key: dayKey, session_date: dateVal, set_number: setNumber,
-      weight_kg: w, reps: r
+      weight_kg: w, reps: r,
+      program_id: (activeProgram && activeProgram.id) || null
     });
     if (error) {
       setSyncStatus('Erreur','error');
