@@ -60,6 +60,21 @@ L'app est une PWA `index.html` unique en HTML/CSS/JavaScript pur, aussi consomm�
 - Anneau circulaire CHARGE, auto-démarrage, wake lock
 - Choix temps : 45s / 1min / 1m30 / 2min / 3min, mémorisé par exercice
 
+### Internationalisation (FR / EN)
+- Langue par défaut **EN**, détection auto au premier chargement (`navigator.language`)
+- Bouton **🌐 Language** dans le menu ⋮ pour basculer FR ↔ EN sans reload
+- Choix persisté dans `localStorage.spottr_lang`
+
+### Reset password
+- Lien "Mot de passe oublié ?" sur l'écran de connexion
+- Email envoyé via Supabase, callback détecté au boot (hash implicit ou query PKCE)
+- Écran "Nouveau mot de passe" en saisie + confirmation, puis reconnexion automatique
+
+### Feedback beta in-app
+- Bouton **💬 Donner un feedback** dans le menu ⋮
+- Modal avec radio (bug / amélioration / question) + textarea
+- Stockage direct Supabase (table `feedback`, RLS insert-only)
+
 ---
 
 ## Stack technique
@@ -118,6 +133,13 @@ Voir la roadmap consolidée dans le [README de la sandbox](https://github.com/St
 ## Historique des versions
 
 Voir le [historique complet dans la sandbox](https://github.com/Striinox/musculation-app-dev). Dernière version :
+
+### v7 — Mai 2026 (mobile polish + i18n FR/EN + feedback + reset password)
+- **Capacitor mobile Android** : status bar transparente edge-to-edge, splash screen Spottr (logo VOLT), plugin haptic feedback sur la validation des sets
+- **Reset password complet** : email Supabase → écran "Nouveau mot de passe" en callback (couvre flow implicit hash et flow PKCE) → reconnexion auto
+- **Refonte header** : ✕ logout remplacé par ⋮ menu déroulant qui regroupe Language 🌐 / Feedback 💬 / Sign out ↗
+- **Feedback beta in-app** : modal radio + textarea, INSERT direct table Supabase `feedback` (RLS insert-only), auto-fill user/version/user-agent
+- **Internationalisation FR / EN** : langue par défaut EN, détection auto, bouton de toggle dans le menu, ~210 clés, mois/jours via `Intl.DateTimeFormat` localisé. Système maison léger (objet I18N + fonction `t()` avec fallback en > fr > clé brute), zéro dépendance externe
 
 ### v6 — Mai 2026 (rebrand Spottr + features avancées + transition mobile)
 - Rebrand complet : Muscu/CHARGE → Spottr
