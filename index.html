@@ -432,10 +432,12 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
 .btn-import-prog{background:transparent;border:1px solid var(--brd);border-radius:12px;padding:12px;text-align:center;cursor:pointer;font-family:var(--font-mono);font-size:11px;color:var(--mut);font-weight:700;width:100%;letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
 .sync-status{font-size:10px;color:var(--mut);text-align:center;padding:4px;flex-shrink:0;min-height:20px}
 .sync-status.syncing{color:var(--acc)}.sync-status.error{color:var(--red)}
-.timer-overlay{position:fixed;inset:0;z-index:100;background:color-mix(in oklch, var(--bg) 92%, transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;flex-direction:column;padding:calc(var(--safe-top) + 24px) 20px calc(var(--safe-bot) + 20px);pointer-events:none}
+.timer-overlay{position:fixed;inset:0;z-index:100;background:color-mix(in oklch, var(--bg) 92%, transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;flex-direction:column;padding:calc(var(--safe-top) + 24px) 20px calc(var(--safe-bot) + 20px);pointer-events:none;overscroll-behavior:contain;touch-action:none}
 .timer-overlay.open{display:flex;pointer-events:all;animation:timerFadeUp .25s ease-out}
+.timer-overlay button,.timer-overlay .timer-opt,.timer-overlay input{touch-action:manipulation}
 @keyframes timerFadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.timer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.timer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
+.timer-header-actions{display:flex;gap:6px;align-items:center}
 .timer-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--mut);text-transform:uppercase;font-weight:700}
 .timer-close{width:32px;height:32px;border:1px solid var(--brd);background:transparent;color:var(--txt);border-radius:16px;display:grid;place-items:center;cursor:pointer;padding:0}
 .timer-close svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.4;fill:none;stroke-linecap:round}
@@ -465,6 +467,44 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
 .timer-action.ghost{flex:1;background:transparent;border:1px solid var(--brd);color:var(--txt)}
 .timer-action.primary{flex:2;background:var(--acc);color:var(--acc-ink)}
 .timer-action:active{transform:scale(.98)}
+
+/* ── Timer minimizable (mode mini-bar au-dessus de la nav) ── */
+.timer-drag-handle{width:48px;height:5px;border-radius:3px;background:var(--mut);opacity:.5;margin:0 auto 12px;flex-shrink:0;touch-action:none;cursor:grab}
+.timer-overlay.minimized .timer-drag-handle{margin:8px auto 2px;opacity:.7}
+.timer-overlay.minimized{
+  inset:auto 0 var(--timer-mini-bottom,0px) 0;
+  height:auto;
+  padding:0 12px;
+  background:var(--sur);
+  border-top:1px solid var(--brd);
+  border-radius:12px 12px 0 0;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  animation:timerMiniSlideUp .22s ease-out;
+  box-shadow:0 -4px 14px rgba(0,0,0,.08);
+  cursor:pointer;
+}
+@keyframes timerMiniSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.timer-overlay.minimized .timer-header,
+.timer-overlay.minimized .timer-body,
+.timer-overlay.minimized .timer-options,
+.timer-overlay.minimized .timer-actions{display:none}
+.timer-mini-progress{position:absolute;top:0;left:0;right:0;height:2px;background:var(--card);overflow:hidden;display:none}
+.timer-overlay.minimized .timer-mini-progress{display:block}
+.timer-mini-progress-fg{height:100%;background:var(--acc);width:0%;transition:width 1s linear, background .3s}
+.timer-mini-progress-fg.urgent{background:var(--red)}
+.timer-mini-content{display:none}
+.timer-overlay.minimized .timer-mini-content{display:flex;align-items:center;gap:10px;padding:0 4px 8px}
+.timer-mini-display{font-family:var(--font-display);font-size:22px;letter-spacing:-.02em;line-height:1;color:var(--txt);min-width:62px}
+.timer-mini-display.urgent{color:var(--red)}
+.timer-mini-display .sep{opacity:.4}
+.timer-mini-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.timer-mini-eyebrow{font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--mut);font-weight:700;text-transform:uppercase}
+.timer-mini-name{font-family:var(--font-display);font-size:13px;letter-spacing:.02em;color:var(--txt);text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.timer-mini-actions{display:flex;gap:4px;flex-shrink:0}
+.timer-mini-action{border:1px solid var(--brd);background:transparent;color:var(--txt);padding:6px 10px;border-radius:6px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.08em;cursor:pointer;text-transform:uppercase}
+.timer-mini-action.primary{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.timer-mini-action:active{transform:scale(.96)}
 
 /* ───────── Session hero card (étape 1a) ───────── */
 .session-hero{position:relative;overflow:hidden;border-radius:16px;margin-bottom:14px;padding:16px 18px 18px;color:var(--acc-ink);background:linear-gradient(135deg,var(--acc) 0%,color-mix(in oklch,var(--acc) 72%,var(--txt)) 100%)}
@@ -1241,7 +1281,8 @@ const I18N = {
     'timer.eyebrow': 'REPOS · EN COURS',
     'timer.sub': 'RÉCUPÉRATION',
     'timer.exercise': 'Exercice',
-    'timer.skip': 'Passer le repos →'
+    'timer.skip': 'Passer le repos →',
+    'timer.skip_short': 'Passer →'
   },
   en: {
     // === MENU ===
@@ -1546,7 +1587,8 @@ const I18N = {
     'timer.eyebrow': 'REST · IN PROGRESS',
     'timer.sub': 'RECOVERY',
     'timer.exercise': 'Exercise',
-    'timer.skip': 'Skip rest →'
+    'timer.skip': 'Skip rest →',
+    'timer.skip_short': 'Skip →'
   }
 };
 let currentLang = 'en';
@@ -4782,20 +4824,30 @@ function formatTwo(n) { return String(n).padStart(2, '0'); }
 function updateTimerVisuals() {
   const mm = Math.max(0, Math.floor(timerRemaining / 60));
   const ss = Math.max(0, timerRemaining % 60);
+  const mmStr = formatTwo(mm);
+  const ssStr = formatTwo(ss);
   const mmEl = document.getElementById('timer-mm');
   const ssEl = document.getElementById('timer-ss');
-  if (mmEl) mmEl.textContent = formatTwo(mm);
-  if (ssEl) ssEl.textContent = formatTwo(ss);
+  if (mmEl) mmEl.textContent = mmStr;
+  if (ssEl) ssEl.textContent = ssStr;
+  const mmMiniEl = document.getElementById('timer-mini-mm');
+  const ssMiniEl = document.getElementById('timer-mini-ss');
+  if (mmMiniEl) mmMiniEl.textContent = mmStr;
+  if (ssMiniEl) ssMiniEl.textContent = ssStr;
   const ringFg = document.getElementById('timer-ring-fg');
+  const pct = timerTotal > 0 ? Math.min(1, Math.max(0, (timerTotal - timerRemaining) / timerTotal)) : 0;
   if (ringFg) {
     ringFg.style.strokeDasharray  = TIMER_RING_C;
-    const pct = timerTotal > 0 ? Math.min(1, Math.max(0, (timerTotal - timerRemaining) / timerTotal)) : 0;
     ringFg.style.strokeDashoffset = (TIMER_RING_C * (1 - pct)).toFixed(2);
   }
+  const miniProgress = document.getElementById('timer-mini-progress-fg');
+  if (miniProgress) miniProgress.style.width = (pct * 100).toFixed(2) + '%';
   const urgent = timerRemaining > 0 && timerRemaining <= 10;
   document.getElementById('timer-ring-fg')?.classList.toggle('urgent', urgent);
   document.getElementById('timer-display')?.classList.toggle('urgent', urgent);
   document.getElementById('timer-ring-center')?.classList.toggle('urgent', urgent);
+  document.getElementById('timer-mini-display')?.classList.toggle('urgent', urgent);
+  miniProgress?.classList.toggle('urgent', urgent);
 }
 
 function openTimer(exName, exId) {
@@ -4807,7 +4859,9 @@ function openTimer(exName, exId) {
   const exLib = _libBy(exId);
   const displayName = exLib ? getExName(exLib) : (exName || '—');
   document.getElementById('timer-ex-name').textContent = displayName;
+  document.getElementById('timer-mini-name').textContent = displayName;
   document.getElementById('timer-eyebrow').textContent = t('timer.eyebrow');
+  document.getElementById('timer-mini-eyebrow').textContent = t('timer.eyebrow');
   document.getElementById('timer-sub').textContent = t('timer.sub');
   // Reset état
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
@@ -4825,13 +4879,18 @@ function openTimer(exName, exId) {
   } else {
     updateTimerVisuals();
   }
-  document.getElementById('timer-overlay').classList.add('open');
+  const overlay = document.getElementById('timer-overlay');
+  overlay.classList.remove('minimized');
+  overlay.classList.add('open');
+  updateTimerMiniBottom();
   // Auto-démarrage (design CHARGE)
   startTimer();
 }
 
 function closeTimer() {
-  document.getElementById('timer-overlay').classList.remove('open');
+  const overlay = document.getElementById('timer-overlay');
+  overlay.classList.remove('open');
+  overlay.classList.remove('minimized');
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   timerRunning = false;
   timerEndTime = 0;
@@ -4852,6 +4911,8 @@ function finishTimer() {
   updateTimerVisuals();
   const sub = document.getElementById('timer-sub');
   if (sub) sub.textContent = "C'EST REPARTI 💪";
+  const miniEyebrow = document.getElementById('timer-mini-eyebrow');
+  if (miniEyebrow) miniEyebrow.textContent = "C'EST REPARTI 💪";
   if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
   setTimeout(function() { closeTimer(); }, 1500);
 }
@@ -4910,6 +4971,122 @@ window.addTimer   = addTimer;
 window.buildWeekOverview = buildWeekOverview;
 window.goPage = goPage;
 
+// ── Timer minimizable : expand / minimize + gestes touch + tap ──
+function updateTimerMiniBottom() {
+  const nav = document.getElementById('bottom-nav');
+  const h = nav ? nav.offsetHeight : 0;
+  document.documentElement.style.setProperty('--timer-mini-bottom', (h > 0 ? h : 0) + 'px');
+}
+function expandTimer() {
+  document.getElementById('timer-overlay')?.classList.remove('minimized');
+}
+function minimizeTimer() {
+  document.getElementById('timer-overlay')?.classList.add('minimized');
+  updateTimerMiniBottom();
+}
+window.expandTimer = expandTimer;
+window.minimizeTimer = minimizeTimer;
+
+function setupTimerGestures() {
+  const overlay = document.getElementById('timer-overlay');
+  if (!overlay) return;
+  let startY = null, lastY = null, startT = 0, dragging = false;
+
+  function isInteractive(target) {
+    if (!target) return false;
+    return !!target.closest('button, .timer-opt, .timer-action, .timer-mini-action, input, a');
+  }
+
+  function setDragOffset(px) {
+    if (px <= 0) { overlay.style.transform = ''; return; }
+    overlay.style.transition = 'none';
+    overlay.style.transform = 'translateY(' + Math.min(px, 240) + 'px)';
+  }
+
+  function resetDragOffset() {
+    overlay.style.transition = 'transform .2s ease';
+    overlay.style.transform = '';
+    setTimeout(function() {
+      overlay.style.transition = '';
+      overlay.style.transform = '';
+    }, 220);
+  }
+
+  overlay.addEventListener('touchstart', function(e) {
+    if (e.touches.length !== 1) return;
+    const isMin = overlay.classList.contains('minimized');
+    // En mode full : autorise depuis n'importe où sauf sur les zones interactives.
+    // En mode mini : depuis n'importe où sur la mini-bar.
+    if (!isMin && isInteractive(e.target)) return;
+    startY = e.touches[0].clientY; lastY = startY; startT = Date.now(); dragging = false;
+  }, { passive: true });
+
+  overlay.addEventListener('touchmove', function(e) {
+    if (startY == null) return;
+    lastY = e.touches[0].clientY;
+    const deltaY = lastY - startY;
+    const isMin = overlay.classList.contains('minimized');
+    // Feedback visuel uniquement pour swipe down en mode full
+    if (!isMin && deltaY > 4) {
+      dragging = true;
+      setDragOffset(deltaY);
+    }
+  }, { passive: true });
+
+  overlay.addEventListener('touchend', function(e) {
+    if (startY == null) return;
+    const deltaY = (lastY != null ? lastY : startY) - startY;
+    const dur = Date.now() - startT;
+    const isMin = overlay.classList.contains('minimized');
+    if (!isMin && deltaY > 60) {
+      // Reset transform avant la transition vers minimized (sinon les deux animations se chevauchent)
+      overlay.style.transition = '';
+      overlay.style.transform = '';
+      minimizeTimer();
+    } else if (!isMin && dragging) {
+      resetDragOffset();
+    } else if (isMin && deltaY < -30) {
+      expandTimer();
+    } else if (isMin && Math.abs(deltaY) < 6 && dur < 250) {
+      const target = e.target;
+      if (target && !target.closest('.timer-mini-action')) expandTimer();
+    }
+    startY = null; lastY = null; dragging = false;
+  }, { passive: true });
+
+  overlay.addEventListener('touchcancel', function() {
+    if (dragging) resetDragOffset();
+    startY = null; lastY = null; dragging = false;
+  }, { passive: true });
+
+  // Click handler (souris + fallback iOS) — expand uniquement en mode mini
+  overlay.addEventListener('click', function(e) {
+    if (!overlay.classList.contains('minimized')) return;
+    if (e.target.closest('.timer-mini-action')) return;
+    expandTimer();
+  });
+}
+
+// Suivre la hauteur de la nav pour positionner la mini-bar juste au-dessus
+function observeNavForTimer() {
+  const nav = document.getElementById('bottom-nav');
+  if (nav && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(updateTimerMiniBottom).observe(nav);
+  }
+  window.addEventListener('resize', updateTimerMiniBottom);
+  window.addEventListener('orientationchange', updateTimerMiniBottom);
+  updateTimerMiniBottom();
+}
+
+// Le HTML du timer-overlay est défini APRÈS ce <script>, donc on attend DOMContentLoaded
+// pour attacher les handlers (sinon getElementById retourne null et tout bail silencieux).
+function _initTimerWiring() { setupTimerGestures(); observeNavForTimer(); }
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _initTimerWiring);
+} else {
+  _initTimerWiring();
+}
+
 
   window.selectTimerOpt = function(el) {
   document.querySelectorAll('.timer-opt').forEach(function(o) { o.classList.remove('selected'); });
@@ -4940,11 +5117,29 @@ applyTranslations();
 </script>
   <!-- TIMER -->
 <div class="timer-overlay" id="timer-overlay">
+  <div class="timer-mini-progress"><div class="timer-mini-progress-fg" id="timer-mini-progress-fg"></div></div>
+  <div class="timer-drag-handle" id="timer-drag-handle"></div>
+  <div class="timer-mini-content" id="timer-mini-content">
+    <div class="timer-mini-display" id="timer-mini-display"><span id="timer-mini-mm">01</span><span class="sep">:</span><span id="timer-mini-ss">30</span></div>
+    <div class="timer-mini-info">
+      <div class="timer-mini-eyebrow" id="timer-mini-eyebrow" data-i18n="timer.eyebrow">REPOS · EN COURS</div>
+      <div class="timer-mini-name" id="timer-mini-name">—</div>
+    </div>
+    <div class="timer-mini-actions">
+      <button class="timer-mini-action" type="button" onclick="event.stopPropagation();addTimer(15)">+15s</button>
+      <button class="timer-mini-action primary" type="button" onclick="event.stopPropagation();closeTimer()" data-i18n="timer.skip_short">Passer →</button>
+    </div>
+  </div>
   <div class="timer-header">
     <span class="timer-eyebrow" id="timer-eyebrow" data-i18n="timer.eyebrow">REPOS · EN COURS</span>
-    <button class="timer-close" type="button" onclick="closeTimer()" data-i18n-aria-label="common.close" aria-label="Fermer">
-      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
+    <div class="timer-header-actions">
+      <button class="timer-close" type="button" onclick="minimizeTimer()" aria-label="Minimize">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+      </button>
+      <button class="timer-close" type="button" onclick="closeTimer()" data-i18n-aria-label="common.close" aria-label="Fermer">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
   </div>
   <div class="timer-body">
     <div class="timer-ring">
