@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Spottr — Politique de confidentialité / Privacy Policy</title>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.65;color:#1a1a1a;background:#fafafa;margin:0;padding:0}
+  .wrap{max-width:780px;margin:0 auto;padding:32px 24px 80px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+  .brand{font-family:'Archivo Black',Impact,sans-serif;font-size:22px;letter-spacing:.02em;color:#161719}
+  .brand a{color:inherit;text-decoration:none}
+  .lang-toggle{display:flex;gap:4px;background:#fff;border:1px solid #e2e2e2;border-radius:8px;padding:4px}
+  .lang-toggle button{background:none;border:none;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;color:#666;font-family:inherit}
+  .lang-toggle button.active{background:#D7E661;color:#161719}
+  h1{font-family:'Archivo Black',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:-.01em;color:#161719;margin:24px 0 8px}
+  h2{font-family:'Archivo Black',Impact,sans-serif;font-size:20px;line-height:1.3;color:#161719;margin:32px 0 10px;border-bottom:2px solid #D7E661;padding-bottom:6px}
+  h3{font-size:16px;font-weight:700;color:#161719;margin:20px 0 8px}
+  p,li{font-size:15px}
+  ul,ol{padding-left:22px}
+  li{margin-bottom:6px}
+  a{color:#1565C0;text-decoration:underline}
+  .meta{color:#666;font-size:13px;margin-bottom:18px}
+  .box{background:#fff;border:1px solid #e2e2e2;border-radius:10px;padding:16px 20px;margin:16px 0}
+  .box.warning{background:#fff8e1;border-color:#ffd54f}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #e2e2e2;vertical-align:top}
+  th{background:#f5f5f5;font-weight:700}
+  .lang-section{display:none}
+  .lang-section.active{display:block}
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid #e2e2e2;color:#666;font-size:13px}
+  footer a{color:#666}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><a href="/">SPOTTR</a></div>
+    <div class="lang-toggle" role="tablist">
+      <button id="btn-fr" class="active" onclick="setLang('fr')" role="tab">Français</button>
+      <button id="btn-en" onclick="setLang('en')" role="tab">English</button>
+    </div>
+  </header>
+
+  <!-- ═════════════════════════════════ FR ═════════════════════════════════ -->
+  <section id="section-fr" class="lang-section active" lang="fr">
+    <h1>Politique de confidentialité</h1>
+    <p class="meta">Dernière mise à jour : 8 mai 2026</p>
+
+    <p>La présente Politique de confidentialité décrit comment <strong>Spottr</strong> (ci-après « le Service ») collecte, utilise et protège les données personnelles de ses utilisateurs, conformément au Règlement (UE) 2016/679 (RGPD) et à la loi française « Informatique et Libertés » du 6 janvier 1978 modifiée.</p>
+
+    <h2>1. Mentions légales</h2>
+    <p><strong>Éditeur du Service :</strong></p>
+    <ul>
+      <li><strong>Take an IT</strong>, Société par actions simplifiée unipersonnelle (SASU) au capital de 2 000 €</li>
+      <li>Siège social : 24 Rue Franklin, 92600 Asnières-sur-Seine, France</li>
+      <li>RCS Nanterre n° 942 906 280</li>
+      <li>SIRET : 942 906 280 00014</li>
+      <li>N° TVA intracommunautaire : FR02 942906280</li>
+      <li>Directeur de la publication : Anthony Nave (Président)</li>
+      <li>Contact : <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a></li>
+    </ul>
+    <p><strong>Hébergeurs :</strong></p>
+    <ul>
+      <li><strong>Pages web (frontend)</strong> : GitHub, Inc. — 88 Colin P Kelly Jr Street, San Francisco, CA 94107, États-Unis (GitHub Pages)</li>
+      <li><strong>Données utilisateurs (backend)</strong> : Supabase, Inc. — 970 Toa Payoh North #07-04, Singapore 318992. Stockage des données dans la région UE (AWS Frankfurt, eu-central-1)</li>
+    </ul>
+
+    <h2>2. Responsable de traitement</h2>
+    <p>Le responsable de traitement est <strong>Take an IT</strong>, dont les coordonnées figurent ci-dessus. Aucun délégué à la protection des données (DPO) n'a été désigné, sa désignation n'étant pas obligatoire au regard de la nature et du volume des traitements effectués.</p>
+
+    <h2>3. Données collectées</h2>
+    <table>
+      <tr><th>Catégorie</th><th>Données</th><th>Origine</th></tr>
+      <tr><td>Authentification</td><td>Adresse email, mot de passe (haché)</td><td>Saisie utilisateur</td></tr>
+      <tr><td>Profil sportif</td><td>Objectif, niveau, fréquence d'entraînement, équipement, contraintes physiques</td><td>Saisie utilisateur (onboarding)</td></tr>
+      <tr><td>Historique d'entraînement</td><td>Programmes générés, séances effectuées (date, exercices, charges, répétitions)</td><td>Saisie utilisateur</td></tr>
+      <tr><td>Feedback</td><td>Type (bug / amélioration / question), message libre, version de l'app, user-agent du navigateur</td><td>Formulaire feedback</td></tr>
+      <tr><td>Préférences techniques</td><td>Langue, jeton de session</td><td>Stockage local du navigateur (localStorage)</td></tr>
+    </table>
+    <p><strong>Aucune donnée biométrique, aucune photo, aucune géolocalisation, aucune donnée de santé sensible n'est collectée.</strong></p>
+
+    <h2>4. Finalités et bases légales</h2>
+    <table>
+      <tr><th>Finalité</th><th>Base légale (RGPD art. 6)</th></tr>
+      <tr><td>Permettre l'accès au Service (authentification, sauvegarde du profil et de l'historique)</td><td>Exécution du contrat (CGU)</td></tr>
+      <tr><td>Améliorer le Service via les feedbacks utilisateurs</td><td>Intérêt légitime de l'éditeur</td></tr>
+      <tr><td>Assurer la sécurité du Service (détection d'abus)</td><td>Intérêt légitime de l'éditeur</td></tr>
+    </table>
+    <p>Aucune donnée n'est utilisée à des fins de profilage commercial, de publicité ciblée ou cédée à des tiers à des fins marketing.</p>
+
+    <h2>5. Sous-traitants</h2>
+    <p>Spottr fait appel aux sous-traitants suivants au sens de l'article 28 du RGPD :</p>
+    <ul>
+      <li><strong>Supabase, Inc.</strong> — Authentification, base de données PostgreSQL, stockage des images. Données stockées en région UE (AWS Frankfurt). Politique de confidentialité : <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a></li>
+      <li><strong>GitHub, Inc.</strong> (filiale de Microsoft) — Hébergement des pages web statiques. Politique : <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com/.../github-general-privacy-statement</a></li>
+      <li><strong>OVH SAS</strong> — Service de redirection email pour le domaine myspottr.app</li>
+    </ul>
+
+    <h2>6. Transferts hors Union européenne</h2>
+    <ul>
+      <li><strong>GitHub (USA)</strong> : transfert encadré par le <em>EU-US Data Privacy Framework</em> (décision d'adéquation de la Commission européenne du 10 juillet 2023). GitHub est certifié.</li>
+      <li><strong>Supabase</strong> : société basée à Singapour, mais les données utilisateurs sont stockées en région UE (AWS Frankfurt). Aucun transfert effectif des données utilisateurs hors UE.</li>
+    </ul>
+
+    <h2>7. Durée de conservation</h2>
+    <ul>
+      <li><strong>Données du compte</strong> : conservées tant que le compte est actif</li>
+      <li><strong>Suppression du compte</strong> : effacement <strong>immédiat et définitif</strong> de toutes les données via le bouton « Supprimer mon compte » accessible depuis le menu de l'application</li>
+      <li><strong>Logs techniques</strong> (côté Supabase) : 30 jours maximum</li>
+    </ul>
+
+    <h2>8. Droits des utilisateurs</h2>
+    <p>Conformément aux articles 15 à 22 du RGPD, vous disposez des droits suivants :</p>
+    <ul>
+      <li><strong>Accès</strong> : obtenir une copie des données vous concernant</li>
+      <li><strong>Rectification</strong> : faire corriger des données inexactes</li>
+      <li><strong>Effacement</strong> (« droit à l'oubli ») : faire supprimer vos données. Disponible directement dans l'app via la fonction « Supprimer mon compte »</li>
+      <li><strong>Opposition</strong> : vous opposer à un traitement</li>
+      <li><strong>Limitation</strong> : faire limiter un traitement</li>
+      <li><strong>Portabilité</strong> : récupérer vos données dans un format structuré et lisible par machine</li>
+      <li><strong>Retrait du consentement</strong> à tout moment lorsque le traitement repose sur le consentement</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a>. Nous répondrons dans un délai maximum d'un mois.</p>
+    <p>Vous disposez également du droit d'introduire une réclamation auprès de la <strong>Commission Nationale de l'Informatique et des Libertés (CNIL)</strong> — 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07 — <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>.</p>
+
+    <h2>9. Cookies et stockage local</h2>
+    <p>Spottr n'utilise <strong>aucun cookie publicitaire</strong> ni outil de tracking tiers (Google Analytics, Meta Pixel, etc.). Seul le stockage local du navigateur (<code>localStorage</code>) est utilisé pour :</p>
+    <ul>
+      <li>Mémoriser votre préférence de langue (FR/EN)</li>
+      <li>Conserver votre jeton de session d'authentification (Supabase Auth)</li>
+    </ul>
+    <p>Ces stockages sont strictement nécessaires au fonctionnement du Service et ne nécessitent pas de consentement préalable au sens de la directive ePrivacy.</p>
+
+    <h2>10. Sécurité</h2>
+    <ul>
+      <li>Communications chiffrées via HTTPS / TLS 1.2+</li>
+      <li>Mots de passe hachés (bcrypt via Supabase Auth) — jamais stockés en clair</li>
+      <li>Politique <em>Row Level Security</em> PostgreSQL : un utilisateur ne peut accéder qu'à ses propres données</li>
+      <li>Authentification par jeton JWT à durée limitée</li>
+    </ul>
+
+    <h2>11. Mineurs</h2>
+    <p>Le Service est réservé aux personnes âgées de <strong>16 ans ou plus</strong>, conformément à l'article 8 du RGPD. Si vous prenez connaissance qu'un mineur de moins de 16 ans utilise le Service, contactez-nous immédiatement à <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a> afin que nous procédions à la suppression du compte.</p>
+
+    <h2>12. Modifications</h2>
+    <p>La présente Politique peut être mise à jour. Les modifications substantielles seront notifiées via l'application. Nous vous invitons à consulter régulièrement cette page.</p>
+
+    <h2>13. Contact</h2>
+    <p>Pour toute question relative à cette Politique ou à vos données personnelles :</p>
+    <ul>
+      <li>Email : <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a></li>
+      <li>Courrier : Take an IT — 24 Rue Franklin, 92600 Asnières-sur-Seine, France</li>
+    </ul>
+  </section>
+
+  <!-- ═════════════════════════════════ EN ═════════════════════════════════ -->
+  <section id="section-en" class="lang-section" lang="en">
+    <h1>Privacy Policy</h1>
+    <p class="meta">Last updated: May 8, 2026</p>
+
+    <p>This Privacy Policy describes how <strong>Spottr</strong> (the "Service") collects, uses and protects the personal data of its users, in accordance with Regulation (EU) 2016/679 (GDPR) and the French <em>"Informatique et Libertés"</em> Act of 6 January 1978 as amended.</p>
+
+    <h2>1. Legal information</h2>
+    <p><strong>Service publisher:</strong></p>
+    <ul>
+      <li><strong>Take an IT</strong>, simplified joint-stock company with sole shareholder (SASU) with share capital of €2,000</li>
+      <li>Registered office: 24 Rue Franklin, 92600 Asnières-sur-Seine, France</li>
+      <li>Nanterre Trade Register no. 942 906 280</li>
+      <li>SIRET: 942 906 280 00014</li>
+      <li>Intra-community VAT no.: FR02 942906280</li>
+      <li>Publication director: Anthony Nave (Chairman)</li>
+      <li>Contact: <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a></li>
+    </ul>
+    <p><strong>Hosting providers:</strong></p>
+    <ul>
+      <li><strong>Web pages (frontend)</strong>: GitHub, Inc. — 88 Colin P Kelly Jr Street, San Francisco, CA 94107, USA (GitHub Pages)</li>
+      <li><strong>User data (backend)</strong>: Supabase, Inc. — 970 Toa Payoh North #07-04, Singapore 318992. Data stored in the EU region (AWS Frankfurt, eu-central-1)</li>
+    </ul>
+
+    <h2>2. Data controller</h2>
+    <p>The data controller is <strong>Take an IT</strong>, whose contact details are listed above. No data protection officer (DPO) has been designated, as designation is not mandatory given the nature and volume of processing carried out.</p>
+
+    <h2>3. Data collected</h2>
+    <table>
+      <tr><th>Category</th><th>Data</th><th>Source</th></tr>
+      <tr><td>Authentication</td><td>Email address, password (hashed)</td><td>User input</td></tr>
+      <tr><td>Sport profile</td><td>Goal, level, training frequency, equipment, physical constraints</td><td>User input (onboarding)</td></tr>
+      <tr><td>Training history</td><td>Generated programs, completed sessions (date, exercises, weights, reps)</td><td>User input</td></tr>
+      <tr><td>Feedback</td><td>Type (bug / improvement / question), free-text message, app version, browser user-agent</td><td>Feedback form</td></tr>
+      <tr><td>Technical preferences</td><td>Language, session token</td><td>Browser local storage</td></tr>
+    </table>
+    <p><strong>No biometric data, no photos, no geolocation, and no sensitive health data is collected.</strong></p>
+
+    <h2>4. Purposes and legal bases</h2>
+    <table>
+      <tr><th>Purpose</th><th>Legal basis (GDPR art. 6)</th></tr>
+      <tr><td>Provide access to the Service (authentication, profile and history storage)</td><td>Performance of the contract (Terms)</td></tr>
+      <tr><td>Improve the Service through user feedback</td><td>Legitimate interest of the publisher</td></tr>
+      <tr><td>Ensure Service security (abuse detection)</td><td>Legitimate interest of the publisher</td></tr>
+    </table>
+    <p>No data is used for commercial profiling, targeted advertising, or sold to third parties for marketing purposes.</p>
+
+    <h2>5. Sub-processors</h2>
+    <p>Spottr uses the following sub-processors within the meaning of GDPR Article 28:</p>
+    <ul>
+      <li><strong>Supabase, Inc.</strong> — Authentication, PostgreSQL database, image storage. Data stored in the EU region (AWS Frankfurt). Privacy policy: <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a></li>
+      <li><strong>GitHub, Inc.</strong> (subsidiary of Microsoft) — Hosting of static web pages. Policy: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com/.../github-general-privacy-statement</a></li>
+      <li><strong>OVH SAS</strong> — Email forwarding service for the myspottr.app domain</li>
+    </ul>
+
+    <h2>6. Transfers outside the European Union</h2>
+    <ul>
+      <li><strong>GitHub (USA)</strong>: transfer governed by the <em>EU-US Data Privacy Framework</em> (European Commission adequacy decision of 10 July 2023). GitHub is certified.</li>
+      <li><strong>Supabase</strong>: company based in Singapore, but user data is stored in the EU region (AWS Frankfurt). No actual transfer of user data outside the EU.</li>
+    </ul>
+
+    <h2>7. Retention period</h2>
+    <ul>
+      <li><strong>Account data</strong>: retained for as long as the account is active</li>
+      <li><strong>Account deletion</strong>: <strong>immediate and permanent</strong> erasure of all data via the "Delete my account" button accessible from the in-app menu</li>
+      <li><strong>Technical logs</strong> (Supabase side): 30 days maximum</li>
+    </ul>
+
+    <h2>8. User rights</h2>
+    <p>In accordance with Articles 15 to 22 of the GDPR, you have the following rights:</p>
+    <ul>
+      <li><strong>Access</strong>: obtain a copy of the data concerning you</li>
+      <li><strong>Rectification</strong>: have inaccurate data corrected</li>
+      <li><strong>Erasure</strong> ("right to be forgotten"): have your data deleted. Available directly in the app via the "Delete my account" feature</li>
+      <li><strong>Object</strong>: object to processing</li>
+      <li><strong>Restriction</strong>: restrict processing</li>
+      <li><strong>Portability</strong>: retrieve your data in a structured, machine-readable format</li>
+      <li><strong>Withdraw consent</strong> at any time when processing is based on consent</li>
+    </ul>
+    <p>To exercise these rights, contact us at <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a>. We will respond within a maximum of one month.</p>
+    <p>You also have the right to lodge a complaint with the French Data Protection Authority — <strong>CNIL</strong> — 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07 — <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>, or with the data protection authority of your country of residence.</p>
+
+    <h2>9. Cookies and local storage</h2>
+    <p>Spottr does not use <strong>any advertising cookies</strong> or third-party tracking tools (Google Analytics, Meta Pixel, etc.). Only the browser's local storage (<code>localStorage</code>) is used to:</p>
+    <ul>
+      <li>Remember your language preference (FR/EN)</li>
+      <li>Store your authentication session token (Supabase Auth)</li>
+    </ul>
+    <p>This storage is strictly necessary for the Service to function and does not require prior consent under the ePrivacy Directive.</p>
+
+    <h2>10. Security</h2>
+    <ul>
+      <li>Encrypted communications via HTTPS / TLS 1.2+</li>
+      <li>Hashed passwords (bcrypt via Supabase Auth) — never stored in clear text</li>
+      <li>PostgreSQL <em>Row Level Security</em> policy: a user can only access their own data</li>
+      <li>JWT-based authentication with limited token lifetime</li>
+    </ul>
+
+    <h2>11. Minors</h2>
+    <p>The Service is reserved for persons aged <strong>16 years or older</strong>, in accordance with Article 8 of the GDPR. If you become aware that a minor under 16 is using the Service, please contact us immediately at <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a> so that we can delete the account.</p>
+
+    <h2>12. Changes</h2>
+    <p>This Policy may be updated. Substantial changes will be notified via the application. We invite you to consult this page regularly.</p>
+
+    <h2>13. Contact</h2>
+    <p>For any question regarding this Policy or your personal data:</p>
+    <ul>
+      <li>Email: <a href="mailto:privacy@myspottr.app">privacy@myspottr.app</a></li>
+      <li>Mail: Take an IT — 24 Rue Franklin, 92600 Asnières-sur-Seine, France</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2026 Take an IT — <a href="terms.html">CGU / Terms</a> — <a href="privacy.html">Confidentialité / Privacy</a></p>
+  </footer>
+</div>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.lang-section').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('section-' + lang).classList.add('active');
+  document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  try { localStorage.setItem('spottr_legal_lang', lang); } catch (e) {}
+  // Met à jour le titre du document selon la langue
+  document.title = lang === 'en' ? 'Spottr — Privacy Policy' : 'Spottr — Politique de confidentialité';
+}
+(function() {
+  // Détection initiale : ?lang=xx > localStorage > navigator.language > fr
+  var url = new URLSearchParams(window.location.search);
+  var fromUrl = url.get('lang');
+  var stored = null;
+  try { stored = localStorage.getItem('spottr_legal_lang'); } catch (e) {}
+  var navLang = (navigator.language || 'fr').split('-')[0].toLowerCase();
+  var lang = fromUrl || stored || (navLang === 'en' ? 'en' : 'fr');
+  if (lang !== 'fr' && lang !== 'en') lang = 'fr';
+  setLang(lang);
+})();
+</script>
+</body>
+</html>
