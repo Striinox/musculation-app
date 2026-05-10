@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="MySpottr">
 <meta name="theme-color" content="#161719">
 <title>MySpottr</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -52,6 +52,14 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
 .auth-terms-notice{font-family:var(--font-body);font-size:11px;color:var(--mut);line-height:1.5;text-align:center;margin-top:4px}
 .auth-terms-notice a{color:var(--acc);text-decoration:underline}
 .auth-error{font-family:var(--font-mono);font-size:10px;color:var(--red);min-height:14px;text-align:center;letter-spacing:.08em}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--bg);color:var(--txt);border:1px solid var(--brd);border-radius:8px;padding:11px 14px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;transition:.15s;letter-spacing:.02em}
+.btn-google:hover{border-color:var(--acc)}
+.btn-google:active{transform:scale(.98)}
+.btn-google:disabled{opacity:.5;cursor:not-allowed}
+.btn-google svg{width:18px;height:18px;flex-shrink:0}
+.auth-divider{display:flex;align-items:center;gap:10px;width:100%}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--brd)}
+.auth-divider span{font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.18em}
 #onboarding-screen{padding:0}
 .onb-wrap{flex:1;overflow-y:auto;padding:calc(var(--safe-top) + 24px) 20px 40px}
 .onb-header{text-align:center;margin-bottom:28px}
@@ -590,6 +598,11 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
   </div>
   <div class="auth-card" id="login-form">
     <div class="auth-card-title" data-i18n="auth.login.title">Connexion</div>
+    <button class="btn-google" id="btn-google-login" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+      <span data-i18n="auth.continue_google">Continuer avec Google</span>
+    </button>
+    <div class="auth-divider"><span data-i18n="auth.or">ou</span></div>
     <div class="inp-group"><label data-i18n="auth.email">Email</label><input type="email" id="login-email" placeholder="ton@email.com" autocomplete="email"></div>
     <div class="inp-group"><label data-i18n="auth.password">Mot de passe</label><input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password"></div>
     <div class="auth-error" id="login-error"></div>
@@ -599,6 +612,11 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
   </div>
   <div class="auth-card" id="register-form" style="display:none;flex-direction:column">
     <div class="auth-card-title" data-i18n="auth.register.title">Créer un compte</div>
+    <button class="btn-google" id="btn-google-register" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+      <span data-i18n="auth.continue_google">Continuer avec Google</span>
+    </button>
+    <div class="auth-divider"><span data-i18n="auth.or">ou</span></div>
     <div class="inp-group"><label data-i18n="auth.email">Email</label><input type="email" id="reg-email" placeholder="ton@email.com" autocomplete="email"></div>
     <div class="inp-group"><label data-i18n="auth.password">Mot de passe</label><input type="password" id="reg-pwd" data-i18n-placeholder="auth.pwd_min" placeholder="Minimum 6 caractères" autocomplete="new-password"></div>
     <div class="auth-error" id="reg-error"></div>
@@ -773,7 +791,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font-body);font-siz
           </a>
           <a class="menu-item" id="menu-privacy" href="https://myspottr.app/privacy.html" target="_blank" rel="noopener" role="menuitem" style="text-decoration:none">
             <span class="menu-item-icon">🔒</span><span data-i18n="legal.privacy_long">Politique de confidentialité</span>
-          </button>
+          </a>
           <button class="menu-item" id="menu-logout" type="button" role="menuitem">
             <span class="menu-item-icon">↗</span><span data-i18n="menu.logout">Se déconnecter</span>
           </button>
@@ -987,12 +1005,21 @@ function nativeHaptic(style) {
 // ══════════════════════════════════════
 const SUPABASE_URL = 'https://rqymrinhvihfrlgklkfi.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_w4SuqbeyssghagcxDmN1jw_hz3WYIKO';
+// Lock auth no-op — remplace navigator.locks par defaut, qui provoque des
+// deadlocks orphelins documentes en navigation privee et apres callbacks
+// OAuth (issue supabase-js #2013 P0, pas de fix merge a date). Une queue
+// sequentielle classique cree un autre bug : Supabase declenche des locks
+// re-entrants (SIGNED_IN dans un lock parent), donc le lock interieur
+// attend le lock exterieur qui attend que SIGNED_IN handler termine ->
+// deadlock circulaire. App mono-onglet en pratique, no-op safe.
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: {
     persistSession: true,
     storage: window.localStorage,
     autoRefreshToken: true,
-    detectSessionInUrl: false
+    detectSessionInUrl: false,
+    flowType: 'pkce',
+    lock: function(_key, _acquireTimeout, fn) { return fn(); }
   }
 });
 
@@ -1050,6 +1077,10 @@ const I18N = {
     'auth.login.forgot': 'Mot de passe oublié ?',
     'auth.login.no_account': 'Pas de compte ?',
     'auth.login.create_account': 'Créer un compte',
+    'auth.continue_google': 'Continuer avec Google',
+    'auth.google_loading': 'Connexion via Google…',
+    'auth.google_error': 'Erreur Google : {msg}',
+    'auth.or': 'ou',
     // === AUTH register ===
     'auth.register.title': 'Créer un compte',
     'auth.register.submit': 'Créer le compte',
@@ -1372,6 +1403,10 @@ const I18N = {
     'auth.login.forgot': 'Forgot password?',
     'auth.login.no_account': 'No account?',
     'auth.login.create_account': 'Create one',
+    'auth.continue_google': 'Continue with Google',
+    'auth.google_loading': 'Signing in with Google…',
+    'auth.google_error': 'Google error: {msg}',
+    'auth.or': 'or',
     // === AUTH register ===
     'auth.register.title': 'Create an account',
     'auth.register.submit': 'Create account',
@@ -1822,6 +1857,101 @@ function today() { return new Date().toISOString().slice(0, 10); }
 // ══════════════════════════════════════
 // AUTH
 // ══════════════════════════════════════
+// URL de base de l'app prod, utilisée comme fallback pour les redirects natifs
+// (Capacitor) et comme cible OAuth quand on n'est pas sur la PWA web.
+const APP_BASE_URL = 'https://myspottr.app/';
+
+// Web Client ID Google OAuth — utilise comme audience de l'idToken signe
+// par le plugin SocialLogin sur Android natif. Doit matcher le Client ID
+// configure dans Supabase Auth Providers > Google.
+const GOOGLE_WEB_CLIENT_ID = '401455332477-fob1epei1g3rn8hco2beisrtvr7b3imu.apps.googleusercontent.com';
+const SUPABASE_SESSION_KEY = 'sb-rqymrinhvihfrlgklkfi-auth-token';
+
+// Init lazy du plugin SocialLogin (Capacitor natif uniquement).
+let __socialLoginReady = false;
+async function ensureSocialLoginReady() {
+  if (__socialLoginReady) return;
+  const SL = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SocialLogin;
+  if (!SL) throw new Error('SocialLogin plugin unavailable');
+  await SL.initialize({ google: { webClientId: GOOGLE_WEB_CLIENT_ID } });
+  __socialLoginReady = true;
+}
+
+// Echange un idToken Google contre une session Supabase via fetch direct.
+// On bypass sb.auth.signInWithIdToken() qui souffre du meme deadlock que
+// signInWithOAuth/exchangeCodeForSession (issue supabase-js #2013).
+async function exchangeIdTokenForSession(idToken) {
+  const r = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=id_token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+    body: JSON.stringify({ provider: 'google', id_token: idToken })
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error_description || data.msg || 'idToken exchange failed');
+  localStorage.setItem(SUPABASE_SESSION_KEY, JSON.stringify({
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+    expires_at: data.expires_at,
+    expires_in: data.expires_in,
+    token_type: data.token_type,
+    user: data.user
+  }));
+  // Reload : le client Supabase repartira d'un etat clean au load et lira
+  // la session fraichement ecrite, sans deadlock interne.
+  location.reload();
+}
+
+// Helper Google OAuth.
+// - Web (PWA / browser) : signInWithOAuth → callback ?code= → exchange PKCE
+//   raw HTTP (cf. checkRecoveryFlow) → localStorage → reload.
+// - Mobile natif (Capacitor) : SocialLogin.login → idToken → exchange
+//   id_token raw HTTP → localStorage → reload.
+async function signInWithGoogle(btnEl, errEl) {
+  if (errEl) { errEl.style.color = ''; errEl.textContent = ''; }
+  const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+  const originalLabel = btnEl ? btnEl.querySelector('span').textContent : '';
+  if (btnEl) {
+    btnEl.disabled = true;
+    btnEl.querySelector('span').textContent = t('auth.google_loading');
+  }
+  try {
+    if (isNative) {
+      await ensureSocialLoginReady();
+      const SL = window.Capacitor.Plugins.SocialLogin;
+      const res = await SL.login({ provider: 'google', options: { scopes: ['email', 'profile'] } });
+      const idToken = res && res.result && res.result.idToken;
+      if (!idToken) throw new Error('idToken not returned by Google Sign-In');
+      await exchangeIdTokenForSession(idToken);
+      return;
+    }
+    // Web flow
+    const base = window.location.origin + window.location.pathname;
+    const sep = base.indexOf('?') !== -1 ? '&' : '?';
+    const redirectTo = base + sep + 'oauth=google';
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: redirectTo }
+    });
+    if (error) throw error;
+    // Pas de restore du bouton ici : le navigateur redirige vers Google.
+  } catch (e) {
+    if (btnEl) {
+      btnEl.disabled = false;
+      btnEl.querySelector('span').textContent = originalLabel || t('auth.continue_google');
+    }
+    if (errEl) errEl.textContent = t('auth.google_error', { msg: e.message || e });
+  }
+}
+window.signInWithGoogle = signInWithGoogle;
+
+document.getElementById('btn-google-login').addEventListener('click', function() {
+  signInWithGoogle(this, document.getElementById('login-error'));
+});
+
+document.getElementById('btn-google-register').addEventListener('click', function() {
+  signInWithGoogle(this, document.getElementById('reg-error'));
+});
+
 document.getElementById('btn-login').addEventListener('click', async function() {
   const email = document.getElementById('login-email').value.trim();
   const pwd   = document.getElementById('login-pwd').value;
@@ -2073,9 +2203,11 @@ document.getElementById('btn-new-prog').addEventListener('click', startNewProgra
 
 // Écouter uniquement les connexions explicites (login form)
 sb.auth.onAuthStateChange(async function(event, session) {
-  // Pendant un flow recovery, setSession/exchangeCodeForSession déclenchent un
-  // SIGNED_IN — on ne doit PAS entrer dans l'app, sinon on saute par-dessus
-  // l'écran "Nouveau mot de passe".
+  if (event === 'PASSWORD_RECOVERY') {
+    isRecoveryFlow = true;
+    showResetScreen();
+    return;
+  }
   if (event === 'SIGNED_IN' && session && session.user && !appReady && !isRecoveryFlow) {
     currentUser = session.user;
     await initUserSession();
@@ -2087,17 +2219,19 @@ sb.auth.onAuthStateChange(async function(event, session) {
   }
 });
 
-// Détection callback recovery (lien d'un email de reset password)
-// Couvre les deux flows Supabase : implicit (hash) et PKCE (query ?code=).
+// Detection des callbacks auth en flow PKCE (?code=...) + hash recovery legacy.
+// On gere manuellement parce que detectSessionInUrl:true du client provoque
+// un blocage des queries post-callback (lock interne supabase-js #2013).
+// Le marqueur ?oauth=google distingue OAuth Google (entree normale dans
+// l'app) du flow recovery (ecran reset password).
 async function checkRecoveryFlow() {
   const hash = window.location.hash || '';
+  // Hash recovery legacy : vieux emails Supabase pre-PKCE
   if (hash.indexOf('type=recovery') !== -1) {
     const params = new URLSearchParams(hash.substring(1));
     const accessToken = params.get('access_token');
     const refreshToken = params.get('refresh_token');
     if (accessToken && refreshToken) {
-      // Set le flag AVANT setSession : le SIGNED_IN qui en découle doit voir
-      // isRecoveryFlow=true pour ne pas déclencher l'entrée dans l'app.
       isRecoveryFlow = true;
       const { error } = await sb.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
       if (!error) {
@@ -2107,9 +2241,47 @@ async function checkRecoveryFlow() {
       isRecoveryFlow = false;
     }
   }
+  // PKCE callback (recovery email PKCE OU OAuth Google)
   const url = new URL(window.location.href);
   const code = url.searchParams.get('code');
+  const oauthSource = url.searchParams.get('oauth');
   if (code) {
+    if (oauthSource === 'google') {
+      // OAuth Google : exchange via fetch direct + reload.
+      // exchangeCodeForSession() de supabase-js laisse le client dans un
+      // etat ou les queries suivantes bloquent (issue #2013 P0, sans fix).
+      // Workaround : on echange le code via /auth/v1/token, on ecrit la
+      // session au format attendu par le client, puis location.reload()
+      // pour que l'init suivante parte d'un client clean qui lira la
+      // session fraiche depuis localStorage.
+      const verifierKey = 'sb-rqymrinhvihfrlgklkfi-auth-token-code-verifier';
+      const sessionKey = 'sb-rqymrinhvihfrlgklkfi-auth-token';
+      const rawVerifier = localStorage.getItem(verifierKey);
+      if (!rawVerifier) return false;
+      const codeVerifier = rawVerifier.replace(/^"|"$/g, '');
+      try {
+        const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=pkce', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+          body: JSON.stringify({ auth_code: code, code_verifier: codeVerifier })
+        });
+        const data = await res.json();
+        if (!res.ok) return false;
+        localStorage.setItem(sessionKey, JSON.stringify({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          expires_at: data.expires_at,
+          expires_in: data.expires_in,
+          token_type: data.token_type,
+          user: data.user
+        }));
+        localStorage.removeItem(verifierKey);
+        history.replaceState(null, '', window.location.pathname);
+        location.reload();
+      } catch (e) {}
+      return false;
+    }
+    // Sinon : recovery PKCE (lien email reset password)
     isRecoveryFlow = true;
     const { error } = await sb.auth.exchangeCodeForSession(code);
     if (!error) {
@@ -2135,6 +2307,10 @@ function showResetScreen() {
       showResetScreen();
       return;
     }
+    // Si un callback OAuth vient d'arriver, exchangeCodeForSession a déclenché
+    // SIGNED_IN, et onAuthStateChange a déjà appelé initUserSession() (qui set
+    // currentUser). Inutile de re-init en lisant localStorage.
+    if (currentUser) return;
     // Lire la session depuis localStorage directement
     const storageKey = 'sb-rqymrinhvihfrlgklkfi-auth-token';
     const raw = localStorage.getItem(storageKey);
