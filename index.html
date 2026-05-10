@@ -2219,6 +2219,21 @@ sb.auth.onAuthStateChange(async function(event, session) {
   }
 });
 
+// Bfcache + restore de navigation : apres un round-trip OAuth via Google,
+// le navigateur restore parfois la page sans re-executer le JS top-level
+// (init() ne tourne pas, checkRecoveryFlow non plus). Strategie : sur
+// pageshow, si on a un ?code= ET que la session est absente du localStorage,
+// on force un reload pour declencher l'init et l'exchange OAuth. Le check
+// de session evite la boucle au cas ou le reload est spontane.
+window.addEventListener('pageshow', function(event) {
+  const url = new URL(window.location.href);
+  const hasCode = !!url.searchParams.get('code');
+  const hasSession = !!localStorage.getItem('sb-rqymrinhvihfrlgklkfi-auth-token');
+  if (hasCode && !hasSession) {
+    location.reload();
+  }
+});
+
 // Detection des callbacks auth en flow PKCE (?code=...) + hash recovery legacy.
 // On gere manuellement parce que detectSessionInUrl:true du client provoque
 // un blocage des queries post-callback (lock interne supabase-js #2013).
@@ -2248,16 +2263,19 @@ async function checkRecoveryFlow() {
   if (code) {
     if (oauthSource === 'google') {
       // OAuth Google : exchange via fetch direct + reload.
-      // exchangeCodeForSession() de supabase-js laisse le client dans un
-      // etat ou les queries suivantes bloquent (issue #2013 P0, sans fix).
-      // Workaround : on echange le code via /auth/v1/token, on ecrit la
-      // session au format attendu par le client, puis location.reload()
-      // pour que l'init suivante parte d'un client clean qui lira la
-      // session fraiche depuis localStorage.
       const verifierKey = 'sb-rqymrinhvihfrlgklkfi-auth-token-code-verifier';
       const sessionKey = 'sb-rqymrinhvihfrlgklkfi-auth-token';
       const rawVerifier = localStorage.getItem(verifierKey);
-      if (!rawVerifier) return false;
+      if (!rawVerifier) {
+        // Verifier perdu (bfcache, navigation interrompue, crash entre
+        // signInWithOAuth et le callback). On nettoie l'URL pour eviter
+        // que la presence du ?code= ne reboucle. Si la session existe
+        // deja en localStorage (login precedent), init() la lira et
+        // entrera dans l'app. Sinon, l'utilisateur reste sur l'ecran
+        // de login et peut retenter.
+        history.replaceState(null, '', window.location.pathname);
+        return false;
+      }
       const codeVerifier = rawVerifier.replace(/^"|"$/g, '');
       try {
         const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=pkce', {
@@ -2266,7 +2284,10 @@ async function checkRecoveryFlow() {
           body: JSON.stringify({ auth_code: code, code_verifier: codeVerifier })
         });
         const data = await res.json();
-        if (!res.ok) return false;
+        if (!res.ok) {
+          history.replaceState(null, '', window.location.pathname);
+          return false;
+        }
         localStorage.setItem(sessionKey, JSON.stringify({
           access_token: data.access_token,
           refresh_token: data.refresh_token,
@@ -2278,7 +2299,9 @@ async function checkRecoveryFlow() {
         localStorage.removeItem(verifierKey);
         history.replaceState(null, '', window.location.pathname);
         location.reload();
-      } catch (e) {}
+      } catch (e) {
+        history.replaceState(null, '', window.location.pathname);
+      }
       return false;
     }
     // Sinon : recovery PKCE (lien email reset password)
