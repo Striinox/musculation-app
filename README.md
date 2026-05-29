@@ -34,7 +34,13 @@ L'app est une PWA `index.html` unique en HTML/CSS/JavaScript pur, aussi consomm�
 - **Suggestions de surcharge progressive** par exercice : ↗ cible, +rep, stagnate, plateau, etc., avec couleurs et bloc tinté CHARGE
 - **Détection de plateau + suggestion de deload** (3 séances de suite sans progrès)
 - Adaptation des incréments au programme actif (mass/cut/fitness × beginner/intermediate/advanced)
-- Logs isolés par programme
+- Logs isolés par programme, historique protégé contre les suppressions de programme/session
+- **Ajustement par séance** (depuis v8) : ajouter / supprimer / changer un exercice depuis la vue séance n'affecte que cette occurrence — le programme reste inchangé pour les autres semaines
+
+### Édition du programme
+- Bouton **Modifier** sur la carte du programme actif (page Programmes) → overlay full-screen
+- Supprimer / Changer / + Ajouter sur le template du jour → s'applique à toutes les futures semaines sans override
+- Séparation explicite avec la vue séance pour éviter toute ambiguïté
 
 ### Mes Records
 - Sous-écran dédié accessible depuis Stats : tous tes PRs par exercice
@@ -132,7 +138,16 @@ Voir la roadmap consolidée dans le [README de la sandbox](https://github.com/St
 
 ## Historique des versions
 
-Voir le [historique complet dans la sandbox](https://github.com/Striinox/musculation-app-dev). Dernière version :
+Voir le [historique complet dans la sandbox](https://github.com/Striinox/musculation-app-dev). Dernières versions :
+
+### v8 — Mai 2026 (sessions matérialisées + édition Programme + Supabase Pro)
+- **Refonte du système de séance** : sépare proprement « ajuster cette séance » (overrides datés stockés dans une nouvelle table `sessions`) et « modifier la routine » (édition explicite du template via le bouton **Modifier** sur la carte du programme actif)
+- **Vue Séance** : nouveaux boutons `+ Ajouter`, ✕ Supprimer et Changer — tous **localisés à la séance datée**, le programme reste inchangé pour les autres semaines
+- **Vue Programmes > Modifier** : overlay full-screen pour ajuster la routine elle-même (s'applique aux futures semaines)
+- **Historique sacralisé** : `workout_logs.session_id` repassé en `ON DELETE SET NULL` — supprimer un programme ne casse plus l'historique d'entraînement
+- **Fix iOS Safari** sur l'overlay d'édition : safe-area-inset-top, z-index ordonné, momentum scroll
+- **Supabase Pro** activé : backups quotidiens automatiques (rétention 7 jours), 250 GB egress/mois
+- Cleanup bucket Storage : suppression des PNG legacy au profit des WebP (106 MB → 4,5 MB)
 
 ### v7 — Mai 2026 (mobile polish + i18n FR/EN + feedback + reset password)
 - **Capacitor mobile Android** : status bar transparente edge-to-edge, splash screen Spottr (logo VOLT), plugin haptic feedback sur la validation des sets
